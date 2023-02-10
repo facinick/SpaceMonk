@@ -50,7 +50,7 @@ const ContactForm = () => {
       ...(data.message !== "" && { message: data.message })
     }
 
-    create({ variables: { input: data } },)
+    create({ variables: { input: contactFormData } },)
   }
 
   const disableInput = loading
