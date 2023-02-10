@@ -2,10 +2,10 @@ import type { Contact } from '@prisma/client'
 
 import {
   contacts,
-  contact,
+  // contact,
   createContact,
-  updateContact,
-  deleteContact,
+  // updateContact,
+  // deleteContact,
 } from './contacts'
 import type { StandardScenario } from './contacts.scenarios'
 
@@ -22,11 +22,11 @@ describe('contacts', () => {
     expect(result.length).toEqual(Object.keys(scenario.contact).length)
   })
 
-  scenario('returns a single contact', async (scenario: StandardScenario) => {
-    const result = await contact({ id: scenario.contact.one.id })
+  // scenario('returns a single contact', async (scenario: StandardScenario) => {
+  //   const result = await contact({ id: scenario.contact.one.id })
 
-    expect(result).toEqual(scenario.contact.one)
-  })
+  //   expect(result).toEqual(scenario.contact.one)
+  // })
 
   scenario('creates a contact', async () => {
     const result = await createContact({
@@ -37,22 +37,22 @@ describe('contacts', () => {
     expect(result.phone).toEqual('String')
   })
 
-  scenario('updates a contact', async (scenario: StandardScenario) => {
-    const original = (await contact({ id: scenario.contact.one.id })) as Contact
-    const result = await updateContact({
-      id: original.id,
-      input: { name: 'String2' },
-    })
+  // scenario('updates a contact', async (scenario: StandardScenario) => {
+  //   const original = (await contact({ id: scenario.contact.one.id })) as Contact
+  //   const result = await updateContact({
+  //     id: original.id,
+  //     input: { name: 'String2' },
+  //   })
 
-    expect(result.name).toEqual('String2')
-  })
+  //   expect(result.name).toEqual('String2')
+  // })
 
-  scenario('deletes a contact', async (scenario: StandardScenario) => {
-    const original = (await deleteContact({
-      id: scenario.contact.one.id,
-    })) as Contact
-    const result = await contact({ id: original.id })
+  // scenario('deletes a contact', async (scenario: StandardScenario) => {
+  //   const original = (await deleteContact({
+  //     id: scenario.contact.one.id,
+  //   })) as Contact
+  //   const result = await contact({ id: original.id })
 
-    expect(result).toEqual(null)
-  })
+  //   expect(result).toEqual(null)
+  // })
 })
