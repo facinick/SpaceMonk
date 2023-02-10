@@ -27,13 +27,11 @@ const ResponsiveLayout = ({ children }: ResponsiveLayoutProps) => {
     pagesToIgnore.push(`signup`)
   }
 
-  console.log(routes)
-
   const navLinks: Array<NavLinkObject> = useMemo(() => Object.entries(routes).filter(([navlink]) => !pagesToIgnore.includes(navlink)).map(([routeName, routePath]) => ({
     routeName: titleCaseWord(routeName),
     routePath: routePath(),
     isActive: pathname === routePath()
-  })), [routes, isAuthenticated]).sort(((navLink) => navLink.routeName === `Home` ? -1 : 1));
+  })), [routes, isAuthenticated, pathname]).sort(((navLink) => navLink.routeName === `Home` ? -1 : 1));
 
 
   const onLogout = async () => {
