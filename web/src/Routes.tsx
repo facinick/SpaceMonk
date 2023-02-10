@@ -8,9 +8,6 @@
 // 'src/pages/Admin/BooksPage/BooksPage.js' -> AdminBooksPage
 
 import { Router, Route, Private, Set, Redirect, routes } from '@redwoodjs/router'
-
-import ScaffoldLayout from 'src/layouts/ScaffoldLayout'
-
 import { useAuth } from './auth'
 import ResponsiveLayout from './layouts/ResponsiveLayout/ResponsiveLayout'
 
