@@ -18,13 +18,18 @@ const ResponsiveLayout = ({ children }: ResponsiveLayoutProps) => {
 
   const { pathname } = useLocation()
 
-  const { isAuthenticated, logOut } = useAuth()
+  const { isAuthenticated, logOut, hasRole } = useAuth()
 
-  const pagesToIgnore = [`post`, `editPost`, `newPost`, `posts`]
+  const pagesToIgnore = [`post`, `editPost`, `postdetailed`, `admin`]
 
   if(isAuthenticated) {
     pagesToIgnore.push(`login`)
     pagesToIgnore.push(`signup`)
+  }
+
+  if(!hasRole('admin')) {
+    pagesToIgnore.push(`newPost`)
+    pagesToIgnore.push(`posts`)
   }
 
   const navLinks: Array<NavLinkObject> = useMemo(() => Object.entries(routes).filter(([navlink]) => !pagesToIgnore.includes(navlink)).map(([routeName, routePath]) => ({

@@ -4,6 +4,9 @@ import { DbAuthHandler, DbAuthHandlerOptions } from '@redwoodjs/auth-dbauth-api'
 
 import { db } from 'src/lib/db'
 
+const ALL_ROLES = ['admin', 'user']
+const DEFAULT_ROLE = 'user'
+
 export const handler = async (
   event: APIGatewayProxyEvent,
   context: Context
@@ -114,6 +117,11 @@ export const handler = async (
           hashedPassword: hashedPassword,
           salt: salt,
           // name: userAttributes.name
+          userRoles: {
+            create: {
+              name: DEFAULT_ROLE
+            }
+          }
         },
       })
     },

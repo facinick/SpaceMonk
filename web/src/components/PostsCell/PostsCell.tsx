@@ -29,7 +29,7 @@ export const Success = ({ posts }: CellSuccessProps<PostsQuery>) => {
     <ul>
       {posts.map((post) => (<li key={post.id}>
         <article className='outline p2 post-small'>
-          <h3><Link className='underline text-blue-700' to={routes.post({id: post.id})}>{post.title}</Link></h3>
+          <h3><Link className='underline text-blue-700' to={routes.postdetailed({id: post.id})}>{post.title}</Link></h3>
           <p>{post.body}</p>
           {post.headerImageUrl && <img className={`w-40`} src={post.headerImageUrl} alt={`Post header image`} />}
           created on <time dateTime={post.createdAt.toString()}>{new Date(post.createdAt).toDateString()}</time>

@@ -1,5 +1,6 @@
 import type { Decoded } from '@redwoodjs/api'
 import { AuthenticationError, ForbiddenError } from '@redwoodjs/graphql-server'
+import { parseJWT } from '@redwoodjs/api'
 
 import { db } from './db'
 
@@ -25,10 +26,18 @@ export const getCurrentUser = async (session: Decoded) => {
     throw new Error('Invalid session')
   }
 
-  return await db.user.findUnique({
+  const user = await db.user.findUnique({
     where: { id: session.id },
-    select: { id: true },
+    include: {
+      userRoles: true
+    }
   })
+
+  const mappedRoles = user.userRoles.map((userRole) => userRole.name)
+
+  Object.assign(user, { roles: mappedRoles })['roles'];
+
+  return user
 }
 
 /**
