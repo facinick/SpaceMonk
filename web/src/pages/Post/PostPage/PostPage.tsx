@@ -1,4 +1,4 @@
-import PostCell from 'src/components/Post/PostCell'
+import PostCell from 'src/components/Admin/Post/PostCell'
 
 type PostPageProps = {
   id: number

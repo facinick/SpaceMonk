@@ -1,4 +1,4 @@
-import NewPost from 'src/components/Post/NewPost'
+import NewPost from 'src/components/Admin/Post/NewPost'
 
 const NewPostPage = () => {
   return <NewPost />

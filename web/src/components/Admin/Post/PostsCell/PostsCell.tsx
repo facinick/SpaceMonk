@@ -3,7 +3,7 @@ import type { FindPosts } from 'types/graphql'
 import { Link, routes } from '@redwoodjs/router'
 import type { CellSuccessProps, CellFailureProps } from '@redwoodjs/web'
 
-import Posts from 'src/components/Post/Posts'
+import Posts from 'src/components/Admin/Post/Posts'
 
 export const QUERY = gql`
   query FindPosts {

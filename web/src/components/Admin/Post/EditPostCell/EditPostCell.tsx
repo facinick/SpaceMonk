@@ -5,7 +5,7 @@ import type { CellSuccessProps, CellFailureProps } from '@redwoodjs/web'
 import { useMutation } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/toast'
 
-import PostForm from 'src/components/Post/PostForm'
+import PostForm from 'src/components/Admin/Post/PostForm'
 
 export const QUERY = gql`
   query EditPostById($id: Int!) {

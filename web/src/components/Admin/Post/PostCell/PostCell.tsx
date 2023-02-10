@@ -2,7 +2,7 @@ import type { FindPostById } from 'types/graphql'
 
 import type { CellSuccessProps, CellFailureProps } from '@redwoodjs/web'
 
-import Post from 'src/components/Post/Post'
+import Post from 'src/components/Admin/Post/Post'
 
 export const QUERY = gql`
   query FindPostById($id: Int!) {

@@ -1,4 +1,4 @@
-import EditPostCell from 'src/components/Post/EditPostCell'
+import EditPostCell from 'src/components/Admin/Post/EditPostCell'
 
 type PostPageProps = {
   id: number
