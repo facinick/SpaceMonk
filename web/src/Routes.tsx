@@ -21,12 +21,10 @@ const Routes = () => {
         {/* only logged in user with admin role can edit posts */}
         {/* Public Routes */}
         <Private unauthenticated="home" roles="admin">
-          <Set wrap={ScaffoldLayout} title="Posts" titleTo="posts" buttonLabel="New Post" buttonTo="newPost">
-            <Route path="/admin/posts/new" page={PostNewPostPage} name="newPost" />
-            <Route path="/admin/posts/{id:Int}/edit" page={PostEditPostPage} name="editPost" />
-            <Route path="/admin/posts/{id:Int}" page={PostPostPage} name="post" />
-            <Route path="/admin/posts" page={PostPostsPage} name="posts" />
-          </Set>
+          <Route path="/admin/posts/new" page={AdminPostNewPostPage} name="newPost" />
+          <Route path="/admin/posts/{id:Int}/edit" page={AdminPostEditPostPage} name="editPost" />
+          <Route path="/admin/posts/{id:Int}" page={AdminPostPostPage} name="post" />
+          <Route path="/admin/posts" page={AdminPostPostsPage} name="posts" />
         </Private>
 
         {/* Public Routes */}
