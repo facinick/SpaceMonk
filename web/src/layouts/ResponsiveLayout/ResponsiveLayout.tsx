@@ -23,7 +23,7 @@ const ResponsiveLayout = ({ children }: ResponsiveLayoutProps) => {
     routeName: titleCaseWord(routeName),
     routePath: routePath(),
     isActive: pathname === routePath()
-  })), [routes]).sort(((navLink) => navLink.routeName === `home` ? 1 : -1));
+  })), [routes]).sort(((navLink) => navLink.routeName === `Home` ? -1 : 1));
 
   return (<>
     <header>

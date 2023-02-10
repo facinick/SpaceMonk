@@ -21,3 +21,10 @@ model User {
   resetToken          String?
   resetTokenExpiresAt DateTime?
 }
+
+model Contact {
+  id      Int     @id @default(autoincrement())
+  name    String
+  phone   String
+  message String? @default("Call back")
+}
