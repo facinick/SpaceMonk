@@ -24015,6 +24015,7 @@ __metadata:
     "@redwoodjs/router": 4.1.2
     "@redwoodjs/web": 4.1.2
     autoprefixer: ^10.4.13
+    humanize-string: 2.1.0
     postcss: ^8.4.21
     postcss-loader: ^7.0.2
     prop-types: 15.8.1

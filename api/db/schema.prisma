@@ -28,3 +28,12 @@ model Contact {
   phone   String
   message String? @default("Call back")
 }
+
+model Post {
+  id             Int      @id @default(autoincrement())
+  title          String
+  body           String
+  headerImageUrl String?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+}

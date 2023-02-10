@@ -1,6 +1,7 @@
-import { Link, NavLink, routes, useLocation } from "@redwoodjs/router"
+import { Link, navigate, NavLink, routes, useLocation } from "@redwoodjs/router"
 import { Toaster } from "@redwoodjs/web/dist/toast"
 import { useMemo } from "react"
+import { useAuth } from "src/auth"
 import { titleCaseWord } from "src/utils/string"
 
 type ResponsiveLayoutProps = {
@@ -17,13 +18,28 @@ const ResponsiveLayout = ({ children }: ResponsiveLayoutProps) => {
 
   const { pathname } = useLocation()
 
-  const pagesToIgnore = [`post`]
+  const { isAuthenticated, logOut } = useAuth()
+
+  const pagesToIgnore = [`post`, `editPost`, `newPost`, `posts`]
+
+  if(isAuthenticated) {
+    pagesToIgnore.push(`login`)
+    pagesToIgnore.push(`signup`)
+  }
+
+  console.log(routes)
 
   const navLinks: Array<NavLinkObject> = useMemo(() => Object.entries(routes).filter(([navlink]) => !pagesToIgnore.includes(navlink)).map(([routeName, routePath]) => ({
     routeName: titleCaseWord(routeName),
     routePath: routePath(),
     isActive: pathname === routePath()
-  })), [routes]).sort(((navLink) => navLink.routeName === `Home` ? -1 : 1));
+  })), [routes, isAuthenticated]).sort(((navLink) => navLink.routeName === `Home` ? -1 : 1));
+
+
+  const onLogout = async () => {
+    await logOut()
+    navigate(routes.home())
+  }
 
   return (<>
     <header>
@@ -36,6 +52,9 @@ const ResponsiveLayout = ({ children }: ResponsiveLayoutProps) => {
               <NavLink className={`underline ${navlinkObject.isActive ? "text-blue-700" : ""}`} activeClassName="active" to={navlinkObject.routePath}>{navlinkObject.routeName}</NavLink>
             </li>
           ))}
+          {isAuthenticated && <li key={`/logout`}>
+            <button onClick={onLogout} className={`underline`}>{`Logout`}</button>
+          </li>}
         </ul>
       </nav>
     </header>

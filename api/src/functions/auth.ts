@@ -110,7 +110,7 @@ export const handler = async (
     handler: ({ username, hashedPassword, salt, userAttributes }) => {
       return db.user.create({
         data: {
-          email: username,
+          username: username,
           hashedPassword: hashedPassword,
           salt: salt,
           // name: userAttributes.name
@@ -145,7 +145,7 @@ export const handler = async (
     // something like `id` or `userId` or even `email`)
     authFields: {
       id: 'id',
-      username: 'email',
+      username: 'username',
       hashedPassword: 'hashedPassword',
       salt: 'salt',
       resetToken: 'resetToken',
