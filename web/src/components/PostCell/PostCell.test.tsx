@@ -1,6 +1,6 @@
 import { render } from '@redwoodjs/testing/web'
 import { Loading, Empty, Failure, Success } from './PostCell'
-import { standard } from './PostCell.mock'
+import { singlePost, singlePostBig, singlePostBigNoGap } from './PostCell.mock'
 
 // Generated boilerplate tests do not account for all circumstances
 // and can fail without adjustments, e.g. Float and DateTime types.
@@ -33,9 +33,21 @@ describe('PostCell', () => {
   // 1. import { screen } from '@redwoodjs/testing/web'
   // 2. Add test: expect(screen.getByText('Hello, world')).toBeInTheDocument()
 
-  it('renders Success successfully', async () => {
+  it('renders simple post successfully', async () => {
     expect(() => {
-      render(<Success post={standard().post} />)
+      render(<Success post={singlePost} />)
+    }).not.toThrow()
+  })
+
+  it('renders post with long sentences successfully', async () => {
+    expect(() => {
+      render(<Success post={singlePostBig} />)
+    }).not.toThrow()
+  })
+
+  it('renders post with long words successfully', async () => {
+    expect(() => {
+      render(<Success post={singlePostBigNoGap} />)
     }).not.toThrow()
   })
 })
