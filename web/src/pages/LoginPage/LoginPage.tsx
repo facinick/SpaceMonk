@@ -1,4 +1,4 @@
-import { useRef } from 'react'
+import { FormEvent, useRef } from 'react'
 import { useEffect } from 'react'
 
 import {
@@ -15,8 +15,19 @@ import { toast, Toaster } from '@redwoodjs/web/toast'
 
 import { useAuth } from 'src/auth'
 
+const Constants = {
+  formTitle: 'Admin Sign In',
+  username: 'Username',
+  usernamePlaceholder: 'Username',
+  password: 'Password',
+  passwordPlaceholder: '••••••••',
+  signInButtonText: 'Sign In'
+}
+
 const LoginPage = () => {
-  const { isAuthenticated, logIn } = useAuth()
+  const { isAuthenticated, logIn, loading, hasError, error } = useAuth()
+
+  const formRef = useRef<HTMLFormElement>(null);
 
   useEffect(() => {
     if (isAuthenticated) {
@@ -29,8 +40,15 @@ const LoginPage = () => {
     usernameRef.current?.focus()
   }, [])
 
-  const onSubmit = async (data: Record<string, string>) => {
-    const response = await logIn({ username: data.username, password: data.password })
+  const onSubmit = async (event: FormEvent) => {
+    event.preventDefault();
+
+    const formData = new FormData(formRef.current);
+
+    const username = formData.get('username')
+    const password = formData.get('password')
+
+    const response = await logIn({ username, password})
 
     if (response.message) {
       toast(response.message)
@@ -41,89 +59,35 @@ const LoginPage = () => {
     }
   }
 
+  const disableInputs = loading
+
   return (
     <>
       <MetaTags title="Login" />
+      <section className="bg-gray-50 dark:bg-gray-900">
+        <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
+          <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
+            <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
 
-      <main className="rw-main">
-        <Toaster toastOptions={{ className: 'rw-toast', duration: 6000 }} />
-        <div className="rw-scaffold rw-login-container">
-          <div className="rw-segment">
-            <header className="rw-segment-header">
-              <h2 className="rw-heading rw-heading-secondary">Login</h2>
-            </header>
+              <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
+                {Constants.formTitle}
+              </h1>
 
-            <div className="rw-segment-main">
-              <div className="rw-form-wrapper">
-                <Form onSubmit={onSubmit} className="rw-form-wrapper">
-                  <Label
-                    name="username"
-                    className="rw-label"
-                    errorClassName="rw-label rw-label-error"
-                  >
-                    Username
-                  </Label>
-                  <TextField
-                    name="username"
-                    className="rw-input"
-                    errorClassName="rw-input rw-input-error"
-                    ref={usernameRef}
-                    validation={{
-                      required: {
-                        value: true,
-                        message: 'Username is required',
-                      },
-                    }}
-                  />
-
-                  <FieldError name="username" className="rw-field-error" />
-
-                  <Label
-                    name="password"
-                    className="rw-label"
-                    errorClassName="rw-label rw-label-error"
-                  >
-                    Password
-                  </Label>
-                  <PasswordField
-                    name="password"
-                    className="rw-input"
-                    errorClassName="rw-input rw-input-error"
-                    autoComplete="current-password"
-                    validation={{
-                      required: {
-                        value: true,
-                        message: 'Password is required',
-                      },
-                    }}
-                  />
-
-                  {/* <div className="rw-forgot-link">
-                    <Link
-                      to={routes.forgotPassword()}
-                      className="rw-forgot-link"
-                    >
-                      Forgot Password?
-                    </Link>
-                  </div> */}
-
-                  <FieldError name="password" className="rw-field-error" />
-
-                  <div className="rw-button-group">
-                    <Submit className="rw-button rw-button-blue">Login</Submit>
-                  </div>
-                </Form>
-              </div>
+              <form ref={formRef} onSubmit={onSubmit} className="space-y-4 md:space-y-6" action="#">
+                <div>
+                  <label htmlFor="username" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{Constants.username}</label>
+                  <input disabled={disableInputs} type="text" name="username" id="username" className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder={Constants.usernamePlaceholder} required={true} />
+                </div>
+                <div>
+                  <label htmlFor="password" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{Constants.password}</label>
+                  <input disabled={disableInputs} type="password" name="password" id="password" placeholder={Constants.passwordPlaceholder} className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required={true} />
+                </div>
+                <button disabled={disableInputs} type="submit" className="w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">{Constants.signInButtonText}</button>
+              </form>
             </div>
           </div>
-          {/* <div className="rw-login-link">
-            <span>Don&apos;t have an account?</span>{' '}
-            <Link to={routes.signup()} className="rw-link">
-              Sign up!
-            </Link>
-          </div> */}
         </div>
-      </main>
+      </section>
     </>
   )
 }
