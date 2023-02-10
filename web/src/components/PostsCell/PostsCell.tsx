@@ -1,6 +1,8 @@
 import type { PostsQuery } from 'types/graphql'
 import type { CellSuccessProps, CellFailureProps } from '@redwoodjs/web'
 import { Link, NavLink, routes, useLocation } from "@redwoodjs/router"
+import PostCard from '../PostCard/PostCard'
+import { truncate } from 'src/utils/string'
 
 export const QUERY = gql`
   query PostsQuery {
@@ -26,14 +28,10 @@ export const Failure = ({ error }: CellFailureProps) => (
 export const Success = ({ posts }: CellSuccessProps<PostsQuery>) => {
 
   return (
-    <ul>
-      {posts.map((post) => (<li key={post.id}>
-        <article className='outline p2 post-small'>
-          <h3><Link className='underline text-blue-700' to={routes.postdetailed({id: post.id})}>{post.title}</Link></h3>
-          <p>{post.body}</p>
-          {post.headerImageUrl && <img className={`w-40`} src={post.headerImageUrl} alt={`Post header image`} />}
-          created on <time dateTime={post.createdAt.toString()}>{new Date(post.createdAt).toDateString()}</time>
-        </article>
+    <ul className="flex flex-col gap-2">
+      {posts.map((post) => (
+        <li className="flex items-center justify-center" key={post.id}>
+          <PostCard createdAt={post.createdAt} bodyTruncated={truncate(post.body, 200)} title={post.title} headerImageUrl={post.headerImageUrl} id={post.id} />
         </li>))}
     </ul>
   )
