@@ -4,8 +4,12 @@ import { DbAuthHandler, DbAuthHandlerOptions } from '@redwoodjs/auth-dbauth-api'
 
 import { db } from 'src/lib/db'
 
-const ALL_ROLES = ['admin', 'user']
-const DEFAULT_ROLE = 'user'
+export enum ROLE {
+  ADMIN = 'admin',
+  MEMBER = 'member'
+}
+
+export const DEFAULT_ROLE = ROLE.MEMBER
 
 export const handler = async (
   event: APIGatewayProxyEvent,

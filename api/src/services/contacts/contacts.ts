@@ -2,8 +2,11 @@ import type { QueryResolvers, MutationResolvers } from 'types/graphql'
 
 import { db } from 'src/lib/db'
 import { validate } from '@redwoodjs/api'
+import { ROLE } from 'src/functions/auth'
+import { requireAuth } from 'src/lib/auth'
 
 export const contacts: QueryResolvers['contacts'] = () => {
+  requireAuth({ roles: ROLE.ADMIN })
   return db.contact.findMany()
 }
 
