@@ -28,7 +28,7 @@ export const Failure = ({ error }: CellFailureProps) => (
 export const Success = ({ posts }: CellSuccessProps<PostsQuery>) => {
 
   return (
-    <ul className="flex flex-col gap-2">
+    <ul className="flex flex-col gap-8 max-w-[720px]">
       {posts.map((post) => (
         <li className="flex items-center justify-center" key={post.id}>
           <PostCard createdAt={post.createdAt} bodyTruncated={truncate(post.body, 200)} title={post.title} headerImageUrl={post.headerImageUrl} id={post.id} />

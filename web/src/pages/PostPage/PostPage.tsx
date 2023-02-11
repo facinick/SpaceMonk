@@ -11,8 +11,7 @@ const PostPage = (props: PageProps) => {
   return (
     <>
       <MetaTags title="Post" description="Post page" />
-
-      <h1>PostPage</h1>
+      {/* <PageTitle title='Post Posts' /> */}
       <PostCell id={id}></PostCell>
     </>
   )

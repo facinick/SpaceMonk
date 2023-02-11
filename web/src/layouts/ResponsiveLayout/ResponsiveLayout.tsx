@@ -29,9 +29,9 @@ const ResponsiveLayout = ({ children }: ResponsiveLayoutProps) => {
     navigate(routes.home())
   }
 
-  useEffect(()=>{
+  useEffect(() => {
     setIsOpen(false)
-  },[pathname])
+  }, [pathname])
 
   const isAdmin = hasRole('admin')
 
@@ -73,7 +73,13 @@ const ResponsiveLayout = ({ children }: ResponsiveLayoutProps) => {
         </div>
       </nav>
     </header>
-    <main>{children}</main>
+    <main>
+      <section className="bg-gray-50 dark:bg-gray-900">
+        <div className="flex flex-col items-center px-4 py-8 min-h-[100vh] h-[100%]">
+          {children}
+        </div>
+      </section>
+    </main>
   </>)
 }
 

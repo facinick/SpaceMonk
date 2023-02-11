@@ -2,6 +2,8 @@ import type { FindPostQuery, FindPostQueryVariables } from 'types/graphql'
 import type { CellSuccessProps, CellFailureProps } from '@redwoodjs/web'
 import { Route } from '@redwoodjs/router'
 import { back } from '@redwoodjs/router'
+import { truncate } from 'src/utils/string'
+import PostCardBig from '../PostCardBig/PostCardBig'
 
 export const QUERY = gql`
   query FindPostQuery($id: Int!) {
@@ -30,14 +32,6 @@ export const Success = ({
   post,
 }: CellSuccessProps<FindPostQuery, FindPostQueryVariables>) => {
   return (
-    <article className='outline p2 post-full'>
-      <div className='flex flex-row gap-2'>
-      <button className='w-8 outline' title='go back' onClick={back}>{"<-"}</button>
-      <h3>{post.title}</h3>
-      </div>
-      <p>{post.body}</p>
-      {post.headerImageUrl && <img className={`w-40`} src={post.headerImageUrl} alt={`Post header image`} />}
-      created on <time dateTime={post.createdAt.toString()}>{new Date(post.createdAt).toDateString()}</time>
-    </article>
+    <PostCardBig createdAt={post.createdAt} body={post.body} title={post.title} headerImageUrl={post.headerImageUrl} id={post.id} />
   )
 }
