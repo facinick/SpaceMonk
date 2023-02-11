@@ -32,6 +32,10 @@ export const Success = ({
   post,
 }: CellSuccessProps<FindPostQuery, FindPostQueryVariables>) => {
   return (
-    <PostCardBig createdAt={post.createdAt} body={post.body} title={post.title} headerImageUrl={post.headerImageUrl} id={post.id} />
+
+
+    <PostCardBig createdAt={post.createdAt} body={post.body} title={post.title} headerImageUrl={post.headerImageUrl || `https://loremflickr.com/1920/720`} id={post.id} />
+
+
   )
 }

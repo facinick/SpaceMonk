@@ -1,6 +1,6 @@
 import type { PostsQuery } from 'types/graphql'
 import type { CellSuccessProps, CellFailureProps } from '@redwoodjs/web'
-import { Link, NavLink, routes, useLocation } from "@redwoodjs/router"
+import { back, Link, navigate, NavLink, routes, useLocation } from "@redwoodjs/router"
 import PostCard from '../PostCard/PostCard'
 import { truncate } from 'src/utils/string'
 
@@ -31,7 +31,7 @@ export const Success = ({ posts }: CellSuccessProps<PostsQuery>) => {
     <ul className="flex flex-col gap-8 max-w-[720px]">
       {posts.map((post) => (
         <li className="flex items-center justify-center" key={post.id}>
-          <PostCard createdAt={post.createdAt} bodyTruncated={truncate(post.body, 200)} title={post.title} headerImageUrl={post.headerImageUrl} id={post.id} />
+          <PostCard createdAt={post.createdAt} bodyTruncated={truncate(post.body, 200)} title={post.title} headerImageUrl={post.headerImageUrl || `https://loremflickr.com/1920/720`} id={post.id} />
         </li>))}
     </ul>
   )
