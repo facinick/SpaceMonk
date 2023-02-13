@@ -4,11 +4,22 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        primary: { "50": "#f0fdfa", "100": "#ccfbf1", "200": "#99f6e4", "300": "#5eead4", "400": "#2dd4bf", "500": "#14b8a6", "600": "#0d9488", "700": "#0f766e", "800": "#115e59", "900": "#134e4a" }
-      }
+        primary: {
+          50: '#f0fdfa',
+          100: '#ccfbf1',
+          200: '#99f6e4',
+          300: '#5eead4',
+          400: '#2dd4bf',
+          500: '#14b8a6',
+          600: '#0d9488',
+          700: '#0f766e',
+          800: '#115e59',
+          900: '#134e4a',
+        },
+      },
     },
     fontFamily: {
-      'body': [
+      body: [
         'Roboto',
         'ui-sans-serif',
         'system-ui',
@@ -23,9 +34,9 @@ module.exports = {
         'Apple Color Emoji',
         'Segoe UI Emoji',
         'Segoe UI Symbol',
-        'Noto Color Emoji'
+        'Noto Color Emoji',
       ],
-      'sans': [
+      sans: [
         'Roboto',
         'ui-sans-serif',
         'system-ui',
@@ -40,9 +51,19 @@ module.exports = {
         'Apple Color Emoji',
         'Segoe UI Emoji',
         'Segoe UI Symbol',
-        'Noto Color Emoji'
-      ]
-    }
+        'Noto Color Emoji',
+      ],
+    },
   },
-  plugins: [],
+  plugins: [require('@tailwindcss/typography'), require('daisyui')],
+  daisyui: {
+    styled: true,
+    themes: true,
+    base: true,
+    utils: true,
+    logs: true,
+    rtl: false,
+    prefix: '',
+    darkTheme: 'dark',
+  },
 }
