@@ -2,7 +2,7 @@ import { Link, navigate, NavLink, routes, useLocation } from "@redwoodjs/router"
 import { Toaster } from "@redwoodjs/web/dist/toast"
 import { useEffect, useMemo, useState } from "react"
 import { useAuth } from "src/auth"
-import { titleCaseWord } from "src/utils/string"
+import { wait } from "src/utils/typescript"
 
 type ResponsiveLayoutProps = {
   children?: React.ReactNode
@@ -26,6 +26,8 @@ const ResponsiveLayout = ({ children }: ResponsiveLayoutProps) => {
 
   const onLogout = async () => {
     await logOut()
+    setIsOpen(false)
+    wait({ seconds: 0.5 })
     navigate(routes.home())
   }
 

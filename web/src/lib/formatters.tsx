@@ -2,7 +2,7 @@ import React from 'react'
 
 import humanize from 'humanize-string'
 
-const MAX_STRING_LENGTH = 150
+const MAX_STRING_LENGTH = 200
 
 export const formatEnum = (values: string | string[] | null | undefined) => {
   let output = ''
@@ -25,14 +25,22 @@ export const jsonDisplay = (obj: unknown) => {
   )
 }
 
-export const truncate = (value: string | number) => {
+export const truncate = (value: string | number, by = MAX_STRING_LENGTH): [string, boolean] => {
   let output = value?.toString() ?? ''
 
-  if (output.length > MAX_STRING_LENGTH) {
-    output = output.substring(0, MAX_STRING_LENGTH) + '...'
+  let truncated = false
+
+  if (output.length > by) {
+    output = output.substring(0, by)
+    truncated = true
   }
 
-  return output
+  return [output, truncated]
+}
+
+export function titleCaseWord(word: string) {
+  if (!word) return word;
+  return word[0].toUpperCase() + word.substr(1).toLowerCase();
 }
 
 export const jsonTruncate = (obj: unknown) => {

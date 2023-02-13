@@ -5,17 +5,17 @@ import { NewPostEditor } from 'src/components/Admin/Post/NewPostEditor/NewPostEd
 import ContactForm from 'src/components/ContactForm/ContactForm'
 
 const HomePage = () => {
-  const { hasRole, currentUser } = useAuth()
+  const { hasRole } = useAuth()
 
   const isAdmin = hasRole(['admin'])
-
-  console.log(currentUser)
 
   return (
     <>
       <MetaTags title="Home" description="Home page" />
-      <ContactForm />
-      {isAdmin && <NewPostEditor />}
+      <div className='flex flex-col gap-5 items-center'>
+        {isAdmin && <NewPostEditor />}
+        <ContactForm />
+      </div>
     </>
   )
 }

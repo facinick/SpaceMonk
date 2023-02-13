@@ -22,13 +22,16 @@ const RTEditor = React.forwardRef<Editor, ComponentProps>((props, ref) => {
         tinymceScriptSrc={PUBLIC_URL + '/tinymce/tinymce.min.js'}
         onInit={(evt, editor) => editorRef.current = editor}
         initialValue={initialValue}
+
         init={{
           height: 500,
           menubar: false,
+          skin: "oxide-dark",
+          content_css: "dark",
           plugins: [
             'advlist', 'autolink', 'lists', 'link', 'image', 'charmap',
             'anchor', 'searchreplace', 'visualblocks', 'code', 'fullscreen',
-            'insertdatetime', 'media', 'table', 'preview', 'help', 'wordcount'
+            'insertdatetime', 'media', 'table', 'preview', 'help', 'wordcount', 'autoresize',
           ],
           toolbar: 'undo redo | blocks | ' +
             'bold italic forecolor | alignleft aligncenter ' +
@@ -38,6 +41,11 @@ const RTEditor = React.forwardRef<Editor, ComponentProps>((props, ref) => {
         }}
         disabled={disable}
         value={value}
+        mobile={{
+          menubar: true,
+          plugins: 'autosave lists autolink',
+          toolbar: 'undo bold italic styles'
+        }}
         onEditorChange={(newValue, editor) => onEditorChange(newValue)}
       />
     </>

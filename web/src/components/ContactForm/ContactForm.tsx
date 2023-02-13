@@ -43,7 +43,7 @@ const ContactForm = () => {
       }
     })
 
-  const onSubmit = (event:FormEvent) => {
+  const onSubmit = (event: FormEvent) => {
     event.preventDefault()
 
     const formData = new FormData(formRef.current);
@@ -68,49 +68,44 @@ const ContactForm = () => {
     <>
       <MetaTags title="Contact" description="Contact page" />
 
-      {/* <section className="bg-gray-50 dark:bg-gray-900">
-        <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0"> */}
-          <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
-            <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
-              <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
-                {Constants.formTitle}
-              </h1>
+      <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
+        <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
+          <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
+            {Constants.formTitle}
+          </h1>
 
-              <form ref={formRef} onSubmit={onSubmit}>
-                <div className="mb-6">
-                  <label htmlFor="name" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{Constants.name}</label>
-                  <div className="flex">
-                    <span className={iconClass}>
-                      &#8491;
-                    </span>
-                    <input disabled={disableInput} type="text" id="name" className={inputClass} placeholder={Constants.namePlaceholder} required />
-                  </div>
-                </div>
-                <div className="mb-6">
-                  <label htmlFor="phone" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{Constants.phone}</label>
-                  <div className="flex">
-                    <span className={iconClass}>
-                      &#9742;
-                    </span>
-                    <input pattern='/^[6-9]\d{9}$/' disabled={disableInput} type="text" id="phone" className={inputClass} placeholder={Constants.phonePlaceholder} required />
-                  </div>
-                </div>
-                <div className="mb-6">
-                  <label htmlFor="message" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{Constants.message}</label>
-                  <div className="flex">
-                    <span className={iconClass}>
-                      &#9993;
-                    </span>
-                    <input max={200} disabled={disableInput} type="text" id="message" className={inputClass} placeholder={Constants.messagePlaceholder} />
-                  </div>
-                </div>
-                <button disabled={disableInput} type="submit" className="text-white bg-primary-600 hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-600 dark:focus:ring-primary-800">{submitting ? Constants.submitButtonTextBusy : Constants.submitButtonText}</button>
-              </form>
+          <form ref={formRef} onSubmit={onSubmit}>
+            <div className="mb-6">
+              <label htmlFor="name" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{Constants.name}</label>
+              <div className="flex">
+                <span className={iconClass}>
+                  &#8491;
+                </span>
+                <input disabled={disableInput} type="text" id="name" className={inputClass} placeholder={Constants.namePlaceholder} required />
+              </div>
             </div>
-          </div>
-        {/* </div>
-      </section> */}
-
+            <div className="mb-6">
+              <label htmlFor="phone" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{Constants.phone}</label>
+              <div className="flex">
+                <span className={iconClass}>
+                  &#9742;
+                </span>
+                <input pattern='/^[6-9]\d{9}$/' disabled={disableInput} type="text" id="phone" className={inputClass} placeholder={Constants.phonePlaceholder} required />
+              </div>
+            </div>
+            <div className="mb-6">
+              <label htmlFor="message" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{Constants.message}</label>
+              <div className="flex">
+                <span className={iconClass}>
+                  &#9993;
+                </span>
+                <input max={200} disabled={disableInput} type="text" id="message" className={inputClass} placeholder={Constants.messagePlaceholder} />
+              </div>
+            </div>
+            <button disabled={disableInput} type="submit" className="btn btn-primary">{submitting ? Constants.submitButtonTextBusy : Constants.submitButtonText}</button>
+          </form>
+        </div>
+      </div>
     </>
   )
 }

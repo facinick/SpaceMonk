@@ -53,10 +53,10 @@ const PostsList = ({ posts }: FindPosts) => {
         <tbody>
           {posts.map((post) => (
             <tr key={post.id}>
-              <td>{truncate(post.id)}</td>
-              <td>{truncate(post.title)}</td>
-              <td>{truncate(post.body)}</td>
-              <td>{truncate(post.headerImageUrl)}</td>
+              <td>{truncate(post.id)[0]}</td>
+              <td>{truncate(post.title)[0]}</td>
+              <td>{truncate(post.body)[0]}</td>
+              <td>{truncate(post.headerImageUrl)[0]}</td>
               <td>{timeTag(post.createdAt)}</td>
               <td>{timeTag(post.updatedAt)}</td>
               <td>
