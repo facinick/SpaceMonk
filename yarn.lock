@@ -6012,6 +6012,19 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@tinymce/tinymce-react@npm:^4.3.0":
+  version: 4.3.0
+  resolution: "@tinymce/tinymce-react@npm:4.3.0"
+  dependencies:
+    prop-types: ^15.6.2
+    tinymce: ^6.3.1
+  peerDependencies:
+    react: ^18.0.0 || ^17.0.1 || ^16.7.0
+    react-dom: ^18.0.0 || ^17.0.1 || ^16.7.0
+  checksum: 60e857cad77cd8fa05d79ffa9eda579a2cec09777ca986c7629c905d608cb1e3e1b6f1527ae6adbc6f197b8482aedb767d41642c27cbe4b2e234b05bbe26225f
+  languageName: node
+  linkType: hard
+
 "@tootallnate/once@npm:2":
   version: 2.0.0
   resolution: "@tootallnate/once@npm:2.0.0"
@@ -19991,7 +20004,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prop-types@npm:15.8.1, prop-types@npm:^15.0.0, prop-types@npm:^15.7.2, prop-types@npm:^15.8.1":
+"prop-types@npm:15.8.1, prop-types@npm:^15.0.0, prop-types@npm:^15.6.2, prop-types@npm:^15.7.2, prop-types@npm:^15.8.1":
   version: 15.8.1
   resolution: "prop-types@npm:15.8.1"
   dependencies:
@@ -22868,6 +22881,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"tinymce@npm:^6.3.1":
+  version: 6.3.1
+  resolution: "tinymce@npm:6.3.1"
+  checksum: b03e4bddefdd6c651381c0e29a84153d5f2e8e60c62e83e305620b7e5f8a22dcb9cc17dab5d680068e3dc4a41948a7cfad857925296d699c8dd14b31af3607fd
+  languageName: node
+  linkType: hard
+
 "title-case@npm:3.0.3, title-case@npm:^3.0.3":
   version: 3.0.3
   resolution: "title-case@npm:3.0.3"
@@ -23767,6 +23787,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"use-sync-external-store@npm:1.2.0":
+  version: 1.2.0
+  resolution: "use-sync-external-store@npm:1.2.0"
+  peerDependencies:
+    react: ^16.8.0 || ^17.0.0 || ^18.0.0
+  checksum: ac4814e5592524f242921157e791b022efe36e451fe0d4fd4d204322d5433a4fc300d63b0ade5185f8e0735ded044c70bcf6d2352db0f74d097a238cebd2da02
+  languageName: node
+  linkType: hard
+
 "use@npm:^3.1.0":
   version: 3.1.1
   resolution: "use@npm:3.1.1"
@@ -24114,6 +24143,7 @@ __metadata:
     "@redwoodjs/router": 4.1.2
     "@redwoodjs/web": 4.1.2
     "@tailwindcss/typography": ^0.5.9
+    "@tinymce/tinymce-react": ^4.3.0
     autoprefixer: ^10.4.13
     daisyui: ^2.50.0
     humanize-string: 2.1.0
@@ -24123,6 +24153,7 @@ __metadata:
     react: 17.0.2
     react-dom: 17.0.2
     tailwindcss: ^3.2.6
+    zustand: ^4.3.3
   languageName: unknown
   linkType: soft
 
@@ -24967,6 +24998,23 @@ __metadata:
     compress-commons: ^4.1.0
     readable-stream: ^3.6.0
   checksum: ed9eb9387953576c43bdf7678705e8b0ff4e9149cf92b39fa845ddd5413b08daf68655b1ee8311e2dd7c88ddeb95908a785e8e48473016b2595870b0adf588d4
+  languageName: node
+  linkType: hard
+
+"zustand@npm:^4.3.3":
+  version: 4.3.3
+  resolution: "zustand@npm:4.3.3"
+  dependencies:
+    use-sync-external-store: 1.2.0
+  peerDependencies:
+    immer: ">=9.0"
+    react: ">=16.8"
+  peerDependenciesMeta:
+    immer:
+      optional: true
+    react:
+      optional: true
+  checksum: 2a12fa2ed5828afde1296803e97172fb82ce9027f15a300b3c94c5007a63a3b9ca367dac66466aa1e4f0b4eafb1106c720936a2fb6a211b290603d44c08f3a51
   languageName: node
   linkType: hard
 
