@@ -1,4 +1,4 @@
-import { useMemo, useRef, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 
 import { navigate, routes } from '@redwoodjs/router'
 import { useMutation } from '@redwoodjs/web'
@@ -6,23 +6,35 @@ import { toast } from '@redwoodjs/web/toast'
 
 import { RTEditor } from 'src/components/Editor/RTEditor'
 import { isImageValid } from 'src/hooks/useImageValidator'
-import { useNewPostStore } from 'src/store/zustand/newPostStore'
-import { CreatePostMutation } from 'types/graphql'
+import { Post, UpdatePostMutation } from 'types/graphql'
+import { useUpdatePostStore } from 'src/store/zustand/updatePostStore'
 
-const CREATE_POST_MUTATION = gql`
-  mutation CreatePostMutation($input: CreatePostInput!) {
-    createPost(input: $input) {
+const UPDATE_POST_MUTATION = gql`
+  mutation UpdatePostMutation($id: Int!, $input: UpdatePostInput!) {
+    updatePost(id: $id, input: $input) {
       id
+      title
+      body
+      headerImageUrl
+      createdAt
+      updatedAt
     }
   }
 `
-export function NewPostEditor() {
 
-  const { title, body, headerImageUrl, setTitle, setBody, setHeaderImageUrl, reset } = useNewPostStore()
+interface ComponentProps {
+  id: number
+  post: Post
+}
 
-  const [createPost, { loading }] = useMutation<CreatePostMutation>(CREATE_POST_MUTATION, {
+export function UpdatePostEditor({ id, post }: ComponentProps) {
+
+  const editorRef = useRef(null)
+  const { title, body, headerImageUrl, setTitle, setBody, setHeaderImageUrl, reset } = useUpdatePostStore()
+
+  const [updatePost, { loading }] = useMutation<UpdatePostMutation>(UPDATE_POST_MUTATION, {
     onCompleted: () => {
-      toast.success('Post created')
+      toast.success('Post updated')
       reset()
     },
     onError: (error) => {
@@ -30,10 +42,16 @@ export function NewPostEditor() {
     },
   })
 
-  const editorRef = useRef(null)
+  useEffect(() => {
+    setTitle(post.title)
+    setBody(post.body)
+    setHeaderImageUrl(post.headerImageUrl)
+  }, [post])
+
+
   const initialBodyValue = useMemo(() => {
-    return body
-  }, [])
+    return post.body
+  }, [post])
 
   const [_validatingHeaderImageUrl, setValidatingHeaderImageUrl] =
     useState<boolean>(false)
@@ -45,7 +63,7 @@ export function NewPostEditor() {
   }
 
   const onBodyChange = (newValue: string) => {
-    setBody(newValue)
+    setBody(newValue.replace(/(\r\n|\n|\r)/gm, ""))
   }
 
   const onHeaderImageUrlChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -81,8 +99,9 @@ export function NewPostEditor() {
       await setValidatingHeaderImageUrl((_state) => false)
     }
 
-    await createPost({
+    await updatePost({
       variables: {
+        id,
         input: {
           title: _title,
           body: _body,
@@ -90,14 +109,13 @@ export function NewPostEditor() {
         }
       },
     })
-  }
 
-  const onClearInputs = async (event: React.MouseEvent<HTMLButtonElement>) => {
-    event.preventDefault()
-    reset()
+    navigate(routes.postdetailed({id}))
   }
 
   const disableInputs = loading || _validatingHeaderImageUrl
+
+  const isEdited = post.body !== body
 
   return (
     <>
@@ -118,12 +136,9 @@ export function NewPostEditor() {
           value={body}
         />
         <div className='flex flex-row gap-5 ml-auto'>
-          <button className="btn-secondary btn" disabled={disableInputs} onClick={onClearInputs}>
-            clear
-          </button>
-          <button className="btn-primary btn" disabled={disableInputs} onClick={onSubmit}>
-            {disableInputs ? "Submitting" : "Submit"}
-          </button>
+          {isEdited && <button className="btn-primary btn" disabled={disableInputs} onClick={onSubmit}>
+            {disableInputs ? "Updated" : "Update"}
+          </button>}
         </div>
       </div>
     </>

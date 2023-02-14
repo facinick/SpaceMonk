@@ -1,5 +1,5 @@
 import { Link, routes } from "@redwoodjs/router"
-import { useSyntaxHighlight } from "src/hooks/useRichTextView"
+import { useParseHtml } from "src/hooks/useParseHtml"
 
 interface ComponentProps {
   headerImageUrl?: string
@@ -14,7 +14,7 @@ const PostCard = (props: ComponentProps) => {
 
   const { headerImageUrl, title, body, id, createdAt, truncated } = props
 
-  const parsedBodyHtml = useSyntaxHighlight(body)
+  const parsedBodyHtml = useParseHtml(body)
 
   return (
     <Link to={routes.postdetailed({ id })} className="w-full flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow md:flex-row md:max-w-xl hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">

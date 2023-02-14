@@ -1853,7 +1853,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/runtime@npm:^7.0.0, @babel/runtime@npm:^7.12.5, @babel/runtime@npm:^7.16.3, @babel/runtime@npm:^7.17.8, @babel/runtime@npm:^7.20.7, @babel/runtime@npm:^7.3.1, @babel/runtime@npm:^7.5.0, @babel/runtime@npm:^7.7.6, @babel/runtime@npm:^7.8.4, @babel/runtime@npm:^7.9.2":
+"@babel/runtime@npm:^7.0.0, @babel/runtime@npm:^7.12.5, @babel/runtime@npm:^7.16.3, @babel/runtime@npm:^7.17.8, @babel/runtime@npm:^7.20.7, @babel/runtime@npm:^7.5.0, @babel/runtime@npm:^7.7.6, @babel/runtime@npm:^7.8.4, @babel/runtime@npm:^7.9.2":
   version: 7.20.13
   resolution: "@babel/runtime@npm:7.20.13"
   dependencies:
@@ -6254,6 +6254,24 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/dompurify@npm:^2.4.0":
+  version: 2.4.0
+  resolution: "@types/dompurify@npm:2.4.0"
+  dependencies:
+    "@types/trusted-types": "*"
+  checksum: a20c4288a067811e097f0b92a0cae927a9c49c0d5de36fea66b85fcc5c8db63a22ac47df37f324e426a01e8ab99ae28ea04260301350bda194850617a26931d6
+  languageName: node
+  linkType: hard
+
+"@types/domutils@npm:*":
+  version: 1.7.4
+  resolution: "@types/domutils@npm:1.7.4"
+  dependencies:
+    domhandler: ^2.4.0
+  checksum: 49733620b4d66ddeb8273dee788ce579eed8a8c1f5a89af99576d2c26ea1f3ab57547e89a7b402d20233349d898932baef9c825c6d7617abeb0f4c81a2867bcb
+  languageName: node
+  linkType: hard
+
 "@types/eslint-scope@npm:^3.7.3":
   version: 3.7.4
   resolution: "@types/eslint-scope@npm:3.7.4"
@@ -6360,6 +6378,17 @@ __metadata:
   version: 6.1.0
   resolution: "@types/html-minifier-terser@npm:6.1.0"
   checksum: a62fb8588e2f3818d82a2d7b953ad60a4a52fd767ae04671de1c16f5788bd72f1ed3a6109ed63fd190c06a37d919e3c39d8adbc1793a005def76c15a3f5f5dab
+  languageName: node
+  linkType: hard
+
+"@types/htmlparser2@npm:*":
+  version: 3.10.3
+  resolution: "@types/htmlparser2@npm:3.10.3"
+  dependencies:
+    "@types/domutils": "*"
+    "@types/node": "*"
+    domhandler: ^2.4.0
+  checksum: f9fa51fe7b94ea146ab8d2b6cb085c417ee19aa23c6b6ac8939e129fc222bdfdac5b14beb1d5213a3f7d1b1eb16cc02d9077296664cfd4b660d11eede64e04ec
   languageName: node
   linkType: hard
 
@@ -6639,6 +6668,27 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/react-html-parser@npm:^2.0.2":
+  version: 2.0.2
+  resolution: "@types/react-html-parser@npm:2.0.2"
+  dependencies:
+    "@types/htmlparser2": "*"
+    "@types/react": "*"
+  checksum: cac0118fe32629b7b3e98b5c9cada3d00f15aff668b69d11cf116d2e0f07a86bb658803340bf0b8f2aceca4bc5d9e12572f3da31a942edc4befeb5c11ae9cb9d
+  languageName: node
+  linkType: hard
+
+"@types/react@npm:*":
+  version: 18.0.28
+  resolution: "@types/react@npm:18.0.28"
+  dependencies:
+    "@types/prop-types": "*"
+    "@types/scheduler": "*"
+    csstype: ^3.0.2
+  checksum: 6d94ec25c18b39aac687814b3a717e767f2fba3289c3b682caa4d0182160a72a9816a612b5a207c8ea73f1d288019f56f3d08742ac7cfff91719abb77da9d11a
+  languageName: node
+  linkType: hard
+
 "@types/react@npm:17.0.53, @types/react@npm:^17":
   version: 17.0.53
   resolution: "@types/react@npm:17.0.53"
@@ -6758,6 +6808,13 @@ __metadata:
   version: 4.0.2
   resolution: "@types/tough-cookie@npm:4.0.2"
   checksum: 38d01fc79a9a87166253b8c548bb401599424c57a818bea1b47a68be6dcd37fc3bff381f978354e00221f284937d5066bb92d58bf79952f9d21deb934e8ec9a7
+  languageName: node
+  linkType: hard
+
+"@types/trusted-types@npm:*":
+  version: 2.0.2
+  resolution: "@types/trusted-types@npm:2.0.2"
+  checksum: 8c5253d7a297ba375b1dff7704013fb8d31c08c681d257db9e7e0624309cbb4a1e0c916bdd5a8c378992391126af0adb731720ba7642244a2f2c1ff42aba5bcf
   languageName: node
   linkType: hard
 
@@ -11594,7 +11651,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"domhandler@npm:^2.3.0":
+"domhandler@npm:^2.3.0, domhandler@npm:^2.4.0":
   version: 2.4.2
   resolution: "domhandler@npm:2.4.2"
   dependencies:
@@ -12996,15 +13053,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"fault@npm:^1.0.0":
-  version: 1.0.4
-  resolution: "fault@npm:1.0.4"
-  dependencies:
-    format: ^0.2.0
-  checksum: c86c11500c1b676787296f31ade8473adcc6784f118f07c1a9429730b6288d0412f96e069ce010aa57e4f65a9cccb5abee8868bbe3c5f10de63b20482c9baebd
-  languageName: node
-  linkType: hard
-
 "faye-websocket@npm:^0.11.3":
   version: 0.11.4
   resolution: "faye-websocket@npm:0.11.4"
@@ -13384,13 +13432,6 @@ __metadata:
     combined-stream: ^1.0.8
     mime-types: ^2.1.12
   checksum: cb6f3ac49180be03ff07ba3ff125f9eba2ff0b277fb33c7fc47569fc5e616882c5b1c69b9904c4c4187e97dd0419dd03b134174756f296dec62041e6527e2c6e
-  languageName: node
-  linkType: hard
-
-"format@npm:^0.2.0":
-  version: 0.2.2
-  resolution: "format@npm:0.2.2"
-  checksum: 6032ba747541a43abf3e37b402b2f72ee08ebcb58bf84d816443dd228959837f1cddf1e8775b29fa27ff133f4bd146d041bfca5f9cf27f048edf3d493cf8fee6
   languageName: node
   linkType: hard
 
@@ -14382,13 +14423,6 @@ __metadata:
   version: 3.1.2
   resolution: "headers-polyfill@npm:3.1.2"
   checksum: 147b2a7012cee01f8d5c6b94c184468204c9fa68b279b9784097cc1826cad7b0457332b7d5c3ad74c1cbe14daddd8009332382c3fdd3025d8a326633b3458968
-  languageName: node
-  linkType: hard
-
-"highlight.js@npm:^10.4.1, highlight.js@npm:~10.7.0":
-  version: 10.7.3
-  resolution: "highlight.js@npm:10.7.3"
-  checksum: 073837eaf816922427a9005c56c42ad8786473dc042332dfe7901aa065e92bc3d94ebf704975257526482066abb2c8677cc0326559bb8621e046c21c5991c434
   languageName: node
   linkType: hard
 
@@ -17127,16 +17161,6 @@ __metadata:
   version: 2.0.0
   resolution: "lowercase-keys@npm:2.0.0"
   checksum: f82a2b3568910509da4b7906362efa40f5b54ea14c2584778ddb313226f9cbf21020a5db35f9b9a0e95847a9b781d548601f31793d736b22a2b8ae8eb9ab1082
-  languageName: node
-  linkType: hard
-
-"lowlight@npm:^1.17.0":
-  version: 1.20.0
-  resolution: "lowlight@npm:1.20.0"
-  dependencies:
-    fault: ^1.0.0
-    highlight.js: ~10.7.0
-  checksum: 728bce6f6fe8b157f48d3324e597f452ce0eed2ccff1c0f41a9047380f944e971eb45bceb31f08fbb64d8f338dabb166f10049b35b92c7ec5cf0241d6adb3dea
   languageName: node
   linkType: hard
 
@@ -20012,20 +20036,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prismjs@npm:^1.27.0":
-  version: 1.29.0
-  resolution: "prismjs@npm:1.29.0"
-  checksum: d906c4c4d01b446db549b4f57f72d5d7e6ccaca04ecc670fb85cea4d4b1acc1283e945a9cbc3d81819084a699b382f970e02f9d1378e14af9808d366d9ed7ec6
-  languageName: node
-  linkType: hard
-
-"prismjs@npm:~1.27.0":
-  version: 1.27.0
-  resolution: "prismjs@npm:1.27.0"
-  checksum: 841cbf53e837a42df9155c5ce1be52c4a0a8967ac916b52a27d066181a3578186c634e52d06d0547fb62b65c486b99b95f826dd54966619f9721b884f486b498
-  languageName: node
-  linkType: hard
-
 "process-nextick-args@npm:~2.0.0":
   version: 2.0.1
   resolution: "process-nextick-args@npm:2.0.1"
@@ -20563,21 +20573,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-syntax-highlighter@npm:^15.5.0":
-  version: 15.5.0
-  resolution: "react-syntax-highlighter@npm:15.5.0"
-  dependencies:
-    "@babel/runtime": ^7.3.1
-    highlight.js: ^10.4.1
-    lowlight: ^1.17.0
-    prismjs: ^1.27.0
-    refractor: ^3.6.0
-  peerDependencies:
-    react: ">= 0.14.0"
-  checksum: 2bf57a1ea151f688efc7eba355677577c9bb55f05f9df7ef86627aae42f63f505486cddf3f4a628aecc51ec75e89beb9533201570d03201c4bf7d69d61d2545d
-  languageName: node
-  linkType: hard
-
 "react@npm:17.0.2":
   version: 17.0.2
   resolution: "react@npm:17.0.2"
@@ -20741,17 +20736,6 @@ __metadata:
     indent-string: ^4.0.0
     strip-indent: ^3.0.0
   checksum: d64a6b5c0b50eb3ddce3ab770f866658a2b9998c678f797919ceb1b586bab9259b311407280bd80b804e2a7c7539b19238ae6a2a20c843f1a7fcff21d48c2eae
-  languageName: node
-  linkType: hard
-
-"refractor@npm:^3.6.0":
-  version: 3.6.0
-  resolution: "refractor@npm:3.6.0"
-  dependencies:
-    hastscript: ^6.0.0
-    parse-entities: ^2.0.0
-    prismjs: ~1.27.0
-  checksum: 63ab62393c8c2fd7108c2ea1eff721c0ad2a1a6eee60fdd1b47f4bb25cf298667dc97d041405b3e718b0817da12b37a86ed07ebee5bd2ca6405611f1bae456db
   languageName: node
   linkType: hard
 
@@ -24292,6 +24276,8 @@ __metadata:
     "@redwoodjs/web": 4.1.2
     "@tailwindcss/typography": ^0.5.9
     "@tinymce/tinymce-react": ^4.3.0
+    "@types/dompurify": ^2.4.0
+    "@types/react-html-parser": ^2.0.2
     autoprefixer: ^10.4.13
     daisyui: ^2.50.0
     dompurify: ^3.0.0
@@ -24302,7 +24288,6 @@ __metadata:
     react: 17.0.2
     react-dom: 17.0.2
     react-html-parser: ^2.0.2
-    react-syntax-highlighter: ^15.5.0
     tailwindcss: ^3.2.6
     zustand: ^4.3.3
   languageName: unknown
