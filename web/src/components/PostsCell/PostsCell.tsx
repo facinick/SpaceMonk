@@ -37,7 +37,7 @@ export const Success = ({ posts }: CellSuccessProps<PostsQuery>) => {
 
         return (
           <li className="flex items-center justify-center" key={post.id}>
-            <PostCard createdAt={post.createdAt} truncated={truncated} body={body} title={post.title} headerImageUrl={post.headerImageUrl || `https://loremflickr.com/1920/720`} id={post.id} />
+            <PostCard key={post.id} createdAt={post.createdAt} truncated={truncated} body={body} title={post.title} headerImageUrl={post.headerImageUrl || `https://loremflickr.com/1920/720`} id={post.id} />
           </li>)
       })}
     </ul>

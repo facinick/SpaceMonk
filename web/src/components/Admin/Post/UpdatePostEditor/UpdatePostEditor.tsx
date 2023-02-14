@@ -113,7 +113,7 @@ export function UpdatePostEditor({ id, post }: ComponentProps) {
     navigate(routes.postdetailed({id}))
   }
 
-  const disableInputs = loading || _validatingHeaderImageUrl
+  const disableInputs = loading && _validatingHeaderImageUrl
 
   const isEdited = post.body !== body
 

@@ -34,45 +34,51 @@ const ResponsiveLayout = ({ children }: ResponsiveLayoutProps) => {
 
   const isAdmin = hasRole('admin')
 
+  const paths = useMemo(() => {
+    return ("Home" + pathname).replace(/^\/?|\/?$/g, "").split("/")
+  }, [pathname])
+
   return (<>
     <header>
       <Toaster />
-      {/* <nav className="bg-white border-gray-200 px-4 lg:px-6 py-2.5 dark:bg-gray-800"> */}
-        <div className="navbar bg-base-300 rounded-box">
-          <div className="flex-1 px-2 lg:flex-none">
-            <Link to={routes.home()} className="flex items-center">
-              <img src={Constants.HeaderLogoUrl} className="mr-3 h-6 sm:h-9" alt="Flowbite Logo" />
-              <span className="text-lg font-bold whitespace-nowrap">{Constants.HeaderTitle}</span>
-            </Link>
+      <div className="navbar bg-base-300 rounded-box">
+        <div className="flex-1 px-2 lg:flex-none gap-2">
+          <Link to={routes.home()} className="flex items-center">
+            <img src={Constants.HeaderLogoUrl} className="mr-3 h-6 sm:h-9" alt="Flowbite Logo" />
+          </Link>
+          <div className="text-sm breadcrumbs">
+            <ul>
+              {paths.map((path) => <li key={path}>{path}</li>)}
+            </ul>
           </div>
-          <div className="flex justify-end flex-1 px-2">
-            <div className="flex items-stretch gap-2">
-              <Link to={routes.blog()} className="btn btn-primary">Blog</Link>
-              <div className="dropdown dropdown-end">
+        </div>
+        <div className="flex justify-end flex-1 px-2">
+          <div className="flex  gap-2 items-center justify-center">
+            <Link to={routes.blog()} className="btn btn-primary btn-sm">Blog</Link>
+            <div className="dropdown dropdown-end">
               <label tabIndex={0} className="btn btn-ghost rounded-btn">      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" className="inline-block w-5 h-5 stroke-current"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
-</label>
-                <ul tabIndex={0} className="menu dropdown-content p-2 shadow bg-base-100 rounded-box w-52 mt-4">
-                  {isAdmin && <li key={"create post"}>
-                    <NavLink className={pathname === routes.newPost() ? '' : ''} activeClassName="active" to={routes.newPost()}>{`Create Post`}</NavLink>
-                  </li>}
-                  {isAdmin && <li key={"view posts"}>
-                    <NavLink className={pathname === routes.posts() ? '' : ''} activeClassName="active" to={routes.posts()}>{`View Posts`}</NavLink>
-                  </li>}
-                  {isAuthenticated && <li key={`/logout`}>
-                    <button onClick={onLogout} className={''}>{`Logout`}</button>
-                  </li>}
-                  {!isAuthenticated && <li key={"login"}>
-                    <NavLink className={pathname === routes.login() ? '' : ''} activeClassName="active" to={routes.login()}>{`Login`}</NavLink>
-                  </li>}
-                  {!isAuthenticated && <li key={"signup"}>
-                    <NavLink className={pathname === routes.signup() ? '' : ''} activeClassName="active" to={routes.signup()}>{`Signup`}</NavLink>
-                  </li>}
-                </ul>
-              </div>
+              </label>
+              <ul tabIndex={0} className="menu dropdown-content p-2 shadow bg-base-100 rounded-box w-52 mt-4">
+                {isAdmin && <li key={"create post"}>
+                  <NavLink className={pathname === routes.newPost() ? '' : ''} activeClassName="active" to={routes.newPost()}>{`Create Post`}</NavLink>
+                </li>}
+                {isAdmin && <li key={"view posts"}>
+                  <NavLink className={pathname === routes.posts() ? '' : ''} activeClassName="active" to={routes.posts()}>{`View Posts`}</NavLink>
+                </li>}
+                {isAuthenticated && <li key={`/logout`}>
+                  <button onClick={onLogout} className={''}>{`Logout`}</button>
+                </li>}
+                {!isAuthenticated && <li key={"login"}>
+                  <NavLink className={pathname === routes.login() ? '' : ''} activeClassName="active" to={routes.login()}>{`Login`}</NavLink>
+                </li>}
+                {!isAuthenticated && <li key={"signup"}>
+                  <NavLink className={pathname === routes.signup() ? '' : ''} activeClassName="active" to={routes.signup()}>{`Signup`}</NavLink>
+                </li>}
+              </ul>
             </div>
           </div>
         </div>
-      {/* </nav> */}
+      </div>
     </header>
     <main>
       <section className="bg-gray-50 dark:bg-gray-900">
