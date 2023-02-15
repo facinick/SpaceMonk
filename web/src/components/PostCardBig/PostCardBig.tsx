@@ -34,11 +34,10 @@ const PostCardBig = (props: ComponentProps) => {
           <h1 style={{ overflowWrap: "anywhere" }} className="text-4xl font-bold tracking-tight text-gray-900 dark:text-white">{title}</h1>
         </div>
       </div>
-      <div className="p-5">
-        <div className="mb-3 font-normal text-gray-700 dark:text-gray-400" style={{ overflowWrap: "anywhere" }}>{parsedBodyHtml}</div>
-
+      <div className="p-5 prose">
+        <div className="mb-3" style={{ overflowWrap: "anywhere" }}>{parsedBodyHtml}</div>
         <div className="flex justify-between items-center flex-row">
-          <time className="text-gray-700 dark:text-gray-400" dateTime={createdAt}>{new Date(createdAt).toDateString()}</time>
+          <time dateTime={createdAt}>{new Date(createdAt).toDateString()}</time>
           {isAdmin && <button title="Edit this post" className="btn btn-primary" onClick={openUpdatePostEditor}>Edit</button>}
         </div>
       </div>

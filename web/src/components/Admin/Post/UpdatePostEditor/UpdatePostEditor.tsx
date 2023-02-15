@@ -8,6 +8,7 @@ import { RTEditor } from 'src/components/Editor/RTEditor'
 import { isImageValid } from 'src/hooks/useImageValidator'
 import { Post, UpdatePostMutation } from 'types/graphql'
 import { useUpdatePostStore } from 'src/store/zustand/updatePostStore'
+import { TipTapEditor } from 'src/components/Editor/TipTapEditor'
 
 const UPDATE_POST_MUTATION = gql`
   mutation UpdatePostMutation($id: Int!, $input: UpdatePostInput!) {
@@ -128,7 +129,7 @@ export function UpdatePostEditor({ id, post }: ComponentProps) {
           <input disabled={disableInputs} onChange={onHeaderImageUrlChange} value={headerImageUrl} type="text" placeholder="Image url" className="input input-bordered w-full" />
         </div>
 
-        <RTEditor
+        <TipTapEditor
           onEditorChange={onBodyChange}
           disable={disableInputs}
           ref={editorRef}

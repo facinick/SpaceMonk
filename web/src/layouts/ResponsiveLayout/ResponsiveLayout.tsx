@@ -52,7 +52,7 @@ const ResponsiveLayout = ({ children }: ResponsiveLayoutProps) => {
             </ul>
           </div>
         </div>
-        <div className="flex justify-end flex-1 px-2">
+        <div className="flex justify-end px-2">
           <div className="flex  gap-2 items-center justify-center">
             <Link to={routes.blog()} className="btn btn-primary btn-sm">Blog</Link>
             <div className="dropdown dropdown-end">

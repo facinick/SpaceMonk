@@ -1,16 +1,10 @@
 import React, { useRef } from 'react';
 import { Editor } from '@tinymce/tinymce-react';
+import { EditorProps } from './interface';
 
 const PUBLIC_URL = window.location.origin
 
-interface ComponentProps {
-  onEditorChange: (newValue: string) => void
-  initialValue: string
-  value: string
-  disable: boolean
-}
-
-const RTEditor = React.forwardRef<Editor, ComponentProps>((props, ref) => {
+const RTEditor = React.forwardRef<Editor, EditorProps>((props, ref) => {
 
   const editorRef = useRef(null);
   const { value, initialValue, onEditorChange, disable } = props

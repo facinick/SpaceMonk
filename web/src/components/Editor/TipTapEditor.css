@@ -1,0 +1,20 @@
+.ProseMirror-focused {
+  outline: none;
+}
+
+.override-tiptap-editor-style{
+  outline: none;
+}
+
+.override-tiptap-editor-style:focus-within{
+  outline: 2px solid hsla(var(--bc) / 0.2) !important;
+  outline-offset: 2px;
+}
+
+.ProseMirror p.is-editor-empty:first-child::before {
+  color: rgb(180, 198, 239);
+  content: attr(data-placeholder);
+  float: left;
+  height: 0;
+  pointer-events: none;
+}

@@ -50,7 +50,7 @@ export function useParseHtml(html: string): React.ReactElement<any, string | Rea
 
   const parsedHtml = useMemo(() => {
     const parsed = ReactHtmlParser(sanitizedHtml);
-    return wrapPreElements(wrapInlineCodeElements(parsed))
+    return parsed
   }, [sanitizedHtml]);
 
   return parsedHtml;

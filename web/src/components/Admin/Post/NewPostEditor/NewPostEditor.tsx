@@ -1,13 +1,13 @@
 import { useMemo, useRef, useState } from 'react'
-
-import { navigate, routes } from '@redwoodjs/router'
 import { useMutation } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/toast'
 
-import { RTEditor } from 'src/components/Editor/RTEditor'
+import { TipTapEditor } from 'src/components/Editor/TipTapEditor'
 import { isImageValid } from 'src/hooks/useImageValidator'
 import { useNewPostStore } from 'src/store/zustand/newPostStore'
 import { CreatePostMutation } from 'types/graphql'
+import { navigate, routes } from '@redwoodjs/router'
+import { wait } from 'src/utils/typescript'
 
 const CREATE_POST_MUTATION = gql`
   mutation CreatePostMutation($input: CreatePostInput!) {
@@ -81,7 +81,7 @@ export function NewPostEditor() {
       await setValidatingHeaderImageUrl((_state) => false)
     }
 
-    await createPost({
+    const newPost = await createPost({
       variables: {
         input: {
           title: _title,
@@ -90,6 +90,10 @@ export function NewPostEditor() {
         }
       },
     })
+
+    reset()
+    wait({seconds: 0.5})
+    navigate(routes.postdetailed({ id: newPost.data.createPost.id}))
   }
 
   const onClearInputs = async (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -101,7 +105,7 @@ export function NewPostEditor() {
 
   return (
     <>
-      <div className='flex flex-col gap-5'>
+      <div className='flex flex-col gap-5 items-center w-[100%] sm:w-[80%]'>
         <div className="form-control w-full">
           <input disabled={disableInputs} required onChange={onTitleChange} value={title} type="text" placeholder="Title: Make every letter count" className="input input-bordered w-full" />
         </div>
@@ -110,7 +114,7 @@ export function NewPostEditor() {
           <input disabled={disableInputs} onChange={onHeaderImageUrlChange} value={headerImageUrl} type="text" placeholder="Image url" className="input input-bordered w-full" />
         </div>
 
-        <RTEditor
+        <TipTapEditor
           onEditorChange={onBodyChange}
           disable={disableInputs}
           ref={editorRef}
