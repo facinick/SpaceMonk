@@ -1,6 +1,6 @@
 export const schema = gql`
   #----------------------- Prisma Reference ---------------------#
-  # id             Int     @id @default(autoincrement())
+  # id             Int     @id @default(autoincrement())         #
   # title          String                                        #
   # body           String                                        #
   # headerImageUrl String?                                       #
@@ -17,8 +17,7 @@ export const schema = gql`
     id: Int!#-----------------------------------------#public
     title: String!#-----------------------------------#public
     body: String!#------------------------------------#public
-    bodyPlainText: String!#------------------------------------#public
-    # @optional
+    bodyPlainText: String!#---------------------------#public
     headerImageUrl: String#---------------------------#public
     #authorId: Int!#----------------------------------#not_available
     score: Int!#--------------------------------------#public
@@ -31,7 +30,7 @@ export const schema = gql`
   }
 
   type Query {
-    posts: [Post]! @skipAuth#------------------------#public
+    posts: [Post]! @skipAuth#-------------------------#public
     post(id: Int!): Post @skipAuth#-------------------#public
   }
 
@@ -39,16 +38,14 @@ export const schema = gql`
     title: String!
     body: String!
     bodyPlainText: String!
-    # @optional
-    headerImageUrl: String
+    headerImageUrl: String      #@optional_input
   }
 
   input UpdatePostInput {
     title: String
     body: String
     bodyPlainText: String
-    # @optional
-    headerImageUrl: String
+    headerImageUrl: String      #@optional_input
   }
 
   type Mutation {

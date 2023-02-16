@@ -31,6 +31,7 @@ export const schema = gql`
   type Query {
     users: [User!]! @skipAuth#------------------#public
     user(id: Int!): User @skipAuth#-------------#public
+    me: User @skipAuth#-----------------------#authenticate(user) + #authorize(owner)
   }
 
   # min requirements to create a user

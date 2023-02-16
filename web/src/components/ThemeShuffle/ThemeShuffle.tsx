@@ -14,12 +14,12 @@ const ThemeShuffle = () => {
 
   return (
     <>
-    <select onChange={setTheme} ref={selectRef} className="select select-bordered select-sm">
+    <select value={theme} onChange={setTheme} ref={selectRef} className="select select-bordered select-sm">
       <optgroup label="Light Themes">
         {
           Object.values(LightTheme).map((value, index) => {
             return (
-              <option  key={value} value={value}>{value}</option>
+              <option key={value} value={value}>{value}</option>
             )
           })
         }
@@ -28,7 +28,7 @@ const ThemeShuffle = () => {
         {
           Object.values(MerryLandTheme).map((value) => {
             return (
-              <option  key={value} value={value}>{value}</option>
+              <option key={value} value={value}>{value}</option>
             )
           })
         }
@@ -37,7 +37,7 @@ const ThemeShuffle = () => {
         {
           Object.values(DarkTheme).map((value) => {
             return (
-              <option  key={value} value={value}>{value}</option>
+              <option key={value} value={value}>{value}</option>
             )
           })
         }

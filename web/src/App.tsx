@@ -10,6 +10,7 @@ import { AuthProvider, useAuth } from './auth'
 import './index.css'
 import { useEffect } from 'react'
 import { useThemeStore } from './store/zustand/themeStore'
+import { Initialize } from './components/Init/Initialize'
 
 const App = () => {
 
@@ -37,7 +38,9 @@ const App = () => {
       <RedwoodProvider titleTemplate="%PageTitle | %AppTitle">
         <AuthProvider>
           <RedwoodApolloProvider useAuth={useAuth}>
-            <Routes />
+            <Initialize>
+              <Routes />
+            </Initialize>
           </RedwoodApolloProvider>
         </AuthProvider>
       </RedwoodProvider>

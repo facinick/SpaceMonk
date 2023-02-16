@@ -1,21 +1,9 @@
-import type { FindPostQuery, FindPostQueryVariables } from 'types/graphql'
+import type { POST_BY_ID, POST_BY_IDVariables } from 'types/graphql'
 import type { CellSuccessProps, CellFailureProps } from '@redwoodjs/web'
-import { Route } from '@redwoodjs/router'
-import { back } from '@redwoodjs/router'
 import PostCardBig from '../PostCardBig/PostCardBig'
+import { POST_BY_ID_QUERY } from 'src/graphql/queries'
 
-export const QUERY = gql`
-  query FindPostQuery($id: Int!) {
-    post: post(id: $id) {
-      id
-      title
-      body
-      headerImageUrl
-      createdAt
-      updatedAt
-    }
-  }
-`
+export const QUERY = POST_BY_ID_QUERY
 
 export const Loading = () => <div>Loading...</div>
 
@@ -23,14 +11,14 @@ export const Empty = () => <div>Empty</div>
 
 export const Failure = ({
   error,
-}: CellFailureProps<FindPostQueryVariables>) => (
+}: CellFailureProps<POST_BY_IDVariables>) => (
   <div style={{ color: 'red' }}>Error: {error?.message}</div>
 )
 
 export const Success = ({
   post,
-}: CellSuccessProps<FindPostQuery, FindPostQueryVariables>) => {
+}: CellSuccessProps<POST_BY_ID, POST_BY_IDVariables>) => {
   return (
-    <PostCardBig createdAt={post.createdAt} body={post.body} title={post.title} headerImageUrl={post.headerImageUrl || `https://loremflickr.com/1920/720`} id={post.id} />
+    <PostCardBig post={post} />
   )
 }

@@ -1,3 +1,4 @@
+import { useRequireAuth } from '@redwoodjs/graphql-server';
 import { ServerError } from 'src/error/ServerError';
 import { requireAuth } from 'src/lib/auth'
 import { db } from 'src/lib/db'
@@ -7,6 +8,16 @@ import type {
 
 export const votes = ({ input }) => {
   const { userId } = input
+  return db.vote.findMany({
+    where: {
+      userId,
+    },
+  })
+}
+
+export const myVotes = () => {
+  requireAuth()
+  const userId = context.currentUser.id
   return db.vote.findMany({
     where: {
       userId,

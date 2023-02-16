@@ -19,6 +19,22 @@ export const user: QueryResolvers['user'] = ({ id }) => {
   })
 }
 
+export const me: QueryResolvers['user'] = () => {
+  requireAuth()
+  const userId = context.currentUser.id
+  return db.user.findUnique({
+    where: {
+      id: userId
+    },
+    include: {
+      userRoles: true,
+      votes: true,
+      comments: true,
+      posts:true,
+    }
+  })
+}
+
 export const createUser: MutationResolvers['createUser'] = ({ input }) => {
 
   const roles: Array<String> = input.userRoles

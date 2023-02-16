@@ -18,7 +18,7 @@ export const schema = gql`
   type Vote {
     id: Int!
     value: Int!
-    entityType: EntityType!
+    entityType: String!
     createdAt: DateTime!
     updatedAt: DateTime!
     #userId: Int!
@@ -35,12 +35,8 @@ export const schema = gql`
 
   type Query {
     votes(input: VotesQueryInput): [Vote]! @requireAuth
+    myVotes: [Vote]! @requireAuth
     vote(id: Int!): Vote @requireAuth
-  }
-
-  enum EntityType {
-    COMMENT
-    POST
   }
 
   enum CUDAction {
@@ -52,7 +48,7 @@ export const schema = gql`
   input VotingInput {
     postId: Int
     commentId: Int
-    entityType: EntityType!
+    entityType: String!
   }
 
   union Entity = Comment | Post

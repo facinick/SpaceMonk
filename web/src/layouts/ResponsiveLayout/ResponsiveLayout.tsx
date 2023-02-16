@@ -21,7 +21,7 @@ const ResponsiveLayout = ({ children }: ResponsiveLayoutProps) => {
 
   const { pathname } = useLocation()
 
-  const { isAuthenticated, logOut, hasRole } = useAuth()
+  const { isAuthenticated, logOut, hasRole, currentUser } = useAuth()
 
   const [isOpen, setIsOpen] = useState<boolean>(false)
 
@@ -44,6 +44,8 @@ const ResponsiveLayout = ({ children }: ResponsiveLayoutProps) => {
   const paths = useMemo(() => {
     return ("Home" + pathname).replace(/^\/?|\/?$/g, "").split("/")
   }, [pathname])
+
+  const isReallyAuthenticated = isAuthenticated && !Number.isNaN(currentUser?.id)
 
   return (<>
     {/* header content */}
@@ -92,14 +94,14 @@ const ResponsiveLayout = ({ children }: ResponsiveLayoutProps) => {
                   </li>
                   </>
                 }
-                {isAuthenticated &&
+                {isReallyAuthenticated &&
                   <>
                     <li key={`/logout`}>
                       <button onClick={onLogout} className={'flex justify-between'}><LogoutIcon />{`Logout`}</button>
                     </li>
                   </>
                 }
-                {!isAuthenticated &&
+                {!isReallyAuthenticated &&
                   <>
                     <li key={"login"}>
                       <NavLink className={'flex justify-between'} activeClassName="active" to={routes.login()}><LoginIcon />{`Login`}</NavLink>
