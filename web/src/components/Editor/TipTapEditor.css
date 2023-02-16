@@ -12,7 +12,7 @@
 }
 
 .ProseMirror p.is-editor-empty:first-child::before {
-  color: rgb(180, 198, 239);
+  color: rgb(157, 163, 174);
   content: attr(data-placeholder);
   float: left;
   height: 0;

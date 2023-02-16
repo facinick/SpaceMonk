@@ -34,7 +34,7 @@ const PostCard = (props: ComponentProps) => {
         <figure className="w-[100%] sm:w-[30%]"><img className="h-[100%] object-cover w-full rounded" src={headerImageUrl} alt="" /></figure>
         <div className="card-body w-[100%]">
           <h5 style={{ overflowWrap: "anywhere", textShadow: '1px 4px 10px rgb(0 0 0 / 40%)' }} className="card-title">{title}</h5>
-          <p style={{ overflowWrap: "anywhere" }}>{parsedBodyHtml}</p>
+          <div style={{ overflowWrap: "anywhere" }}>{parsedBodyHtml}</div>
           <time className="text-gray-700 dark:text-gray-400" dateTime={createdAt}>{new Date(createdAt).toDateString()}</time>
         </div>
       </div>

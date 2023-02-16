@@ -7,10 +7,7 @@ const BlogPage = () => {
   return (
     <>
       <MetaTags title="Blog" description="Blog page" />
-      <div className='flex flex-col gap-8 items-center'>
-        <PageTitle title='Blog Posts' />
-        <PostsCell />
-      </div>
+      <PostsCell />
     </>
   )
 }

@@ -27,8 +27,6 @@ export const Failure = ({ error }: CellFailureProps) => (
 
 export const Success = ({ posts }: CellSuccessProps<PostsQuery>) => {
 
-
-
   return (
     <ul className="flex flex-col gap-8 max-w-[720px]">
       {posts.map((post) => {

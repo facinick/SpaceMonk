@@ -6,9 +6,7 @@ const HomePage = () => {
   return (
     <>
       <MetaTags title="Home" description="Home page" />
-      <div className='flex flex-col gap-5 items-center w-full'>
-        <ContactForm />
-      </div>
+      <ContactForm />
     </>
   )
 }

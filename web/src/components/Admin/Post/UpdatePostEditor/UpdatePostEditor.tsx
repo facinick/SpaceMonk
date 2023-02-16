@@ -46,7 +46,7 @@ export function UpdatePostEditor({ id, post }: ComponentProps) {
   useEffect(() => {
     setTitle(post.title)
     setBody(post.body)
-    setHeaderImageUrl(post.headerImageUrl)
+    setHeaderImageUrl(post.headerImageUrl || "")
   }, [post])
 
 
@@ -64,7 +64,7 @@ export function UpdatePostEditor({ id, post }: ComponentProps) {
   }
 
   const onBodyChange = (newValue: string) => {
-    setBody(newValue.replace(/(\r\n|\n|\r)/gm, ""))
+    setBody(newValue)
   }
 
   const onHeaderImageUrlChange = (event: React.ChangeEvent<HTMLInputElement>) => {

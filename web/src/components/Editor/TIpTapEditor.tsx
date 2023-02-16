@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { EditorProps } from './interface'
 import { Editor, EditorContent, useEditor } from '@tiptap/react'
-import { TwitterPicker } from 'react-color';
+import { GithubPicker } from 'react-color';
 import { useOnClickOutside } from 'src/hooks/useOnClickOutside'
 import Color from '@tiptap/extension-color'
 import StarterKit from '@tiptap/starter-kit'
@@ -16,6 +16,7 @@ import CodeBlock from '@tiptap/extension-code-block';
 import Code from '@tiptap/extension-code';
 import Image from '@tiptap/extension-image';
 import { isImageValid } from 'src/hooks/useImageValidator';
+import tinycolor from "tinycolor2";
 
 const MenuBar = ({ editor }: { editor: Editor }) => {
 
@@ -24,14 +25,18 @@ const MenuBar = ({ editor }: { editor: Editor }) => {
   }
 
   const [showColourPicker, setShowColourPicker] = useState<boolean>(false)
-  const colourPickerRef = useRef<TwitterPicker>(null)
+  const colourPickerRef = useRef<HTMLDivElement>(null)
+
+  useOnClickOutside(colourPickerRef, () => {
+    setShowColourPicker(false)
+  })
 
   return (
     <div className='flex gap-2 flex-wrap'>
       <button
         onClick={() => editor.chain().focus().toggleBold().run()}
         disabled={!editor.can().chain().focus().toggleBold().run()}
-        className={`rounded btn-xs ${ !editor.can().chain().focus().toggleBold().run() ? "btn-disabled" : ""} ${editor.isActive('bold') ? 'btn-accent' : 'btn-ghost'}`}
+        className={`rounded btn-xs ${!editor.can().chain().focus().toggleBold().run() ? "btn-disabled" : ""} ${editor.isActive('bold') ? 'btn-accent' : 'btn-ghost'}`}
       >
         bold
       </button>
@@ -184,27 +189,31 @@ const MenuBar = ({ editor }: { editor: Editor }) => {
       >
         redo
       </button>
-      <button
-        style={{
-          color: editor.getAttributes('textStyle').color || "inherit"
-        }}
-        className={`rounded btn-xs ${editor.isActive('textStyle') ? 'btn-accent' : 'btn-ghost'}`}
-        onClick={() => setShowColourPicker((showing) => !showing)}
-      >
-        text colour
-      </button>
+
+      <div ref={colourPickerRef} >
+        <button
+          style={{
+            color: tinycolor(editor.getAttributes('textStyle').color || "inherit").isLight() ? '#000000' : 'inherit',
+            backgroundColor: editor.getAttributes('textStyle').color || "",
+          }}
+          className={`rounded btn-xs btn-ghost hover:bg-[hsl(var(--bc) / var(--tw-bg-opacity)]`}
+          onClick={() => setShowColourPicker((showing) => !showing)}
+        >
+          text colour
+        </button>
+        <div className={`${showColourPicker ? "" : "hidden"}`}>
+          <GithubPicker
+            color={editor.getAttributes('textStyle').color}
+            onChangeComplete={(color) => {
+              editor.chain().setColor(color.hex).run()
+            }}
+          />
+        </div>
+      </div>
+
       <button className={`btn-ghost rounded btn-xs`} onClick={() => editor.chain().focus().unsetColor().run()}>
         remove text colour
       </button>
-      {showColourPicker &&
-        <TwitterPicker
-        ref={colourPickerRef}
-        color={editor.getAttributes('textStyle').color}
-        onChangeComplete={(color) => {
-          editor.chain().setColor(color.hex).run()
-          }}
-        />
-      }
       <button
         className={`btn-ghost rounded btn-xs`}
         onClick={async () => {
@@ -239,7 +248,7 @@ const TipTapEditor = React.forwardRef<Editor, EditorProps>((props, ref) => {
       Text,
       TextStyle,
       Placeholder.configure({
-        placeholder: 'Write something … Nice.',
+        placeholder: 'Write something … Nice',
       }),
       TextAlign.configure({
         types: ['heading', 'paragraph'],
@@ -257,9 +266,6 @@ const TipTapEditor = React.forwardRef<Editor, EditorProps>((props, ref) => {
       Color,
       Image.configure({
         allowBase64: true,
-        HTMLAttributes: {
-          class: 'my-custom-class',
-        },
       })
     ],
     content: initialValue,
@@ -268,7 +274,7 @@ const TipTapEditor = React.forwardRef<Editor, EditorProps>((props, ref) => {
     }),
     editorProps: {
       attributes: {
-        class: 'prose prose-sm sm:prose lg:prose-lg xl:prose-2xl h-full w-full',
+        class: 'min-h-[150px] prose prose-sm sm:prose lg:prose-lg xl:prose-2xl h-full w-full',
       },
     }
   })
@@ -276,7 +282,7 @@ const TipTapEditor = React.forwardRef<Editor, EditorProps>((props, ref) => {
   return (
     <div className='flex flex-wrap justify-center gap-5'>
       <MenuBar editor={editor} />
-      <EditorContent className='textarea textarea-bordered override-tiptap-editor-style w-full min-h-24' disabled={disable} ref={editorRef} value={value} editor={editor} />
+      <EditorContent className='textarea textarea-bordered override-tiptap-editor-style w-full' disabled={disable} ref={editorRef} value={value} editor={editor} />
     </div>
   )
 
