@@ -9,27 +9,27 @@ import { AuthProvider, useAuth } from './auth'
 
 import './index.css'
 import { useEffect } from 'react'
-import { getThemeForCurrentMode, Mode, useThemeStore } from './store/zustand/themeStore'
+import { useThemeStore } from './store/zustand/themeStore'
 
 const App = () => {
 
-  const { mode, setMode } = useThemeStore()
+  const { switchToPreferredDarkTheme, switchToPreferredLightTheme, theme } = useThemeStore()
 
   useEffect(() => {
     window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', event => {
-      event.matches ? setMode(Mode.dark) : setMode(Mode.light);
+      event.matches ? switchToPreferredDarkTheme() : switchToPreferredLightTheme();
     })
 
     return () => {
       window.matchMedia('(prefers-color-scheme: dark)').removeEventListener('change', event => {
-        event.matches ? setMode(Mode.dark) : setMode(Mode.light);
+        event.matches ? switchToPreferredDarkTheme() : switchToPreferredLightTheme();
       })
     }
   }, [])
 
   useEffect(() => {
-    document.querySelector('html').setAttribute('data-theme', getThemeForCurrentMode(mode));
-  }, [mode])
+    document.querySelector('html').setAttribute('data-theme', theme);
+  }, [theme])
 
   return (
     //@ts-ignore

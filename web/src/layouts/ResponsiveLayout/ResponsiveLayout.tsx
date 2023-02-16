@@ -2,6 +2,9 @@ import { Link, navigate, NavLink, routes, useLocation } from "@redwoodjs/router"
 import { Toaster } from "@redwoodjs/web/dist/toast"
 import { useEffect, useMemo, useState } from "react"
 import { useAuth } from "src/auth"
+import ModeToggle from "src/components/ModeToggle/ModeToggle"
+import ThemeShuffle from "src/components/ThemeShuffle/ThemeShuffle"
+import { useThemeStore } from "src/store/zustand/themeStore"
 import { wait } from "src/utils/typescript"
 
 type ResponsiveLayoutProps = {
@@ -20,6 +23,9 @@ const ResponsiveLayout = ({ children }: ResponsiveLayoutProps) => {
   const { isAuthenticated, logOut, hasRole } = useAuth()
 
   const [isOpen, setIsOpen] = useState<boolean>(false)
+
+  const { reset } = useThemeStore()
+
 
   const onLogout = async () => {
     await logOut()
@@ -53,12 +59,14 @@ const ResponsiveLayout = ({ children }: ResponsiveLayoutProps) => {
           </div>
         </div>
         <div className="flex justify-end">
-          <div className="flex  gap-2 items-center justify-center">
+          <div className="flex gap-2 items-center justify-center">
             <Link to={routes.blog()} className="btn btn-primary btn-sm">Blog</Link>
+            <ThemeShuffle />
             <div className="dropdown dropdown-end">
-              <label tabIndex={0} className="btn btn-ghost rounded-btn">      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" className="inline-block w-5 h-5 stroke-current"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+              <label tabIndex={0} className="btn btn-ghost rounded-btn">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" className="inline-block w-5 h-5 stroke-current"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
               </label>
-              <ul tabIndex={0} className="menu dropdown-content p-2 shadow bg-base-100 rounded-box w-52 mt-4">
+              <ul tabIndex={0} className="menu dropdown-content p-2 shadow bg-base-100 rounded-box w-60 mt-4 gap-y-2">
                 {isAdmin && <li key={"create post"}>
                   <NavLink className={pathname === routes.newPost() ? '' : ''} activeClassName="active" to={routes.newPost()}>{`Create Post`}</NavLink>
                 </li>}
@@ -73,6 +81,12 @@ const ResponsiveLayout = ({ children }: ResponsiveLayoutProps) => {
                 </li>}
                 {!isAuthenticated && <li key={"signup"}>
                   <NavLink className={pathname === routes.signup() ? '' : ''} activeClassName="active" to={routes.signup()}>{`Signup`}</NavLink>
+                </li>}
+                {<li key={`/toggle_modes`}>
+                  <ModeToggle />
+                </li>}
+                {<li key={`/reset_theme`}>
+                  <button onClick={reset} >Reset Theme</button>
                 </li>}
               </ul>
             </div>

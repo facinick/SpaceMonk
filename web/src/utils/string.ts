@@ -14,4 +14,9 @@ function rgbToHex(rgb: string): string {
   return "#" + ("000000" + hex).slice(-6);
 }
 
-export {rgbToHex}
+
+function capitalizeFirstLetter(string) {
+  return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
+export { rgbToHex, capitalizeFirstLetter }
