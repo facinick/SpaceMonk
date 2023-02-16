@@ -5,6 +5,7 @@ import {
   CreateContactInput
 } from 'types/graphql'
 import { FormEvent, useRef } from 'react'
+import { MessageIcon, PhoneIcon, SendRightIcon, UserLoginIcon } from '../Icons/icons'
 
 const CREATE_CONTACT = gql`
   mutation CreateContactMutation($input: CreateContactInput!) {
@@ -19,7 +20,7 @@ const Constants = {
   name: 'Name',
   namePlaceholder: 'Nick',
   phone: 'Phone',
-  phonePlaceholder: '9283746372 (10 Digit Indian Phone Number)',
+  phonePlaceholder: '9283746372 (10 Digits)',
   message: 'Message',
   messagePlaceholder: 'Leave blank to just get a call back!',
   submitButtonText: 'Submit',
@@ -77,8 +78,10 @@ const ContactForm = () => {
                 <span className="label-text">{Constants.name}</span>
               </label>
               <label className="input-group">
-                <span> &#8491;</span>
-                <input type="text" disabled={disableInput} pattern='/^[6-9]\d{9}$/' id="name" placeholder={Constants.namePlaceholder} className="input input-bordered w-full" required />
+                <span>
+                  <UserLoginIcon />
+                </span>
+                <input type="text" disabled={disableInput} pattern='/^[6-9]\d{9}$/' id="name" placeholder={Constants.namePlaceholder} className="input input-bordered w-full input-sm" required />
               </label>
             </div>
             <div>
@@ -86,8 +89,10 @@ const ContactForm = () => {
                 <span className="label-text">{Constants.phone}</span>
               </label>
               <label className="input-group">
-                <span> &#9742;</span>
-                <input type="text" disabled={disableInput} pattern='/^[6-9]\d{9}$/' id="phone" placeholder={Constants.phonePlaceholder} className="input input-bordered w-full" required />
+                <span>
+                  <PhoneIcon />
+                </span>
+                <input type="text" disabled={disableInput} pattern='/^[6-9]\d{9}$/' id="phone" placeholder={Constants.phonePlaceholder} className="input input-bordered w-full input-sm" required />
               </label>
             </div>
             <div>
@@ -96,11 +101,13 @@ const ContactForm = () => {
               </label>
 
               <label className="input-group">
-                <span>  &#9993;</span>
-                <input max={200} disabled={disableInput} type="text" id="message" placeholder={Constants.messagePlaceholder} className="input input-bordered w-full" />
+                <span>
+                  <MessageIcon />
+                </span>
+                <input max={200} disabled={disableInput} type="text" id="message" placeholder={Constants.messagePlaceholder} className="input input-bordered w-full input-sm" />
               </label>
             </div>
-            <button disabled={disableInput} type="submit" className="btn btn-primary btn-sm">{submitting ? Constants.submitButtonTextBusy : Constants.submitButtonText}</button>
+            <button disabled={disableInput} type="submit" className="btn btn-primary btn-sm gap-2">{submitting ? Constants.submitButtonTextBusy : Constants.submitButtonText} <SendRightIcon /></button>
           </form>
         </div>
       </div>

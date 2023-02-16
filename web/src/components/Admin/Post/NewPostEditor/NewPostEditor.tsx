@@ -8,6 +8,7 @@ import { useNewPostStore } from 'src/store/zustand/newPostStore'
 import { CreatePostMutation } from 'types/graphql'
 import { navigate, routes } from '@redwoodjs/router'
 import { wait } from 'src/utils/typescript'
+import { NewPostIcon, SendRightIcon, TrashIcon } from 'src/components/Icons/icons'
 
 const CREATE_POST_MUTATION = gql`
   mutation CreatePostMutation($input: CreatePostInput!) {
@@ -122,11 +123,13 @@ export function NewPostEditor() {
           value={body}
         />
         <div className='flex flex-row gap-5 ml-auto'>
-          <button className="btn-secondary btn" disabled={disableInputs} onClick={onClearInputs}>
+          <button className="btn-secondary btn gap-2" disabled={disableInputs} onClick={onClearInputs}>
             clear
+            <TrashIcon />
           </button>
-          <button className="btn-primary btn" disabled={disableInputs} onClick={onSubmit}>
+          <button className="btn-primary btn gap-2" disabled={disableInputs} onClick={onSubmit}>
             {disableInputs ? "Submitting" : "Submit"}
+            <SendRightIcon />
           </button>
         </div>
       </div>

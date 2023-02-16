@@ -1,6 +1,5 @@
 import { ChangeEvent, useEffect, useRef } from "react"
 import { useThemeStore, LightTheme, DarkTheme, MerryLandTheme } from "src/store/zustand/themeStore"
-import { wait } from "src/utils/typescript"
 
 const ThemeShuffle = () => {
 
@@ -14,6 +13,7 @@ const ThemeShuffle = () => {
   }
 
   return (
+    <>
     <select onChange={setTheme} ref={selectRef} className="select select-bordered select-sm">
       <optgroup label="Light Themes">
         {
@@ -43,6 +43,7 @@ const ThemeShuffle = () => {
         }
       </optgroup>
     </select>
+    </>
   )
 }
 

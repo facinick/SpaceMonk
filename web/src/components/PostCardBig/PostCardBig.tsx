@@ -2,6 +2,7 @@ import "./PostCardBig.css"
 import { useParseHtml } from "src/hooks/useParseHtml";
 import { useAuth } from "src/auth";
 import { navigate, routes } from "@redwoodjs/router";
+import { EditPostIcon } from "../Icons/icons";
 interface ComponentProps {
   headerImageUrl?: string
   title: string
@@ -38,7 +39,7 @@ const PostCardBig = (props: ComponentProps) => {
         <div className="mb-3" style={{ overflowWrap: "anywhere" }}>{parsedBodyHtml}</div>
         <div className="flex justify-between items-center flex-row">
           <time dateTime={createdAt}>{new Date(createdAt).toDateString()}</time>
-          {isAdmin && <button title="Edit this post" className="btn btn-sm btn-primary" onClick={openUpdatePostEditor}>Edit</button>}
+          {isAdmin && <button title="Edit this post" className="btn btn-sm btn-primary gap-2" onClick={openUpdatePostEditor}>Edit {<EditPostIcon /> }</button>}
         </div>
       </div>
     </div>
