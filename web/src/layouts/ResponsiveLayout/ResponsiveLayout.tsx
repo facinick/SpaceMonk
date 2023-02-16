@@ -48,7 +48,17 @@ const ResponsiveLayout = ({ children }: ResponsiveLayoutProps) => {
   return (<>
     {/* header content */}
     <header className="bg-base-300 text-base-content">
-      <Toaster />
+      <Toaster
+        toastOptions={{
+          position: "bottom-left",
+          success: {
+            className: "alert alert-success"
+          },
+          error: {
+            className: "alert alert-error"
+          },
+        }}
+      />
       <div className="navbar rounded-box px-3">
         <div className="flex-1 gap-2">
           <Link to={routes.home()} className="flex items-center">

@@ -44,6 +44,10 @@ const ContactForm = () => {
   const onSubmit = (event: FormEvent) => {
     event.preventDefault()
 
+    toast.success(`Submitted! You'll get a call back shortly!`)
+
+    return;
+
     const formData = new FormData(formRef.current);
 
     const name = formData.get('name')
@@ -81,7 +85,7 @@ const ContactForm = () => {
                 <span>
                   <UserLoginIcon />
                 </span>
-                <input type="text" disabled={disableInput} pattern='/^[6-9]\d{9}$/' id="name" placeholder={Constants.namePlaceholder} className="input input-bordered w-full input-sm" required />
+                <input type="text" disabled={disableInput} id="name" placeholder={Constants.namePlaceholder} className="input input-bordered w-full input-sm" required />
               </label>
             </div>
             <div>
@@ -92,7 +96,7 @@ const ContactForm = () => {
                 <span>
                   <PhoneIcon />
                 </span>
-                <input type="text" disabled={disableInput} pattern='/^[6-9]\d{9}$/' id="phone" placeholder={Constants.phonePlaceholder} className="input input-bordered w-full input-sm" required />
+                <input type="text" disabled={disableInput}  id="phone" placeholder={Constants.phonePlaceholder} className="input input-bordered w-full input-sm" required />
               </label>
             </div>
             <div>
