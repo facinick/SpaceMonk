@@ -26,9 +26,6 @@ const Constants = {
   submitButtonTextBusy: 'Submitting'
 }
 
-const inputClass = "rounded-none rounded-r-lg bg-gray-50 border border-gray-300 text-gray-900 focus:ring-primary-600 focus:border-primary-600 block flex-1 min-w-0 w-full text-sm p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-600 dark:focus:border-primary-600"
-const iconClass = "inline-flex items-center px-3 text-sm text-gray-900 bg-gray-200 border border-r-0 border-gray-300 rounded-l-md dark:bg-gray-600 dark:text-gray-400 dark:border-gray-600"
-
 const ContactForm = () => {
 
   const formRef = useRef<HTMLFormElement>(null);
@@ -68,41 +65,42 @@ const ContactForm = () => {
     <>
       <MetaTags title="Contact" description="Contact page" />
 
-      <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
-        <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
-          <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
+      <div className="w-full rounded-lg sm:max-w-md bg-base-100">
+        <div className="p-6 space-y-4">
+          <h1 className="text-xl font-bold">
             {Constants.formTitle}
           </h1>
 
-          <form ref={formRef} onSubmit={onSubmit}>
-            <div className="mb-6">
-              <label htmlFor="name" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{Constants.name}</label>
-              <div className="flex">
-                <span className={iconClass}>
-                  &#8491;
-                </span>
-                <input disabled={disableInput} type="text" id="name" className={inputClass} placeholder={Constants.namePlaceholder} required />
-              </div>
+          <form ref={formRef} onSubmit={onSubmit} className="space-y-4">
+            <div>
+              <label htmlFor="name" className="label">
+                <span className="label-text">{Constants.name}</span>
+              </label>
+              <label className="input-group">
+                <span> &#8491;</span>
+                <input type="text" disabled={disableInput} pattern='/^[6-9]\d{9}$/' id="name" placeholder={Constants.namePlaceholder} className="input input-bordered w-full" required />
+              </label>
             </div>
-            <div className="mb-6">
-              <label htmlFor="phone" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{Constants.phone}</label>
-              <div className="flex">
-                <span className={iconClass}>
-                  &#9742;
-                </span>
-                <input pattern='/^[6-9]\d{9}$/' disabled={disableInput} type="text" id="phone" className={inputClass} placeholder={Constants.phonePlaceholder} required />
-              </div>
+            <div>
+              <label htmlFor="phone" className="label">
+                <span className="label-text">{Constants.phone}</span>
+              </label>
+              <label className="input-group">
+                <span> &#9742;</span>
+                <input type="text" disabled={disableInput} pattern='/^[6-9]\d{9}$/' id="phone" placeholder={Constants.phonePlaceholder} className="input input-bordered w-full" required />
+              </label>
             </div>
-            <div className="mb-6">
-              <label htmlFor="message" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{Constants.message}</label>
-              <div className="flex">
-                <span className={iconClass}>
-                  &#9993;
-                </span>
-                <input max={200} disabled={disableInput} type="text" id="message" className={inputClass} placeholder={Constants.messagePlaceholder} />
-              </div>
+            <div>
+              <label htmlFor="message" className="label">
+                <span className="label-text">{Constants.message}</span>
+              </label>
+
+              <label className="input-group">
+                <span>  &#9993;</span>
+                <input max={200} disabled={disableInput} type="text" id="message" placeholder={Constants.messagePlaceholder} className="input input-bordered w-full" />
+              </label>
             </div>
-            <button disabled={disableInput} type="submit" className="btn btn-primary">{submitting ? Constants.submitButtonTextBusy : Constants.submitButtonText}</button>
+            <button disabled={disableInput} type="submit" className="btn btn-primary btn-sm">{submitting ? Constants.submitButtonTextBusy : Constants.submitButtonText}</button>
           </form>
         </div>
       </div>

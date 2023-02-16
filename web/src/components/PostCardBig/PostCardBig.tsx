@@ -27,7 +27,7 @@ const PostCardBig = (props: ComponentProps) => {
   }
 
   return (
-    <div className="w-full max-w-2xl bg-white border border-gray-200 rounded-lg dark:bg-gray-800 dark:border-gray-700 p-5">
+    <div className="w-full max-w-2xl border rounded-lg p-5 border-current-color">
       <div className="relative inline-block w-full">
         <img className="w-full h-[300px] object-cover rounded-t-lg" src={headerImageUrl} alt="post header image" />
         <div className="px-8 bg-[#0000004d] absolute left-0 top-0 w-[100%] h-[100%] flex items-center justify-center">
@@ -38,7 +38,7 @@ const PostCardBig = (props: ComponentProps) => {
         <div className="mb-3" style={{ overflowWrap: "anywhere" }}>{parsedBodyHtml}</div>
         <div className="flex justify-between items-center flex-row">
           <time dateTime={createdAt}>{new Date(createdAt).toDateString()}</time>
-          {isAdmin && <button title="Edit this post" className="btn btn-primary" onClick={openUpdatePostEditor}>Edit</button>}
+          {isAdmin && <button title="Edit this post" className="btn btn-sm btn-primary" onClick={openUpdatePostEditor}>Edit</button>}
         </div>
       </div>
     </div>

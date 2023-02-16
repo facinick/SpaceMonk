@@ -39,10 +39,10 @@ const ResponsiveLayout = ({ children }: ResponsiveLayoutProps) => {
   }, [pathname])
 
   return (<>
-    <header>
+    <header className="bg-base-300 text-base-content">
       <Toaster />
-      <div className="navbar bg-base-300 rounded-box">
-        <div className="flex-1 px-2 lg:flex-none gap-2">
+      <div className="navbar rounded-box px-3">
+        <div className="flex-1 gap-2">
           <Link to={routes.home()} className="flex items-center">
             <img src={Constants.HeaderLogoUrl} className="mr-3 h-6 sm:h-9" alt="Flowbite Logo" />
           </Link>
@@ -52,7 +52,7 @@ const ResponsiveLayout = ({ children }: ResponsiveLayoutProps) => {
             </ul>
           </div>
         </div>
-        <div className="flex justify-end px-2">
+        <div className="flex justify-end">
           <div className="flex  gap-2 items-center justify-center">
             <Link to={routes.blog()} className="btn btn-primary btn-sm">Blog</Link>
             <div className="dropdown dropdown-end">
@@ -80,14 +80,12 @@ const ResponsiveLayout = ({ children }: ResponsiveLayoutProps) => {
         </div>
       </div>
     </header>
-    <main>
-      <section className="bg-gray-50 dark:bg-gray-900">
-        <div className="flex flex-col items-center px-4 py-8 min-h-[100vh] h-[100%]">
-          {children}
-        </div>
-      </section>
+    <main className="bg-base-300 text-base-content">
+      <div className="flex flex-col items-center px-4 py-8 min-h-[100vh] h-[100%]">
+        {children}
+      </div>
     </main>
-    <footer className="footer footer-center p-4 bg-base-300 text-base-content">
+    <footer className="bg-base-300 text-base-content footer footer-center p-4">
       <div>
         <p>Copyright © 2023 - All right reserved by Me</p>
       </div>

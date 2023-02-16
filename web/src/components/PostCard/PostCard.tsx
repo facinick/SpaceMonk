@@ -30,7 +30,7 @@ const PostCard = (props: ComponentProps) => {
 
   return (
     <Link className="w-full" to={routes.postdetailed({ id })} >
-      <div className="card sm:card-side bg-base-100 hover:bg-base-300">
+      <div className="card sm:card-side bg-base-200 hover:bg-base-100 transition-colors">
         <figure className="w-[100%] sm:w-[30%]"><img className="h-[100%] object-cover w-full rounded" src={headerImageUrl} alt="" /></figure>
         <div className="card-body w-[100%]">
           <h5 style={{ overflowWrap: "anywhere", textShadow: '1px 4px 10px rgb(0 0 0 / 40%)' }} className="card-title">{title}</h5>

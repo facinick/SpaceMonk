@@ -49,7 +49,7 @@ const SignupPage = () => {
     const username = formData.get('username')
     const password = formData.get('password')
 
-    const response = await signUp({ username, password})
+    const response = await signUp({ username, password })
 
     if (response.message) {
       toast(response.message)
@@ -65,31 +65,30 @@ const SignupPage = () => {
   return (
     <>
       <MetaTags title="Signup" />
+      <div className="w-full rounded-lg sm:max-w-md bg-base-100">
+        <div className="p-6 space-y-4">
 
-      {/* <section className="bg-gray-50 dark:bg-gray-900">
-        <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0"> */}
-          <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
-            <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
+          <h1 className="text-xl font-bold">
+            {Constants.formTitle}
+          </h1>
 
-              <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
-                {Constants.formTitle}
-              </h1>
-
-              <form ref={formRef} onSubmit={onSubmit} className="space-y-4 md:space-y-6" action="#">
-                <div>
-                  <label htmlFor="username" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{Constants.username}</label>
-                  <input disabled={disableInputs} type="text" name="username" id="username" className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder={Constants.usernamePlaceholder} required={true} />
-                </div>
-                <div>
-                  <label htmlFor="password" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{Constants.password}</label>
-                  <input disabled={disableInputs} type="password" name="password" id="password" placeholder={Constants.passwordPlaceholder} className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required={true} />
-                </div>
-                <button disabled={disableInputs} type="submit" className="btn btn-primary">{Constants.signUpButtonText}</button>
-              </form>
+          <form ref={formRef} onSubmit={onSubmit} className="space-y-4" action="#">
+            <div>
+              <label htmlFor="username" className="label">
+                <span className="label-text">{Constants.username}</span>
+              </label>
+              <input disabled={disableInputs} type="text" name="username" id="username" className="input input-bordered w-full" placeholder={Constants.usernamePlaceholder} required={true} />
             </div>
-          </div>
-        {/* </div>
-      </section> */}
+            <div>
+              <label htmlFor="password" className="label">
+                <span className="label-text">{Constants.password}</span>
+              </label>
+              <input disabled={disableInputs} type="password" name="password" id="password" className="input input-bordered w-full" placeholder={Constants.passwordPlaceholder} required={true} />
+            </div>
+            <button disabled={disableInputs} type="submit" className="btn btn-primary btn-sm">{Constants.signUpButtonText}</button>
+          </form>
+        </div>
+      </div>
     </>
   )
 }

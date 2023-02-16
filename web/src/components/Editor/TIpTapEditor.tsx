@@ -14,6 +14,8 @@ import Text from '@tiptap/extension-text'
 import './TipTapEditor.css'
 import CodeBlock from '@tiptap/extension-code-block';
 import Code from '@tiptap/extension-code';
+import Image from '@tiptap/extension-image';
+import { isImageValid } from 'src/hooks/useImageValidator';
 
 const MenuBar = ({ editor }: { editor: Editor }) => {
 
@@ -203,6 +205,23 @@ const MenuBar = ({ editor }: { editor: Editor }) => {
           }}
         />
       }
+      <button
+        className={`btn-ghost rounded btn-xs`}
+        onClick={async () => {
+          let imageUrl = prompt("Enter image url")
+          while (imageUrl !== null) {
+            const isValid = await isImageValid(imageUrl)
+            if (isValid) {
+              editor.chain().setImage({ src: imageUrl }).run()
+              break
+            } else {
+              imageUrl = prompt("Enter valid image url")
+            }
+          }
+        }}
+      >
+        add image
+      </button>
     </ div>
   )
 }
@@ -235,7 +254,13 @@ const TipTapEditor = React.forwardRef<Editor, EditorProps>((props, ref) => {
           class: 'kbd kbd-sm',
         },
       }),
-      Color
+      Color,
+      Image.configure({
+        allowBase64: true,
+        HTMLAttributes: {
+          class: 'my-custom-class',
+        },
+      })
     ],
     content: initialValue,
     onUpdate: (({ editor }) => {
