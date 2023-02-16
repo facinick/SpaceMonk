@@ -19,7 +19,7 @@ const ThemeShuffle = () => {
         {
           Object.values(LightTheme).map((value, index) => {
             return (
-              <option selected={value === theme} key={value} value={value}>{value}</option>
+              <option  key={value} value={value}>{value}</option>
             )
           })
         }
@@ -28,7 +28,7 @@ const ThemeShuffle = () => {
         {
           Object.values(MerryLandTheme).map((value) => {
             return (
-              <option selected={value === theme} key={value} value={value}>{value}</option>
+              <option  key={value} value={value}>{value}</option>
             )
           })
         }
@@ -37,7 +37,7 @@ const ThemeShuffle = () => {
         {
           Object.values(DarkTheme).map((value) => {
             return (
-              <option selected={value === theme} key={value} value={value}>{value}</option>
+              <option  key={value} value={value}>{value}</option>
             )
           })
         }

@@ -274,7 +274,7 @@ const TipTapEditor = React.forwardRef<Editor, EditorProps>((props, ref) => {
     }),
     editorProps: {
       attributes: {
-        class: 'min-h-[150px] prose prose-sm sm:prose lg:prose-lg xl:prose-2xl h-full w-full',
+        class: `min-h-[150px] ${prose_classes} h-full w-full`,
       },
     }
   })
@@ -288,4 +288,5 @@ const TipTapEditor = React.forwardRef<Editor, EditorProps>((props, ref) => {
 
 })
 
+export const prose_classes = `prose prose-sm sm:prose lg:prose-lg xl:prose-2xl`
 export { TipTapEditor }
