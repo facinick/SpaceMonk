@@ -19,12 +19,14 @@ const CREATE_POST_MUTATION = gql`
 `
 export function NewPostEditor() {
 
-  const { title, body, headerImageUrl, setTitle, setBody, setHeaderImageUrl, reset } = useNewPostStore()
+  const { title, body, headerImageUrl, setBodyPlainText, setTitle, setBody, bodyPlainText,  setHeaderImageUrl, reset } = useNewPostStore()
 
   const [createPost, { loading }] = useMutation<CreatePostMutation>(CREATE_POST_MUTATION, {
-    onCompleted: () => {
+    onCompleted: (data) => {
       toast.success('Post created')
       reset()
+      wait({ seconds: 0.5 })
+      navigate(routes.postdetailed({ id: data.createPost.id }))
     },
     onError: (error) => {
       toast.error(error.message)
@@ -45,8 +47,12 @@ export function NewPostEditor() {
     setTitle(title)
   }
 
-  const onBodyChange = (newValue: string) => {
-    setBody(newValue)
+  const onBodyChange = ({ newHtmlValue, newPlainTextValue }: {
+    newHtmlValue: string;
+    newPlainTextValue: string;
+  }) => {
+    setBody(newHtmlValue)
+    setBodyPlainText(newPlainTextValue)
   }
 
   const onHeaderImageUrlChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -82,19 +88,16 @@ export function NewPostEditor() {
       await setValidatingHeaderImageUrl((_state) => false)
     }
 
-    const newPost = await createPost({
+    await createPost({
       variables: {
         input: {
           title: _title,
           body: _body,
+          bodyPlainText: bodyPlainText.trim(),
           ...(_headerImageUrl && { headerImageUrl: _headerImageUrl })
         }
       },
     })
-
-    reset()
-    wait({seconds: 0.5})
-    navigate(routes.postdetailed({ id: newPost.data.createPost.id}))
   }
 
   const onClearInputs = async (event: React.MouseEvent<HTMLButtonElement>) => {

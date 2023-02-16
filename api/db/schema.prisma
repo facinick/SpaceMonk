@@ -8,19 +8,20 @@ generator client {
   binaryTargets = "native"
 }
 
-// Define your own datamodels here and run `yarn redwood prisma migrate dev`
-// to create migrations for them and apply to your dev DB.
-// TODO: Please remove the following example:
-
 model User {
   id                  Int        @id @default(autoincrement())
-  name                String?
   username            String     @unique
   hashedPassword      String
   salt                String
   resetToken          String?
   resetTokenExpiresAt DateTime?
+  createdAt           DateTime   @default(now())
+  updatedAt           DateTime   @updatedAt
+  // prisma relations
   userRoles           UserRole[]
+  posts               Post[]     @relation("author")
+  votes               Vote[]
+  comments            Comment[]
 }
 
 model UserRole {
@@ -38,14 +39,57 @@ model Contact {
   id      Int     @id @default(autoincrement())
   name    String
   phone   String
-  message String? @default("Call back")
+  message String? @default("call back")
 }
 
 model Post {
-  id             Int      @id @default(autoincrement())
+  id             Int     @id @default(autoincrement())
   title          String
   body           String
+  bodyPlainText  String
   headerImageUrl String?
-  createdAt      DateTime @default(now())
-  updatedAt      DateTime @updatedAt
+
+  score     Int       @default(0)
+  authorId  Int
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  activity  Int       @default(0)
+  // prisma relations
+  author    User      @relation("author", fields: [authorId], references: [id])
+  comments  Comment[]
+  votes     Vote[]
+}
+
+model Vote {
+  id         Int      @id @default(autoincrement())
+  value      Int
+  entityType String
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  userId     Int
+  // vote given to what, comment or post
+  postId     Int?
+  commentId  Int?
+  // prisma relations
+  user       User     @relation(fields: [userId], references: [id])
+  post       Post?    @relation(fields: [postId], references: [id])
+  comment    Comment? @relation(fields: [commentId], references: [id])
+}
+
+model Comment {
+  id              Int       @id @default(autoincrement())
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  body            String
+  authorId        Int
+  score           Int       @default(0)
+  postId          Int
+  activity        Int       @default(0)
+  // prisma relations
+  votes           Vote[]
+  author          User      @relation(fields: [authorId], references: [id])
+  post            Post      @relation(fields: [postId], references: [id])
+  parentCommentId Int?
+  parent          Comment?  @relation("parentChildComment", fields: [parentCommentId], references: [id])
+  comments        Comment[] @relation("parentChildComment")
 }

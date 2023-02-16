@@ -5,9 +5,10 @@ import { DbAuthHandler, DbAuthHandlerOptions } from '@redwoodjs/auth-dbauth-api'
 import { db } from 'src/lib/db'
 
 export enum ROLE {
-  ADMIN = 'admin',
-  MEMBER = 'member'
+  ADMIN = "admin",
+  MEMBER = "member"
 }
+
 
 export const DEFAULT_ROLE = ROLE.MEMBER
 
@@ -120,11 +121,10 @@ export const handler = async (
           username: username,
           hashedPassword: hashedPassword,
           salt: salt,
-          // name: userAttributes.name
           userRoles: {
-            create: {
+            create: [{
               name: DEFAULT_ROLE
-            }
+            }]
           }
         },
       })

@@ -1,41 +1,50 @@
 export const schema = gql`
+  #----------------------- Prisma Reference ---------------------#
+  # id                  Int        @id @default(autoincrement()) #
+  # username            String     @unique                       #
+  # hashedPassword      String                                   #
+  # salt                String                                   #
+  # resetToken          String?
+  # resetTokenExpiresAt DateTime?                                #
+  # createdAt           DateTime   @default(now())               #
+  # updatedAt           DateTime   @updatedAt                    #
+  # userRoles           UserRole[]                               #
+  # posts               Post[]     @relation("author")           #
+  # votes               Vote[]                                   #
+  # comments            Comment[]                                #
+  #--------------------------------------------------------------#
   type User {
-    id: Int!
-    name: String
-    username: String!
-    hashedPassword: String!
-    salt: String!
-    resetToken: String
-    resetTokenExpiresAt: DateTime
-    userRoles: [UserRole]!
+    id: Int!#-----------------------------------#public
+    username: String!#--------------------------#public
+    # hashedPassword: String!-------------------#not_available
+    # salt: String!-----------------------------#not_available
+    # resetToken: String------------------------#not_available
+    # resetTokenExpiresAt: DateTime-------------#not_available
+    createdAt: DateTime!#-----------------------#public
+    updatedAt: DateTime!#-----------------------#public
+    userRoles: [UserRole]!#---------------------#authenticate(user) + #authorize(owner)
+    posts: [Post]!#-----------------------------#public
+    votes: [Vote]!#-----------------------------#public
+    comments: [Comment]!#-----------------------#public
   }
 
   type Query {
-    users: [User!]! @requireAuth(roles: "admin")
-    user(id: Int!): User @requireAuth(roles: "admin")
+    users: [User!]! @skipAuth#------------------#public
+    user(id: Int!): User @skipAuth#-------------#public
   }
 
+  # min requirements to create a user
   input CreateUserInput {
-    name: String
     username: String!
     hashedPassword: String!
     salt: String!
     resetToken: String
     resetTokenExpiresAt: DateTime
-  }
-
-  input UpdateUserInput {
-    name: String
-    username: String
-    hashedPassword: String
-    salt: String
-    resetToken: String
-    resetTokenExpiresAt: DateTime
+    userRoles: [String]
   }
 
   type Mutation {
     createUser(input: CreateUserInput!): User! @skipAuth
-    updateUser(id: Int!, input: UpdateUserInput!): User! @requireAuth(roles: "admin")
     deleteUser(id: Int!): User! @requireAuth(roles: "admin")
   }
 `

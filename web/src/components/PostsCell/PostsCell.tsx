@@ -11,6 +11,7 @@ export const QUERY = gql`
       title
       body
       headerImageUrl
+      bodyPlainText
       createdAt
       updatedAt
     }
@@ -30,12 +31,10 @@ export const Success = ({ posts }: CellSuccessProps<PostsQuery>) => {
   return (
     <ul className="flex flex-col gap-8 max-w-[720px]">
       {posts.map((post) => {
-
-        const [body, truncated] = truncate(post.body, 200)
-
+        const [bodyPlainText, truncated] = truncate(post.bodyPlainText, 250)
         return (
           <li className="flex items-center justify-center" key={post.id}>
-            <PostCard key={post.id} createdAt={post.createdAt} truncated={truncated} body={body} title={post.title} headerImageUrl={post.headerImageUrl || `https://loremflickr.com/1920/720`} id={post.id} />
+            <PostCard bodyPlainText={bodyPlainText} key={post.id} createdAt={post.createdAt} truncated={truncated} body={post.body} title={post.title} headerImageUrl={post.headerImageUrl || `https://loremflickr.com/1920/720`} id={post.id} />
           </li>)
       })}
     </ul>

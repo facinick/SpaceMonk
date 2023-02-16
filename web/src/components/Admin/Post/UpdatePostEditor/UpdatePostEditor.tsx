@@ -9,6 +9,7 @@ import { isImageValid } from 'src/hooks/useImageValidator'
 import { Post, UpdatePostMutation } from 'types/graphql'
 import { useUpdatePostStore } from 'src/store/zustand/updatePostStore'
 import { TipTapEditor } from 'src/components/Editor/TipTapEditor'
+import { wait } from 'src/utils/typescript'
 
 const UPDATE_POST_MUTATION = gql`
   mutation UpdatePostMutation($id: Int!, $input: UpdatePostInput!) {
@@ -31,12 +32,14 @@ interface ComponentProps {
 export function UpdatePostEditor({ id, post }: ComponentProps) {
 
   const editorRef = useRef(null)
-  const { title, body, headerImageUrl, setTitle, setBody, setHeaderImageUrl, reset } = useUpdatePostStore()
+  const { title, body, headerImageUrl, setTitle, setBody, setHeaderImageUrl, reset, setBodyPlainText, bodyPlainText } = useUpdatePostStore()
 
   const [updatePost, { loading }] = useMutation<UpdatePostMutation>(UPDATE_POST_MUTATION, {
-    onCompleted: () => {
+    onCompleted: (data) => {
       toast.success('Post updated')
       reset()
+      wait({ seconds: 0.5 })
+      navigate(routes.postdetailed({ id: data.updatePost.id }))
     },
     onError: (error) => {
       toast.error(error.message)
@@ -63,8 +66,15 @@ export function UpdatePostEditor({ id, post }: ComponentProps) {
     setTitle(title)
   }
 
-  const onBodyChange = (newValue: string) => {
-    setBody(newValue)
+  const onBodyChange = ({ newHtmlValue, newPlainTextValue }: {
+    newHtmlValue: string;
+    newPlainTextValue: string;
+  }) => {
+    console.log(`whiy`)
+    console.log(`setting: ${newHtmlValue}`)
+    console.log(`setting: ${newPlainTextValue}`)
+    setBody(newHtmlValue)
+    setBodyPlainText(newPlainTextValue)
   }
 
   const onHeaderImageUrlChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -75,6 +85,11 @@ export function UpdatePostEditor({ id, post }: ComponentProps) {
 
   const onSubmit = async (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault()
+
+    console.log(title)
+    console.log(body)
+    console.log(headerImageUrl)
+    console.log(bodyPlainText)
 
     const _title = title.trim()
     const _body = body.trim()
@@ -106,12 +121,11 @@ export function UpdatePostEditor({ id, post }: ComponentProps) {
         input: {
           title: _title,
           body: _body,
+          bodyPlainText: bodyPlainText.trim(),
           ...(_headerImageUrl && { headerImageUrl: _headerImageUrl })
         }
       },
     })
-
-    navigate(routes.postdetailed({id}))
   }
 
   const disableInputs = loading && _validatingHeaderImageUrl
@@ -120,7 +134,7 @@ export function UpdatePostEditor({ id, post }: ComponentProps) {
 
   return (
     <>
-      <div className='flex flex-col gap-5'>
+      <div className='flex flex-col gap-5 items-center w-[100%] sm:w-[80%]'>
         <div className="form-control w-full">
           <input disabled={disableInputs} required onChange={onTitleChange} value={title} type="text" placeholder="Title: Make every letter count" className="input input-bordered w-full" />
         </div>

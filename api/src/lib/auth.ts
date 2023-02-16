@@ -119,3 +119,43 @@ export const requireAuth = ({ roles }: { roles?: AllowedRoles } = {}) => {
     throw new ForbiddenError("You don't have access to do that.")
   }
 }
+
+export const requireOwnerAccess = ({ id }: { id: typeof context.currentUser.id }) => {
+  requireAuth({})
+
+  if (id !== context.currentUser.id) {
+    throw new ForbiddenError("You don't have access to do that.")
+  }
+}
+
+export const requireCommentOwner = async ({ id }: { id: number }) => {
+  requireAuth({})
+
+  const userId: number = context.currentUser?.id
+  const comment = await db.post.findMany({
+    where: {
+      id,
+      authorId: userId,
+    },
+  })
+
+  if (!comment) {
+    throw new ForbiddenError("You don't have access to do that.")
+  }
+}
+
+export const requirePostOwner = async ({ id }: { id: number }): Promise<boolean> => {
+  const userId: number = context.currentUser?.id;
+  const post = await db.post.findMany({
+    where: {
+      id,
+      authorId: userId,
+    },
+  });
+
+  if (post) {
+    return true;
+  } else {
+    return false;
+  }
+}

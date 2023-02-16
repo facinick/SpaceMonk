@@ -85,7 +85,7 @@ const ContactForm = () => {
                 <span>
                   <UserLoginIcon />
                 </span>
-                <input type="text" disabled={disableInput} id="name" placeholder={Constants.namePlaceholder} className="input input-bordered w-full input-sm" required />
+                <input type="text" disabled={disableInput} id="name" placeholder={Constants.namePlaceholder} className="input input-bordered w-full" required />
               </label>
             </div>
             <div>
@@ -96,7 +96,7 @@ const ContactForm = () => {
                 <span>
                   <PhoneIcon />
                 </span>
-                <input type="text" disabled={disableInput}  id="phone" placeholder={Constants.phonePlaceholder} className="input input-bordered w-full input-sm" required />
+                <input type="text" disabled={disableInput}  id="phone" placeholder={Constants.phonePlaceholder} className="input input-bordered w-full" required />
               </label>
             </div>
             <div>
@@ -108,7 +108,7 @@ const ContactForm = () => {
                 <span>
                   <MessageIcon />
                 </span>
-                <input max={200} disabled={disableInput} type="text" id="message" placeholder={Constants.messagePlaceholder} className="input input-bordered w-full input-sm" />
+                <input max={200} disabled={disableInput} type="text" id="message" placeholder={Constants.messagePlaceholder} className="input input-bordered w-full" />
               </label>
             </div>
             <button disabled={disableInput} type="submit" className="btn btn-primary btn-sm gap-2">{submitting ? Constants.submitButtonTextBusy : Constants.submitButtonText} <SendRightIcon /></button>

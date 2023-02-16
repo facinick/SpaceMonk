@@ -238,7 +238,7 @@ const MenuBar = ({ editor }: { editor: Editor }) => {
 const TipTapEditor = React.forwardRef<Editor, EditorProps>((props, ref) => {
 
   const editorRef = useRef(null);
-  const { value, initialValue, onEditorChange, disable } = props
+  const { value, initialValue, disable, onEditorChange } = props
 
   const editor = useEditor({
     extensions: [
@@ -270,11 +270,14 @@ const TipTapEditor = React.forwardRef<Editor, EditorProps>((props, ref) => {
     ],
     content: initialValue,
     onUpdate: (({ editor }) => {
-      onEditorChange(editor.getHTML())
+      onEditorChange({
+        newHtmlValue: editor.getHTML(),
+        newPlainTextValue: editor.getText()
+      })
     }),
     editorProps: {
       attributes: {
-        class: `min-h-[150px] ${prose_classes} h-full w-full`,
+        class: `min-h-[150px] ${prose_classes} h-full w-full mx-auto`,
       },
     }
   })
