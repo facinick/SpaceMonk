@@ -34,9 +34,13 @@ export const schema = gql`
     activity: Int! #public
   }
 
+  input CommentsByPostIdInput {
+    postId: Int!
+  }
   type Query {
     comments: [Comment]! @skipAuth
     comment(id: Int!): Comment @skipAuth
+    commentsByPostId(input: CommentsByPostIdInput!): [Comment] @skipAuth
   }
 
   input CreateCommentInput {

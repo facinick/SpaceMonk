@@ -2,6 +2,7 @@ import { back, Link, routes } from '@redwoodjs/router'
 import { MetaTags } from '@redwoodjs/web'
 import { BackIcon, DownIcon, UpIcon } from 'src/components/Icons/icons'
 import PostCell from 'src/components/PostCell'
+import PostCardBigCommentSectionCell from 'src/components/PostCardBigCommentSectionCell'
 
 interface PageProps {
   id: number
@@ -18,16 +19,9 @@ const PostPage = (props: PageProps) => {
             <BackIcon />
             Back
           </button>
-
-          <button title="Up Vote" className="btn btn-sm btn-success btn-square gap-2">
-            <UpIcon />
-          </button>
-
-          <button title="Down Vote" className="btn btn-sm btn-error btn-square gap-2">
-            <DownIcon />
-          </button>
         </div>
         <PostCell id={id}></PostCell>
+        <PostCardBigCommentSectionCell input={{postId: id}} />
       </div>
     </>
   )

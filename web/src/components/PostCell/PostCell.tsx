@@ -19,6 +19,8 @@ export const Success = ({
   post,
 }: CellSuccessProps<POST_BY_ID, POST_BY_IDVariables>) => {
   return (
-    <PostCardBig post={post} />
+    <>
+      <PostCardBig post={post} />
+    </>
   )
 }

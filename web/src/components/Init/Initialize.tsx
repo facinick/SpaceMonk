@@ -15,12 +15,9 @@ export function Initialize({ children }: ComponentProps) {
   const [getAllPosts, { loading: loading_AllPosts , data: data_AllPosts }] = useLazyQuery(ALL_POSTS_QUERY)
 
   useEffect(() => {
-    console.log(`1. checking if authenticated...`)
     if (currentUser?.id && isAuthenticated) {
-      console.log(`2. user is authenticated... fetching ALl user data and ALl Posts`)
       getMyData()
       getAllPosts()
-      console.log(`4. async call for data has been made...lets wait`)
     }
   }, [isAuthenticated])
 
@@ -32,7 +29,6 @@ export function Initialize({ children }: ComponentProps) {
 
   useEffect(() => {
     if (data_MyData && data_AllPosts) {
-      console.log(`5. got all the data...`)
       console.log(data_MyData)
       console.log(data_AllPosts)
     }

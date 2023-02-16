@@ -19,4 +19,19 @@ function capitalizeFirstLetter(string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
-export { rgbToHex, capitalizeFirstLetter }
+function abbreviateNumberPlusMinus50Million(number: number): string {
+  if (number > 50000000 || number < -50000000) {
+    throw new Error("Number must be between -50M and 50M.");
+  }
+
+  const suffixes = ["", "K", "M"];
+  const suffixNum = Math.floor(("" + number).length / 3);
+  let shortNumber = parseFloat((suffixNum != 0 ? (number / Math.pow(1000, suffixNum)) : number).toFixed(2));
+  if (shortNumber % 1 !== 0) {
+    shortNumber = Number(shortNumber.toFixed(1));
+  }
+  return shortNumber + suffixes[suffixNum];
+}
+
+export { rgbToHex, capitalizeFirstLetter, abbreviateNumberPlusMinus50Million }
+

@@ -70,9 +70,6 @@ export function UpdatePostEditor({ id, post }: ComponentProps) {
     newHtmlValue: string;
     newPlainTextValue: string;
   }) => {
-    console.log(`whiy`)
-    console.log(`setting: ${newHtmlValue}`)
-    console.log(`setting: ${newPlainTextValue}`)
     setBody(newHtmlValue)
     setBodyPlainText(newPlainTextValue)
   }
@@ -85,12 +82,6 @@ export function UpdatePostEditor({ id, post }: ComponentProps) {
 
   const onSubmit = async (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault()
-
-    console.log(title)
-    console.log(body)
-    console.log(headerImageUrl)
-    console.log(bodyPlainText)
-
     const _title = title.trim()
     const _body = body.trim()
     const _headerImageUrl = headerImageUrl.trim()

@@ -1,14 +1,27 @@
-import { ForbiddenError } from '@redwoodjs/graphql-server'
 import { requireAuth, requireCommentOwner } from 'src/lib/auth'
 import { db } from 'src/lib/db'
 import type {
   CommentResolvers,
+  CommentsByPostIdInput,
   MutationResolvers,
   QueryResolvers,
 } from 'types/graphql'
 
-export const comments: QueryResolvers['comments'] = ({ input }) => {
+export const comments: QueryResolvers['comments'] = () => {
   return db.comment.findMany()
+}
+
+export const commentsByPostId: QueryResolvers['comments'] = async ({ input }: { input: CommentsByPostIdInput }) => {
+  const post =  await db.post.findUnique({
+    where: {
+      id: input.postId
+    },
+    include: {
+      comments: true
+    }
+  })
+
+  return post.comments
 }
 
 export const comment: QueryResolvers['comment'] = ({ id }) => {
