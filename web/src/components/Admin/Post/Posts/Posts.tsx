@@ -5,7 +5,11 @@ import { toast } from '@redwoodjs/web/toast'
 import { QUERY } from 'src/components/Admin/Post/PostsCell'
 import { timeTag, truncate } from 'src/lib/formatters'
 
-import type { DeletePostMutationVariables, FindPosts } from 'types/graphql'
+import type {
+  deletePost,
+  DeletePostMutationVariables,
+  FindPosts,
+} from 'types/graphql'
 
 const DELETE_POST_MUTATION = gql`
   mutation DeletePostMutation($id: Int!) {
@@ -16,7 +20,7 @@ const DELETE_POST_MUTATION = gql`
 `
 
 const PostsList = ({ posts }: FindPosts) => {
-  const [deletePost] = useMutation(DELETE_POST_MUTATION, {
+  const [deletePost] = useMutation<deletePost>(DELETE_POST_MUTATION, {
     onCompleted: () => {
       toast.success('Post deleted')
     },

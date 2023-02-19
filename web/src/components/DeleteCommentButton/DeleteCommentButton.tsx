@@ -1,7 +1,8 @@
 import { useMutation } from '@redwoodjs/web'
 import { DELETE_COMMENT_MUTATION } from 'src/graphql/mutations'
 import { COMMENTS_BY_POST_ID_QUERY } from 'src/graphql/queries'
-import { wait } from 'src/utils/typescript'
+import { wait } from 'src/utils/misc'
+import { deleteComment } from 'types/graphql'
 import { TrashIcon } from '../Icons/icons'
 
 interface ComponentProps {
@@ -11,9 +12,12 @@ interface ComponentProps {
 const DeleteCommentButton = (props: ComponentProps) => {
   const { commentId } = props
 
-  const [deleteComment, { loading }] = useMutation(DELETE_COMMENT_MUTATION, {
-    refetchQueries: [COMMENTS_BY_POST_ID_QUERY],
-  })
+  const [deleteComment, { loading }] = useMutation<deleteComment>(
+    DELETE_COMMENT_MUTATION,
+    {
+      refetchQueries: [COMMENTS_BY_POST_ID_QUERY],
+    }
+  )
 
   const initiateCommentDelete = async () => {
     await deleteComment({
@@ -32,7 +36,7 @@ const DeleteCommentButton = (props: ComponentProps) => {
     <button
       disabled={disableInput}
       title="Delete this comment"
-      className={`btn-error btn-sm btn scale-50 gap-2 opacity-0 transition group-hover:scale-100 group-hover:opacity-100 ${
+      className={`btn btn-error btn-sm scale-50 gap-2 opacity-0 transition group-hover:scale-100 group-hover:opacity-100 ${
         disableInput ? 'disabled' : ''
       }`}
       onClick={initiateCommentDelete}

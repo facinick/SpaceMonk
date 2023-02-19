@@ -5,10 +5,11 @@ import { TipTapEditor } from 'src/components/Editor/TipTapEditor'
 import { isImageValid } from 'src/hooks/useImageValidator'
 import { useNewPostStore } from 'src/store/zustand/newPostStore'
 import { navigate, routes } from '@redwoodjs/router'
-import { wait } from 'src/utils/typescript'
 import { PlusIcon, TrashIcon } from 'src/components/Icons/icons'
 import { ALL_POSTS_QUERY } from 'src/graphql/queries'
 import { CREATE_POST_MUTATION } from 'src/graphql/mutations'
+import { wait } from 'src/utils/misc'
+import { createPost } from 'types/graphql'
 
 export function NewPostEditor() {
   const {
@@ -23,18 +24,21 @@ export function NewPostEditor() {
     reset,
   } = useNewPostStore()
 
-  const [createPost, { loading }] = useMutation(CREATE_POST_MUTATION, {
-    onCompleted: (data) => {
-      toast.success('Post created')
-      reset()
-      wait({ seconds: 0.5 })
-      navigate(routes.post({ id: data.createPost.id }))
-    },
-    onError: (error) => {
-      toast.error(error.message)
-    },
-    refetchQueries: [ALL_POSTS_QUERY],
-  })
+  const [createPost, { loading }] = useMutation<createPost>(
+    CREATE_POST_MUTATION,
+    {
+      onCompleted: (data) => {
+        toast.success('Post created')
+        reset()
+        wait({ seconds: 0.5 })
+        navigate(routes.post({ id: data.createPost.id }))
+      },
+      onError: (error) => {
+        toast.error(error.message)
+      },
+      refetchQueries: [ALL_POSTS_QUERY],
+    }
+  )
 
   const editorRef = useRef(null)
   const initialBodyValue = useMemo(() => {

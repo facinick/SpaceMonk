@@ -118,3 +118,11 @@ export const DELETE_POST_MUTATION = gql`
     }
   }
 `
+
+export const CREATE_CONTACT_MUTATION = gql`
+  mutation createContact($input: CreateContactInput!) {
+    createContact(input: $input) {
+      id
+    }
+  }
+`

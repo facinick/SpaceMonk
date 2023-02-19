@@ -15,7 +15,7 @@ import {
 import ModeToggle from 'src/components/ModeToggle/ModeToggle'
 import ThemeSelectComponent from 'src/components/ThemeSelectComponent/ThemeSelectComponent'
 import { useThemeStore } from 'src/store/zustand/themeStore'
-import { wait } from 'src/utils/typescript'
+import { wait } from 'src/utils/misc'
 
 type ResponsiveLayoutProps = {
   children?: React.ReactNode

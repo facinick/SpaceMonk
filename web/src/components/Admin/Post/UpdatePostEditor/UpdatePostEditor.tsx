@@ -5,13 +5,13 @@ import { useMutation } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/toast'
 
 import { isImageValid } from 'src/hooks/useImageValidator'
-import { EditPostById, UpdatePostMutation } from 'types/graphql'
+import { EditPostById, updatePost } from 'types/graphql'
 import { useUpdatePostStore } from 'src/store/zustand/updatePostStore'
 import { TipTapEditor } from 'src/components/Editor/TipTapEditor'
-import { wait } from 'src/utils/typescript'
 import { CancelIcon, PencilIcon } from 'src/components/Icons/icons'
 import { ALL_POSTS_QUERY } from 'src/graphql/queries'
 import { UPDATE_POST_MUTATION } from 'src/graphql/mutations'
+import { wait } from 'src/utils/misc'
 
 interface ComponentProps {
   id: number
@@ -32,7 +32,7 @@ export function UpdatePostEditor({ id, post }: ComponentProps) {
     bodyPlainText,
   } = useUpdatePostStore()
 
-  const [updatePost, { loading }] = useMutation<UpdatePostMutation>(
+  const [updatePost, { loading }] = useMutation<updatePost>(
     UPDATE_POST_MUTATION,
     {
       onCompleted: (data) => {

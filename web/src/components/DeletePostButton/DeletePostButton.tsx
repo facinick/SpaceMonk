@@ -2,7 +2,8 @@ import { navigate, routes } from '@redwoodjs/router'
 import { useMutation } from '@redwoodjs/web'
 import { DELETE_POST_MUTATION } from 'src/graphql/mutations'
 import { ALL_POSTS_QUERY } from 'src/graphql/queries'
-import { wait } from 'src/utils/typescript'
+import { wait } from 'src/utils/misc'
+import { deletePost } from 'types/graphql'
 import { TrashIcon } from '../Icons/icons'
 
 interface ComponentProps {
@@ -12,9 +13,12 @@ interface ComponentProps {
 const DeletePostButton = (props: ComponentProps) => {
   const { postId } = props
 
-  const [deletePost, { loading }] = useMutation(DELETE_POST_MUTATION, {
-    refetchQueries: [ALL_POSTS_QUERY],
-  })
+  const [deletePost, { loading }] = useMutation<deletePost>(
+    DELETE_POST_MUTATION,
+    {
+      refetchQueries: [ALL_POSTS_QUERY],
+    }
+  )
 
   const initiatePostDelete = async () => {
     const confirmation = prompt('type F to confirm delete')

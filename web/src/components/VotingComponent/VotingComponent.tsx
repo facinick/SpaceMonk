@@ -4,7 +4,7 @@ import { UPVOTE_MUTATION, DOWNVOTE_MUTATION } from 'src/graphql/mutations'
 import { POST_BY_ID_QUERY } from 'src/graphql/queries'
 import { useAuthentication } from 'src/hooks/useAuthentication'
 import { abbreviateNumberPlusMinus50Million } from 'src/utils/string'
-import { POST_BY_ID } from 'types/graphql'
+import { downvote, POST_BY_ID, upvote } from 'types/graphql'
 import { MyVoteValue } from '../Business/businessLogic'
 import { UpIcon, DownIcon } from '../Icons/icons'
 
@@ -20,11 +20,11 @@ const VotingComponent = (props: ComponentProps) => {
 
   const currentUserOrFalse = useAuthentication({})
 
-  const [upvote] = useMutation(UPVOTE_MUTATION, {
+  const [upvote] = useMutation<upvote>(UPVOTE_MUTATION, {
     refetchQueries: [POST_BY_ID_QUERY],
   })
 
-  const [downvote] = useMutation(DOWNVOTE_MUTATION, {
+  const [downvote] = useMutation<downvote>(DOWNVOTE_MUTATION, {
     refetchQueries: [POST_BY_ID_QUERY],
   })
 

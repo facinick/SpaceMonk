@@ -7,8 +7,9 @@ import { prose_classes } from '../Editor/TipTapEditor'
 import { toast } from '@redwoodjs/web/toast'
 import { useNewCommentStore } from 'src/store/zustand/newCommentStore'
 import { ChatBubbleIcon } from '../Icons/icons'
-import { wait } from 'src/utils/typescript'
 import { useAuthentication } from 'src/hooks/useAuthentication'
+import { wait } from 'src/utils/misc'
+import { createComment } from 'types/graphql'
 
 type ComponentProps = {}
 
@@ -29,7 +30,7 @@ function NewCommentEditor(props: ComponentProps) {
   }, [])
 
   const [createComment, { loading: loading_upvote, data: data_upvote }] =
-    useMutation(CREATE_COMMENT_MUTATION, {
+    useMutation<createComment>(CREATE_COMMENT_MUTATION, {
       refetchQueries: [COMMENTS_BY_POST_ID_QUERY],
       onCompleted: () => {
         toast.success('Comment added')

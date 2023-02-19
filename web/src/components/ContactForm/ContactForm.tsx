@@ -1,7 +1,7 @@
 import { MetaTags } from '@redwoodjs/web'
 import { useMutation } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/toast'
-import { CreateContactInput } from 'types/graphql'
+import { createContact } from 'types/graphql'
 import { FormEvent, useRef } from 'react'
 import {
   MessageIcon,
@@ -9,14 +9,7 @@ import {
   SendRightIcon,
   UserLoginIcon,
 } from '../Icons/icons'
-
-const CREATE_CONTACT = gql`
-  mutation CreateContactMutation($input: CreateContactInput!) {
-    createContact(input: $input) {
-      id
-    }
-  }
-`
+import { CREATE_CONTACT_MUTATION } from 'src/graphql/mutations'
 
 const Constants = {
   formTitle: 'Request Call Back',
@@ -33,8 +26,8 @@ const Constants = {
 const ContactForm = () => {
   const formRef = useRef<HTMLFormElement>(null)
 
-  const [create, { loading }] = useMutation<CreateContactInput>(
-    CREATE_CONTACT,
+  const [create, { loading }] = useMutation<createContact>(
+    CREATE_CONTACT_MUTATION,
     {
       onCompleted: () => {
         toast.success(`Submitted! You'll get a call back shortly!`)
@@ -133,7 +126,7 @@ const ContactForm = () => {
             <button
               disabled={disableInput}
               type="submit"
-              className="btn-primary btn-sm btn gap-2"
+              className="btn btn-primary btn-sm gap-2"
             >
               {submitting
                 ? Constants.submitButtonTextBusy
