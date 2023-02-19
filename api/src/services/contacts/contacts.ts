@@ -19,14 +19,13 @@ export const contacts: QueryResolvers['contacts'] = () => {
 export const createContact: MutationResolvers['createContact'] = ({
   input,
 }) => {
-
   validate(input.phone, 'phone', {
     format: /^[6-9]\d{9}$/,
-    length: { equal: 10 }
+    length: { equal: 10 },
   })
 
   validate(input.message, 'message', {
-    length: { max: 200 }
+    length: { max: 200 },
   })
 
   return db.contact.create({

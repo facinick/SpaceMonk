@@ -1,5 +1,5 @@
 export const UPVOTE_MUTATION = gql`
-  mutation upvoteMutation($input: VotingInput) {
+  mutation upvote($input: VotingInput) {
     upvote(input: $input) {
       vote {
         id
@@ -13,7 +13,7 @@ export const UPVOTE_MUTATION = gql`
 `
 
 export const DOWNVOTE_MUTATION = gql`
-  mutation downvoteMutation($input: VotingInput) {
+  mutation downvote($input: VotingInput) {
     downvote(input: $input) {
       vote {
         id
@@ -22,6 +22,78 @@ export const DOWNVOTE_MUTATION = gql`
       #for optimistic updates
       cudAction
       score
+    }
+  }
+`
+
+export const CREATE_COMMENT_MUTATION = gql`
+  mutation createComment($input: CreateCommentInput!) {
+    createComment(input: $input) {
+      id
+      body
+      createdAt
+      score
+      updatedAt
+      author {
+        id
+        username
+      }
+      votes {
+        id
+        value
+        user {
+          id
+          username
+        }
+      }
+    }
+  }
+`
+
+export const DELETE_COMMENT_MUTATION = gql`
+  mutation deleteComment($id: Int!) {
+    deleteComment(id: $id) {
+      id
+      body
+      createdAt
+      score
+      updatedAt
+      author {
+        id
+        username
+      }
+      votes {
+        id
+        value
+        user {
+          id
+          username
+        }
+      }
+    }
+  }
+`
+
+export const DELETE_POST_MUTATION = gql`
+  mutation deletePost($id: Int!) {
+    deletePost(id: $id) {
+      id
+      body
+      createdAt
+      score
+      updatedAt
+      author {
+        id
+        username
+      }
+      votes {
+        id
+        value
+        user {
+          id
+          username
+        }
+      }
     }
   }
 `

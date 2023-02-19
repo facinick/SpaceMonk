@@ -1,11 +1,14 @@
 import { MetaTags } from '@redwoodjs/web'
 import { useMutation } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/toast'
-import {
-  CreateContactInput
-} from 'types/graphql'
+import { CreateContactInput } from 'types/graphql'
 import { FormEvent, useRef } from 'react'
-import { MessageIcon, PhoneIcon, SendRightIcon, UserLoginIcon } from '../Icons/icons'
+import {
+  MessageIcon,
+  PhoneIcon,
+  SendRightIcon,
+  UserLoginIcon,
+} from '../Icons/icons'
 
 const CREATE_CONTACT = gql`
   mutation CreateContactMutation($input: CreateContactInput!) {
@@ -24,31 +27,28 @@ const Constants = {
   message: 'Message',
   messagePlaceholder: 'Leave blank to just get a call back!',
   submitButtonText: 'Submit',
-  submitButtonTextBusy: 'Submitting'
+  submitButtonTextBusy: 'Submitting',
 }
 
 const ContactForm = () => {
+  const formRef = useRef<HTMLFormElement>(null)
 
-  const formRef = useRef<HTMLFormElement>(null);
-
-  const [create, { loading }] = useMutation<CreateContactInput>(CREATE_CONTACT,
+  const [create, { loading }] = useMutation<CreateContactInput>(
+    CREATE_CONTACT,
     {
       onCompleted: () => {
         toast.success(`Submitted! You'll get a call back shortly!`)
       },
       onError: () => {
         toast.error(`Couldn't submit, don't know why!`)
-      }
-    })
+      },
+    }
+  )
 
   const onSubmit = (event: FormEvent) => {
     event.preventDefault()
 
-    toast.success(`Submitted! You'll get a call back shortly!`)
-
-    return;
-
-    const formData = new FormData(formRef.current);
+    const formData = new FormData(formRef.current)
 
     const name = formData.get('name')
     const phone = formData.get('phone')
@@ -57,10 +57,10 @@ const ContactForm = () => {
     const contactFormData = {
       name: name,
       phone: phone,
-      ...(message !== "" && { message: message })
+      ...(message !== '' && { message: message }),
     }
 
-    create({ variables: { input: contactFormData } },)
+    create({ variables: { input: contactFormData } })
   }
 
   const disableInput = loading
@@ -70,11 +70,9 @@ const ContactForm = () => {
     <>
       <MetaTags title="Contact" description="Contact page" />
 
-      <div className="w-full rounded-lg sm:max-w-md bg-base-100">
-        <div className="p-6 space-y-4">
-          <h1 className="text-xl font-bold">
-            {Constants.formTitle}
-          </h1>
+      <div className="w-full rounded-lg bg-base-100 sm:max-w-md">
+        <div className="space-y-4 p-6">
+          <h1 className="text-xl font-bold">{Constants.formTitle}</h1>
 
           <form ref={formRef} onSubmit={onSubmit} className="space-y-4">
             <div>
@@ -85,7 +83,14 @@ const ContactForm = () => {
                 <span>
                   <UserLoginIcon />
                 </span>
-                <input type="text" disabled={disableInput} id="name" placeholder={Constants.namePlaceholder} className="input input-bordered w-full" required />
+                <input
+                  type="text"
+                  disabled={disableInput}
+                  id="name"
+                  placeholder={Constants.namePlaceholder}
+                  className="input-bordered input w-full"
+                  required
+                />
               </label>
             </div>
             <div>
@@ -96,7 +101,14 @@ const ContactForm = () => {
                 <span>
                   <PhoneIcon />
                 </span>
-                <input type="text" disabled={disableInput}  id="phone" placeholder={Constants.phonePlaceholder} className="input input-bordered w-full" required />
+                <input
+                  type="text"
+                  disabled={disableInput}
+                  id="phone"
+                  placeholder={Constants.phonePlaceholder}
+                  className="input-bordered input w-full"
+                  required
+                />
               </label>
             </div>
             <div>
@@ -108,10 +120,26 @@ const ContactForm = () => {
                 <span>
                   <MessageIcon />
                 </span>
-                <input max={200} disabled={disableInput} type="text" id="message" placeholder={Constants.messagePlaceholder} className="input input-bordered w-full" />
+                <input
+                  max={200}
+                  disabled={disableInput}
+                  type="text"
+                  id="message"
+                  placeholder={Constants.messagePlaceholder}
+                  className="input-bordered input w-full"
+                />
               </label>
             </div>
-            <button disabled={disableInput} type="submit" className="btn btn-primary btn-sm gap-2">{submitting ? Constants.submitButtonTextBusy : Constants.submitButtonText} <SendRightIcon /></button>
+            <button
+              disabled={disableInput}
+              type="submit"
+              className="btn-primary btn-sm btn gap-2"
+            >
+              {submitting
+                ? Constants.submitButtonTextBusy
+                : Constants.submitButtonText}{' '}
+              <SendRightIcon />
+            </button>
           </form>
         </div>
       </div>

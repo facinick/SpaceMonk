@@ -22,8 +22,7 @@ export const Failure = ({ error }: CellFailureProps) => (
 )
 
 export const Success = ({ post }: CellSuccessProps<EditPostById>) => {
+  console.log(post)
 
-  return (
-    <UpdatePostEditor id={post.id} post={post} />
-  )
+  return <UpdatePostEditor id={post.id} post={post} />
 }

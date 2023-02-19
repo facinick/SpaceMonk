@@ -1,141 +1,197 @@
-import { Link, navigate, NavLink, routes, useLocation } from "@redwoodjs/router"
-import { Toaster } from "@redwoodjs/web/dist/toast"
-import { useEffect, useMemo, useState } from "react"
-import { useAuth } from "src/auth"
-import { BlogIcon, HomeIcon, LoginIcon, LogoutIcon, NewPostIcon, ResetThemeIcon, UserRegisterIcon, ViewPostsIcon } from "src/components/Icons/icons"
-import ModeToggle from "src/components/ModeToggle/ModeToggle"
-import ThemeShuffle from "src/components/ThemeShuffle/ThemeShuffle"
-import { useThemeStore } from "src/store/zustand/themeStore"
-import { wait } from "src/utils/typescript"
+import { Link, navigate, NavLink, routes, useLocation } from '@redwoodjs/router'
+import { Toaster } from '@redwoodjs/web/dist/toast'
+import { useEffect, useMemo, useState } from 'react'
+import { useAuth } from 'src/auth'
+import {
+  BlogIcon,
+  BurgerMenuIcon,
+  HomeIcon,
+  LoginIcon,
+  LogoutIcon,
+  NewPostIcon,
+  ResetThemeIcon,
+  UserRegisterIcon,
+  ViewPostsIcon,
+} from 'src/components/Icons/icons'
+import ModeToggle from 'src/components/ModeToggle/ModeToggle'
+import ThemeSelectComponent from 'src/components/ThemeSelectComponent/ThemeSelectComponent'
+import { useThemeStore } from 'src/store/zustand/themeStore'
+import { wait } from 'src/utils/typescript'
 
 type ResponsiveLayoutProps = {
   children?: React.ReactNode
 }
 
 const Constants = {
-  HeaderTitle: "Website Title",
-  HeaderLogoUrl: "https://flowbite.com/docs/images/logo.svg",
+  HeaderTitle: 'Website Title',
+  HeaderLogoUrl: 'https://flowbite.com/docs/images/logo.svg',
 }
 
 const ResponsiveLayout = ({ children }: ResponsiveLayoutProps) => {
-
   const { pathname } = useLocation()
 
-  const { isAuthenticated, logOut, hasRole, currentUser } = useAuth()
+  const { logOut, currentUser } = useAuth()
 
-  const [isOpen, setIsOpen] = useState<boolean>(false)
-
-  const { reset } = useThemeStore()
-
+  const { reset: resetTheme } = useThemeStore()
 
   const onLogout = async () => {
     await logOut()
-    setIsOpen(false)
     wait({ seconds: 0.5 })
     navigate(routes.home())
   }
 
-  useEffect(() => {
-    setIsOpen(false)
-  }, [pathname])
-
-  const isAdmin = hasRole('admin')
-
   const paths = useMemo(() => {
-    return ("Home" + pathname).replace(/^\/?|\/?$/g, "").split("/")
+    return ('Home' + pathname).replace(/^\/?|\/?$/g, '').split('/')
   }, [pathname])
 
-  const isReallyAuthenticated = isAuthenticated && !Number.isNaN(currentUser?.id)
+  const currentUserOrFalse = currentUser ? currentUser : false
+  const isAutenticated = currentUserOrFalse !== false
+  const canCreate = currentUserOrFalse !== false
+  const isAuthorizedToCreate = canCreate
 
-  return (<>
-    {/* header content */}
-    <header className="bg-base-300 text-base-content">
-      <Toaster
-        toastOptions={{
-          position: "bottom-left",
-          success: {
-            className: "alert alert-success"
-          },
-          error: {
-            className: "alert alert-error"
-          },
-        }}
-      />
-      <div className="navbar rounded-box px-3">
-        <div className="flex-1 gap-2">
-          <Link to={routes.home()} className="flex items-center">
-            <button title="Please take me home" onClick={() => navigate(routes.home())}><HomeIcon /></button>
-            {/* <img src={Constants.HeaderLogoUrl} className="mr-3 h-6 sm:h-9" alt="Flowbite Logo" /> */}
-          </Link>
-          <div className="text-sm breadcrumbs">
-            <ul>
-              {paths.map((path) => <li key={path}>{path}</li>)}
-            </ul>
+  return (
+    <>
+      {/* header content */}
+      <header className="bg-base-300 text-base-content">
+        <Toaster
+          toastOptions={{
+            position: 'bottom-left',
+            success: {
+              className: 'alert alert-success',
+            },
+            error: {
+              className: 'alert alert-error',
+            },
+          }}
+        />
+        <div className="navbar rounded-box px-3">
+          <div className="flex-1 gap-2">
+            <Link to={routes.home()} className="flex items-center">
+              <button
+                title="Please take me home"
+                onClick={() => navigate(routes.home())}
+              >
+                <HomeIcon />
+              </button>
+            </Link>
+          </div>
+          <div className="flex justify-end">
+            <div className="flex items-center justify-center gap-2">
+              {/* BLOG LINK */}
+              <Link to={routes.blog()} className="btn btn-primary btn-sm gap-2">
+                Blog
+                <BlogIcon />
+              </Link>
+              {/* THEME SELECT */}
+              <ThemeSelectComponent />
+              {/* RIGHT BURGER MENU */}
+              <div className="dropdown-end dropdown">
+                {/* BURGER MENU ICON */}
+                <label
+                  tabIndex={0}
+                  className="btn btn-ghost rounded-btn btn-sm"
+                >
+                  <BurgerMenuIcon />
+                </label>
+                {/* BURGER MENU CONTENT*/}
+                <ul
+                  tabIndex={0}
+                  className="dropdown-content menu rounded-box mt-4 w-60 gap-y-2 bg-base-100 p-2 shadow"
+                >
+                  {/* CREATE POST */}
+                  {isAuthorizedToCreate && (
+                    <li key={'create post'}>
+                      <NavLink
+                        className={'flex justify-between'}
+                        activeClassName="active"
+                        to={routes.newPost()}
+                      >
+                        <NewPostIcon />
+                        {`Create Post`}
+                      </NavLink>
+                    </li>
+                  )}
+                  {/* LOGIN SIGNUP */}
+                  {!isAutenticated && (
+                    <>
+                      <li key={'login'}>
+                        <NavLink
+                          className={'flex justify-between'}
+                          activeClassName="active"
+                          to={routes.login()}
+                        >
+                          <LoginIcon />
+                          {`Login`}
+                        </NavLink>
+                      </li>
+                      <li key={'signup'}>
+                        <NavLink
+                          className={'flex justify-between'}
+                          activeClassName="active"
+                          to={routes.signup()}
+                        >
+                          <UserRegisterIcon />
+                          {`Signup`}
+                        </NavLink>
+                      </li>
+                    </>
+                  )}
+                  {/* TOGLE DARK MARRYLAND NIGHT MODES */}
+                  <li key={`/toggle_modes`}>
+                    <ModeToggle />
+                  </li>
+                  {/* RESET THEME */}
+                  <li key={`/reset_theme`}>
+                    <button
+                      className="flex justify-between"
+                      onClick={resetTheme}
+                    >
+                      <ResetThemeIcon /> Reset Theme
+                    </button>
+                  </li>
+                  {/* LOGOUT */}
+                  {isAutenticated && (
+                    <li key={`/logout`}>
+                      <button
+                        onClick={onLogout}
+                        className={'flex justify-between'}
+                      >
+                        <LogoutIcon />
+                        {`Logout`}
+                      </button>
+                    </li>
+                  )}
+                </ul>
+              </div>
+            </div>
           </div>
         </div>
-        <div className="flex justify-end">
-          <div className="flex gap-2 items-center justify-center">
-            <Link to={routes.blog()} className="btn btn-primary btn-sm gap-2">Blog
-              <BlogIcon />
-            </Link>
-            <ThemeShuffle />
-            <div className="dropdown dropdown-end">
-              <label tabIndex={0} className="btn btn-sm btn-ghost rounded-btn">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" className="inline-block w-5 h-5 stroke-current"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
-              </label>
-              <ul tabIndex={0} className="menu dropdown-content p-2 shadow bg-base-100 rounded-box w-60 mt-4 gap-y-2">
-                {isAdmin &&
-                  <>
-                    <li key={"create post"}>
-                      <NavLink className={'flex justify-between'} activeClassName="active" to={routes.newPost()}><NewPostIcon />{`Create Post`}</NavLink>
-                    </li>
-                    <li key={"view posts"}>
-                      <NavLink className={'flex justify-between'} activeClassName="active" to={routes.posts()}><ViewPostsIcon />{`View Posts`}</NavLink>
-                  </li>
-                  </>
-                }
-                {isReallyAuthenticated &&
-                  <>
-                    <li key={`/logout`}>
-                      <button onClick={onLogout} className={'flex justify-between'}><LogoutIcon />{`Logout`}</button>
-                    </li>
-                  </>
-                }
-                {!isReallyAuthenticated &&
-                  <>
-                    <li key={"login"}>
-                      <NavLink className={'flex justify-between'} activeClassName="active" to={routes.login()}><LoginIcon />{`Login`}</NavLink>
-                    </li>
-                    <li key={"signup"}>
-                      <NavLink className={'flex justify-between'} activeClassName="active" to={routes.signup()}><UserRegisterIcon />{`Signup`}</NavLink>
-                    </li>
-                  </>
-                }
-                <li key={`/toggle_modes`}>
-                  <ModeToggle />
-                </li>
-                <li key={`/reset_theme`}>
-                  <button className='flex justify-between' onClick={reset} ><ResetThemeIcon /> Reset Theme</button>
-                </li>
+        <div className="navbar rounded-box px-3">
+          <div className="flex-1 gap-2">
+            <div className="breadcrumbs text-sm">
+              <ul>
+                {paths.map((path) => (
+                  <li key={path}>{path}</li>
+                ))}
               </ul>
             </div>
           </div>
         </div>
-      </div>
-    </header>
-    {/* main content */}
-    <main className="bg-base-300 text-base-content">
-      <div className="flex flex-col items-center px-4 py-8 min-h-[100vh] h-[100%]">
-        {children}
-      </div>
-    </main>
-    {/* footer */}
-    <footer className="bg-base-300 text-base-content footer footer-center p-4">
-      <div>
-        <p>Copyright © 2023 - All right reserved by Me</p>
-      </div>
-    </footer>
-  </>)
+      </header>
+      {/* main content */}
+      <main className="bg-base-300 text-base-content">
+        <div className="flex h-[100%] min-h-[100vh] flex-col items-center px-4 py-8">
+          {children}
+        </div>
+      </main>
+      {/* footer */}
+      <footer className="footer footer-center bg-base-300 p-4 text-base-content">
+        <div>
+          <p>Copyright © 2023 - All right reserved by Me</p>
+        </div>
+      </footer>
+    </>
+  )
 }
 
 export default ResponsiveLayout

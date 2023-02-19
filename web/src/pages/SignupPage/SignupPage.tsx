@@ -21,13 +21,13 @@ const Constants = {
   usernamePlaceholder: 'Username',
   password: 'Password',
   passwordPlaceholder: '••••••••',
-  signUpButtonText: 'Sign Up'
+  signUpButtonText: 'Sign Up',
 }
 
 const SignupPage = () => {
   const { isAuthenticated, signUp, loading, hasError, error } = useAuth()
 
-  const formRef = useRef<HTMLFormElement>(null);
+  const formRef = useRef<HTMLFormElement>(null)
 
   useEffect(() => {
     if (isAuthenticated) {
@@ -42,9 +42,9 @@ const SignupPage = () => {
   }, [])
 
   const onSubmit = async (event: FormEvent) => {
-    event.preventDefault();
+    event.preventDefault()
 
-    const formData = new FormData(formRef.current);
+    const formData = new FormData(formRef.current)
 
     const username = formData.get('username')
     const password = formData.get('password')
@@ -65,27 +65,51 @@ const SignupPage = () => {
   return (
     <>
       <MetaTags title="Signup" />
-      <div className="w-full rounded-lg sm:max-w-md bg-base-100">
-        <div className="p-6 space-y-4">
+      <div className="w-full rounded-lg bg-base-100 sm:max-w-md">
+        <div className="space-y-4 p-6">
+          <h1 className="text-xl font-bold">{Constants.formTitle}</h1>
 
-          <h1 className="text-xl font-bold">
-            {Constants.formTitle}
-          </h1>
-
-          <form ref={formRef} onSubmit={onSubmit} className="space-y-4" action="#">
+          <form
+            ref={formRef}
+            onSubmit={onSubmit}
+            className="space-y-4"
+            action="#"
+          >
             <div>
               <label htmlFor="username" className="label">
                 <span className="label-text">{Constants.username}</span>
               </label>
-              <input disabled={disableInputs} type="text" name="username" id="username" className="input input-bordered w-full" placeholder={Constants.usernamePlaceholder} required={true} />
+              <input
+                disabled={disableInputs}
+                type="text"
+                name="username"
+                id="username"
+                className="input-bordered input w-full"
+                placeholder={Constants.usernamePlaceholder}
+                required={true}
+              />
             </div>
             <div>
               <label htmlFor="password" className="label">
                 <span className="label-text">{Constants.password}</span>
               </label>
-              <input disabled={disableInputs} type="password" name="password" id="password" className="input input-bordered w-full" placeholder={Constants.passwordPlaceholder} required={true} />
+              <input
+                disabled={disableInputs}
+                type="password"
+                name="password"
+                id="password"
+                className="input-bordered input w-full"
+                placeholder={Constants.passwordPlaceholder}
+                required={true}
+              />
             </div>
-            <button disabled={disableInputs} type="submit" className="btn btn-primary btn-sm">{Constants.signUpButtonText}</button>
+            <button
+              disabled={disableInputs}
+              type="submit"
+              className="btn btn-primary btn-sm"
+            >
+              {Constants.signUpButtonText}
+            </button>
           </form>
         </div>
       </div>

@@ -2,11 +2,11 @@
   outline: none;
 }
 
-.override-tiptap-editor-style{
+.override-tiptap-editor-style {
   outline: none;
 }
 
-.override-tiptap-editor-style:focus-within{
+.override-tiptap-editor-style:focus-within {
   outline: 2px solid hsla(var(--bc) / 0.2) !important;
   outline-offset: 2px;
 }

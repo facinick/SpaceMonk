@@ -1,87 +1,85 @@
-import { useMutation } from '@redwoodjs/web'
-import { useMemo } from 'react'
-import { useAuth } from 'src/auth'
-import { DOWNVOTE_MUTATION, UPVOTE_MUTATION } from 'src/graphql/mutations'
-import { COMMENTS_BY_POST_ID_QUERY } from 'src/graphql/queries'
-import type { COMMENTS_BY_POST_ID, COMMENTS_BY_POST_IDVariables } from 'types/graphql'
-import { MyVoteValue } from '../Business/businessLogic'
+import { useState } from 'react'
+import { useAuthentication } from 'src/hooks/useAuthentication'
+import type {
+  COMMENTS_BY_POST_ID,
+  COMMENTS_BY_POST_IDVariables,
+  Vote,
+} from 'types/graphql'
+import DeleteCommentButton from '../DeleteCommentButton/DeleteCommentButton'
 import { prose_classes } from '../Editor/TipTapEditor'
 import { VotingComponentVerticle } from '../VotingComponent/VotingComponentVerticle'
 
 interface ComponentProps {
   comments: COMMENTS_BY_POST_ID['commentsByPostId']
-  postId: number
+  postId: COMMENTS_BY_POST_ID['commentsByPostId']['0']['id']
 }
 const PostCardBigCommentSection = ({ comments, postId }: ComponentProps) => {
-
-  const { isAuthenticated, currentUser } = useAuth()
-  const isReallyAuthenticated = isAuthenticated && !isNaN(currentUser?.id)
-  const myId = currentUser?.id
-  const [upvote, { loading: loading_upvote, data: data_upvote }] = useMutation(UPVOTE_MUTATION, {
-    refetchQueries: [COMMENTS_BY_POST_ID_QUERY]
-  })
-
-  const [downvote, { loading: loading_downvote, data: data_downvote }] = useMutation(DOWNVOTE_MUTATION, {
-    refetchQueries: [COMMENTS_BY_POST_ID_QUERY]
-  })
+  const currentUserOrFalse = useAuthentication({})
 
   return (
-    <div className={`${prose_classes} w-full max-w-2xl border rounded-lg p-5 border-current-color`}>
-      <ul className='!p-0 gap-5 flex flex-col'>
-        {comments.map((comment, index, commentsArray) => {
+    <div
+      className={`${prose_classes} border-current-color w-full max-w-2xl rounded-lg border p-5`}
+    >
+      <ul className="flex flex-col gap-5 !p-0">
+        {comments.map((comment, index) => {
+          const { body, author, votes, score, createdAt, id } = comment
+          const { username, id: authorId } = author
 
-          const { body, id, author, votes, score, createdAt } = comment
-          const { username } = author
-          const totalVotesSum = score
-
-          const myVote = useMemo(() => {
-            return votes.filter((vote => vote.user.id === myId))
-          }, [votes, myId])
-
-          const myVoteValue = (myVote.length === 1 ? myVote[0].value : 0) as MyVoteValue
           const readableTime = new Date(createdAt).toDateString()
 
-          const openEditMyComment = () => {
+          const isAuthenticatedToVote = currentUserOrFalse
+          const isAuthorizedToVote = currentUserOrFalse
+          const canVote = isAuthenticatedToVote && isAuthorizedToVote
 
-          }
-
-          const onUpvote = async () => {
-            await upvote({
-              variables: {
-                input: {
-                  entityType: 'COMMENT',
-                  postId,
-                  commentId: id,
-                },
-              }
-            })
-          }
-
-          const onDownVote = async () => {
-            await downvote({
-              variables: {
-                input: {
-                  entityType: 'COMMENT',
-                  postId,
-                  commentId: id,
-                },
-              }
-            })
-          }
+          const isAuthenticatedToDelete = currentUserOrFalse
+          const isAuthorizedToDelete =
+            currentUserOrFalse !== false && currentUserOrFalse.id === authorId
+          const canDelete = isAuthenticatedToDelete && isAuthorizedToDelete
 
           const isEven = index % 2 === 0
 
           return (
-            <li key={index} className={`flex ${isEven ? "flex-row" : "flex-row-reverse"} !py-[20px] items-baseline !m-0 gap-5 min-h-[160px]`}>
-              <div className='flex-shrink-0 min-w-[80px] flex justify-center items-center !my-0'>
+            <li
+              key={index}
+              className={`flex ${
+                isEven ? 'flex-row' : 'flex-row-reverse'
+              } !m-0 min-h-[160px] items-stretch gap-5 !py-5 !px-0`}
+            >
+              <aside className="!my-0 flex h-fit flex-shrink-0 items-center justify-center px-4 py-5">
                 <VotingComponentVerticle
-                  myVoteValue={myVoteValue}
-                  totalVotesSum={totalVotesSum}
-                  onUpvote={onUpvote}
-                  onDownvote={onDownVote}
-                  disable={!isReallyAuthenticated} />
-              </div>
-              <div className='w-full flex items-center !my-0 rounded-2xl bg-base-100 p-5'>{comment.body}</div>
+                  votes={votes}
+                  score={score}
+                  commentId={id}
+                  postId={postId}
+                  disable={canVote === false}
+                />
+              </aside>
+              <article className="group !my-0 flex w-full flex-col justify-between self-stretch rounded-2xl bg-base-100 px-4 py-5">
+                {body}
+                <div className="flex flex-row justify-between">
+                  <div className="text-gray-700 dark:text-gray-400">
+                    <address className="author inline-block">
+                      @
+                      <a rel="author" href="#">
+                        {username}
+                      </a>
+                    </address>
+                    <span>{' on '}</span>
+                    <time
+                      className="inline"
+                      title={readableTime}
+                      dateTime={createdAt}
+                    >
+                      {readableTime}
+                    </time>
+                  </div>
+                  {canDelete && (
+                    <DeleteCommentButton
+                      commentId={comment.id}
+                    ></DeleteCommentButton>
+                  )}
+                </div>
+              </article>
             </li>
           )
         })}

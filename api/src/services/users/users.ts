@@ -19,24 +19,24 @@ export const user: QueryResolvers['user'] = ({ id }) => {
   })
 }
 
-export const me: QueryResolvers['user'] = () => {
+export const me: QueryResolvers['user'] = async () => {
   requireAuth()
   const userId = context.currentUser.id
-  return db.user.findUnique({
+  const user = await db.user.findUnique({
     where: {
-      id: userId
+      id: userId,
     },
     include: {
       userRoles: true,
       votes: true,
       comments: true,
-      posts:true,
-    }
+      posts: true,
+    },
   })
+  return user
 }
 
 export const createUser: MutationResolvers['createUser'] = ({ input }) => {
-
   const roles: Array<String> = input.userRoles
 
   if (roles.length === 0) {
@@ -47,14 +47,14 @@ export const createUser: MutationResolvers['createUser'] = ({ input }) => {
     data: {
       ...input,
       userRoles: {
-        create: input.userRoles.map((role) => ({ name: role }))
-      }
-    }
+        create: input.userRoles.map((role) => ({ name: role })),
+      },
+    },
   })
 }
 
 export const deleteUser: MutationResolvers['deleteUser'] = ({ id }) => {
-  requireAuth({ roles: ROLE.ADMIN })
+  requireAuth({ roles: [ROLE.ADMIN] })
   return db.user.delete({
     where: { id },
   })
@@ -69,7 +69,7 @@ export const User: UserRelationResolvers = {
     return db.user.findUnique({ where: { id: root.id } }).posts()
   },
   votes: (_obj, { root }) => {
-    return db.user.findUnique({ where: { id: root.id } }).votes();
+    return db.user.findUnique({ where: { id: root.id } }).votes()
   },
   comments: (_obj, { root }) => {
     return db.user.findUnique({ where: { id: root.id } }).comments()

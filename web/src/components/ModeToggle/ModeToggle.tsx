@@ -1,10 +1,20 @@
 import { useThemeStore } from 'src/store/zustand/themeStore'
-import { capitalizeFirstLetter } from 'src/utils/string'
-import { ArrowRightIcon, DarkModeIcon, LightModeIcon, MerryLandIcon } from '../Icons/icons'
+import {
+  ArrowRightIcon,
+  DarkModeIcon,
+  LightModeIcon,
+  MerryLandIcon,
+} from '../Icons/icons'
 
 const ModeToggle = () => {
-
-  const { isDarkTheme, isLightTheme, theme, switchToPreferredDarkTheme, switchToPreferredLightTheme, switchToPreferredMerryLandTheme } = useThemeStore()
+  const {
+    isDarkTheme,
+    isLightTheme,
+    theme,
+    switchToPreferredDarkTheme,
+    switchToPreferredLightTheme,
+    switchToPreferredMerryLandTheme,
+  } = useThemeStore()
 
   const darkMode = isDarkTheme()
   const lightMode = isLightTheme()
@@ -13,19 +23,15 @@ const ModeToggle = () => {
   const switchMode = () => {
     if (isDarkTheme()) {
       switchToPreferredLightTheme()
-    }
-
-    else if (isLightTheme()) {
+    } else if (isLightTheme()) {
       switchToPreferredMerryLandTheme()
-    }
-
-    else {
+    } else {
       switchToPreferredDarkTheme()
     }
   }
 
   return (
-    <button className='flex justify-between' onClick={switchMode}>
+    <button className="flex justify-between" onClick={switchMode}>
       {darkMode && <DarkModeIcon />}
       {lightMode && <LightModeIcon />}
       {merryLandMod && <MerryLandIcon />}

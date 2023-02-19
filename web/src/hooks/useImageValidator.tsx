@@ -1,42 +1,47 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect } from 'react'
 
 const useImageValidator = (url: string) => {
-  const [isValid, setIsValid] = useState<boolean>(null);
+  const [isValid, setIsValid] = useState<boolean>(null)
 
   useEffect(() => {
-    const xhr = new XMLHttpRequest();
-    xhr.open('GET', url, true);
+    const xhr = new XMLHttpRequest()
+    xhr.open('GET', url, true)
     xhr.onload = () => {
-      setIsValid(xhr.status === 200 && xhr.getResponseHeader('Content-Type').includes('image'));
-    };
+      setIsValid(
+        xhr.status === 200 &&
+          xhr.getResponseHeader('Content-Type').includes('image')
+      )
+    }
     xhr.onerror = () => {
-      setIsValid(false);
-    };
-    xhr.send();
-  }, [url]);
+      setIsValid(false)
+    }
+    xhr.send()
+  }, [url])
 
-  return isValid;
-};
+  return isValid
+}
 
 const isImageValid = async (url: string): Promise<boolean> => {
-
   return new Promise((resolve) => {
-    const xhr = new XMLHttpRequest();
-    xhr.open('GET', url, true);
+    const xhr = new XMLHttpRequest()
+    xhr.open('GET', url, true)
     xhr.onload = () => {
-      resolve(xhr.status === 200 && xhr.getResponseHeader('Content-Type').includes('image'));
+      resolve(
+        xhr.status === 200 &&
+          xhr.getResponseHeader('Content-Type').includes('image')
+      )
     }
     xhr.onerror = () => {
-      resolve(false);
+      resolve(false)
     }
     xhr.onabort = () => {
-      resolve(false);
+      resolve(false)
     }
     xhr.ontimeout = () => {
       resolve(false)
     }
-    xhr.send();
+    xhr.send()
   })
-};
+}
 
 export { useImageValidator, isImageValid }

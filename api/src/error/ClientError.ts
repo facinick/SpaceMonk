@@ -1,4 +1,4 @@
-import { GeneralError } from "./GeneralError"
+import { GeneralError } from './GeneralError'
 
 interface Props {
   message: string
@@ -7,6 +7,6 @@ interface Props {
 
 export class ClientError extends GeneralError {
   constructor({ message, data }: Props) {
-    super({ code: 400, message, data})
+    super({ code: 400, message, data })
   }
 }

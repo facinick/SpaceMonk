@@ -15,19 +15,16 @@ const Routes = () => {
   return (
     <Router useAuth={useAuth}>
       <Set wrap={ResponsiveLayout}>
-        {/* only logged in user with admin role can edit posts */}
         {/* Public Routes */}
-        <Private unauthenticated="home" roles="admin">
-          <Route path="/admin/posts/new" page={AdminPostNewPostPage} name="newPost" />
-          <Route path="/admin/posts/{id:Int}/edit" page={AdminPostEditPostPage} name="editPost" />
-          <Route path="/admin/posts/{id:Int}" page={AdminPostPostPage} name="post" />
-          <Route path="/admin/posts" page={AdminPostPostsPage} name="posts" />
+        <Private unauthenticated="home">
+          <Route path="/posts/new" page={AdminPostNewPostPage} name="newPost" />
+          <Route path="/posts/{id:Int}/edit" page={AdminPostEditPostPage} name="editPost" />
         </Private>
 
         {/* Public Routes */}
         <Route path="/" page={HomePage} name="home" />
         <Route path="/blog" page={BlogPage} name="blog" />
-        <Route path="/post/{id:Int}" page={PostPage} name="postdetailed" />
+        <Route path="/post/{id:Int}" page={PostPage} name="post" />
         <Route path="/login" page={LoginPage} name="login" />
         <Route path="/signup" page={SignupPage} name="signup" />
         <Route notfound page={NotFoundPage} />

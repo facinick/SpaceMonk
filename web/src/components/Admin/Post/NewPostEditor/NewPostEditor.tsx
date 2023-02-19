@@ -8,7 +8,14 @@ import { useNewPostStore } from 'src/store/zustand/newPostStore'
 import { CreatePostMutation } from 'types/graphql'
 import { navigate, routes } from '@redwoodjs/router'
 import { wait } from 'src/utils/typescript'
-import { NewPostIcon, SendRightIcon, TrashIcon } from 'src/components/Icons/icons'
+import {
+  NewPostIcon,
+  PencilIcon,
+  PlusIcon,
+  ReloadIcon,
+  SendRightIcon,
+  TrashIcon,
+} from 'src/components/Icons/icons'
 
 const CREATE_POST_MUTATION = gql`
   mutation CreatePostMutation($input: CreatePostInput!) {
@@ -18,20 +25,32 @@ const CREATE_POST_MUTATION = gql`
   }
 `
 export function NewPostEditor() {
+  const {
+    title,
+    body,
+    headerImageUrl,
+    setBodyPlainText,
+    setTitle,
+    setBody,
+    bodyPlainText,
+    setHeaderImageUrl,
+    reset,
+  } = useNewPostStore()
 
-  const { title, body, headerImageUrl, setBodyPlainText, setTitle, setBody, bodyPlainText,  setHeaderImageUrl, reset } = useNewPostStore()
-
-  const [createPost, { loading }] = useMutation<CreatePostMutation>(CREATE_POST_MUTATION, {
-    onCompleted: (data) => {
-      toast.success('Post created')
-      reset()
-      wait({ seconds: 0.5 })
-      navigate(routes.postdetailed({ id: data.createPost.id }))
-    },
-    onError: (error) => {
-      toast.error(error.message)
-    },
-  })
+  const [createPost, { loading }] = useMutation<CreatePostMutation>(
+    CREATE_POST_MUTATION,
+    {
+      onCompleted: (data) => {
+        toast.success('Post created')
+        reset()
+        wait({ seconds: 0.5 })
+        navigate(routes.post({ id: data.createPost.id }))
+      },
+      onError: (error) => {
+        toast.error(error.message)
+      },
+    }
+  )
 
   const editorRef = useRef(null)
   const initialBodyValue = useMemo(() => {
@@ -47,15 +66,20 @@ export function NewPostEditor() {
     setTitle(title)
   }
 
-  const onBodyChange = ({ newHtmlValue, newPlainTextValue }: {
-    newHtmlValue: string;
-    newPlainTextValue: string;
+  const onBodyChange = ({
+    newHtmlValue,
+    newPlainTextValue,
+  }: {
+    newHtmlValue: string
+    newPlainTextValue: string
   }) => {
     setBody(newHtmlValue)
     setBodyPlainText(newPlainTextValue)
   }
 
-  const onHeaderImageUrlChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const onHeaderImageUrlChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
     event.preventDefault()
     const headerImageUrl = event.target.value
     setHeaderImageUrl(headerImageUrl)
@@ -94,11 +118,13 @@ export function NewPostEditor() {
           title: _title,
           body: _body,
           bodyPlainText: bodyPlainText.trim(),
-          ...(_headerImageUrl && { headerImageUrl: _headerImageUrl })
-        }
+          ...(_headerImageUrl && { headerImageUrl: _headerImageUrl }),
+        },
       },
     })
   }
+
+  const loadRandomHeaderImage = async () => {}
 
   const onClearInputs = async (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault()
@@ -109,13 +135,31 @@ export function NewPostEditor() {
 
   return (
     <>
-      <div className='flex flex-col gap-5 items-center w-[100%] sm:w-[80%]'>
+      <div className="flex w-[100%] flex-col items-center gap-5 sm:w-[80%]">
         <div className="form-control w-full">
-          <input disabled={disableInputs} required onChange={onTitleChange} value={title} type="text" placeholder="Title: Make every letter count" className="input input-bordered w-full" />
+          <input
+            disabled={disableInputs}
+            required
+            onChange={onTitleChange}
+            value={title}
+            type="text"
+            placeholder="Title: Make every letter count"
+            className="input-bordered input w-full"
+          />
         </div>
 
-        <div className="form-control w-full">
-          <input disabled={disableInputs} onChange={onHeaderImageUrlChange} value={headerImageUrl} type="text" placeholder="Image url" className="input input-bordered w-full" />
+        <div className="input-group w-full">
+          <input
+            disabled={disableInputs}
+            onChange={onHeaderImageUrlChange}
+            value={headerImageUrl}
+            type="text"
+            placeholder="Image url"
+            className="input-bordered input w-full"
+          />
+          <button onClick={loadRandomHeaderImage} className="btn-square btn">
+            <ReloadIcon />
+          </button>
         </div>
 
         <TipTapEditor
@@ -125,14 +169,22 @@ export function NewPostEditor() {
           initialValue={initialBodyValue}
           value={body}
         />
-        <div className='flex flex-row gap-5 ml-auto'>
-          <button className="btn-secondary btn gap-2" disabled={disableInputs} onClick={onClearInputs}>
+        <div className="ml-auto flex flex-row gap-5">
+          <button
+            className="btn-secondary btn gap-2"
+            disabled={disableInputs}
+            onClick={onClearInputs}
+          >
             clear
             <TrashIcon />
           </button>
-          <button className="btn-primary btn gap-2" disabled={disableInputs} onClick={onSubmit}>
-            {disableInputs ? "Submitting" : "Submit"}
-            <SendRightIcon />
+          <button
+            className="btn-primary btn gap-2"
+            disabled={disableInputs}
+            onClick={onSubmit}
+          >
+            {disableInputs ? 'Creating' : 'Create'}
+            <PlusIcon />
           </button>
         </div>
       </div>

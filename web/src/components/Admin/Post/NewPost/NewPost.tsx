@@ -1,9 +1,7 @@
 import { NewPostEditor } from '../NewPostEditor/NewPostEditor'
 
 const NewPost = () => {
-  return (
-    <NewPostEditor />
-  )
+  return <NewPostEditor />
 }
 
 export default NewPost

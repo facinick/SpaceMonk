@@ -14,24 +14,24 @@ export const schema = gql`
   # comments            Comment[]                                #
   #--------------------------------------------------------------#
   type User {
-    id: Int!#-----------------------------------#public
-    username: String!#--------------------------#public
+    id: Int! #-----------------------------------#public
+    username: String! #--------------------------#public
     # hashedPassword: String!-------------------#not_available
     # salt: String!-----------------------------#not_available
     # resetToken: String------------------------#not_available
     # resetTokenExpiresAt: DateTime-------------#not_available
-    createdAt: DateTime!#-----------------------#public
-    updatedAt: DateTime!#-----------------------#public
-    userRoles: [UserRole]!#---------------------#authenticate(user) + #authorize(owner)
-    posts: [Post]!#-----------------------------#public
-    votes: [Vote]!#-----------------------------#public
-    comments: [Comment]!#-----------------------#public
+    createdAt: DateTime! #-----------------------#public
+    updatedAt: DateTime! #-----------------------#public
+    userRoles: [UserRole]! #---------------------#authenticate(user) + #authorize(owner)
+    posts: [Post]! #-----------------------------#public
+    votes: [Vote]! #-----------------------------#public
+    comments: [Comment]! #-----------------------#public
   }
 
   type Query {
-    users: [User!]! @skipAuth#------------------#public
-    user(id: Int!): User @skipAuth#-------------#public
-    me: User @skipAuth#-----------------------#authenticate(user) + #authorize(owner)
+    users: [User!]! @skipAuth #------------------#public
+    user(id: Int!): User @skipAuth #-------------#public
+    me: User @skipAuth #-----------------------#authenticate(user) + #authorize(owner)
   }
 
   # min requirements to create a user

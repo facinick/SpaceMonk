@@ -1,9 +1,11 @@
-import { useRequireAuth } from '@redwoodjs/graphql-server';
-import { ServerError } from 'src/error/ServerError';
+import { useRequireAuth } from '@redwoodjs/graphql-server'
+import { ServerError } from 'src/error/ServerError'
 import { requireAuth } from 'src/lib/auth'
 import { db } from 'src/lib/db'
 import type {
-  CUDAction, MutationupvoteArgs, VoteResolvers
+  CUDAction,
+  MutationupvoteArgs,
+  VoteResolvers,
 } from 'types/graphql'
 
 export const votes = ({ input }) => {
@@ -32,7 +34,6 @@ export const vote = ({ id }) => {
 }
 
 export const upvote = async ({ input }: MutationupvoteArgs) => {
-
   requireAuth({})
 
   const { postId, commentId, entityType } = input
@@ -70,13 +71,13 @@ export const upvote = async ({ input }: MutationupvoteArgs) => {
         updatedEntity =
           entityType === 'COMMENT'
             ? db.comment.update({
-              where: { id: commentId },
-              data: { score: { decrement: 1 } },
-            })
+                where: { id: commentId },
+                data: { score: { decrement: 1 } },
+              })
             : db.post.update({
-              where: { id: postId },
-              data: { score: { decrement: 1 } },
-            })
+                where: { id: postId },
+                data: { score: { decrement: 1 } },
+              })
 
         break
       case -1:
@@ -91,13 +92,13 @@ export const upvote = async ({ input }: MutationupvoteArgs) => {
         updatedEntity =
           entityType === 'COMMENT'
             ? db.comment.update({
-              where: { id: commentId },
-              data: { score: { increment: 2 } },
-            })
+                where: { id: commentId },
+                data: { score: { increment: 2 } },
+              })
             : db.post.update({
-              where: { id: postId },
-              data: { score: { increment: 2 } },
-            })
+                where: { id: postId },
+                data: { score: { increment: 2 } },
+              })
 
         break
       default:
@@ -119,13 +120,13 @@ export const upvote = async ({ input }: MutationupvoteArgs) => {
     updatedEntity =
       entityType === 'COMMENT'
         ? db.comment.update({
-          where: { id: commentId },
-          data: { score: { increment: 1 } },
-        })
+            where: { id: commentId },
+            data: { score: { increment: 1 } },
+          })
         : db.post.update({
-          where: { id: postId },
-          data: { score: { increment: 1 } },
-        })
+            where: { id: postId },
+            data: { score: { increment: 1 } },
+          })
   }
 
   const [responseVote, responseEntity] = await db.$transaction([
@@ -180,13 +181,13 @@ export const downvote = async ({ input }: MutationupvoteArgs) => {
         updatedEntity =
           entityType === 'COMMENT'
             ? db.comment.update({
-              where: { id: commentId },
-              data: { score: { increment: 1 } },
-            })
+                where: { id: commentId },
+                data: { score: { increment: 1 } },
+              })
             : db.post.update({
-              where: { id: postId },
-              data: { score: { increment: 1 } },
-            })
+                where: { id: postId },
+                data: { score: { increment: 1 } },
+              })
 
         break
       case 1:
@@ -201,13 +202,13 @@ export const downvote = async ({ input }: MutationupvoteArgs) => {
         updatedEntity =
           entityType === 'COMMENT'
             ? db.comment.update({
-              where: { id: commentId },
-              data: { score: { decrement: 2 } },
-            })
+                where: { id: commentId },
+                data: { score: { decrement: 2 } },
+              })
             : db.post.update({
-              where: { id: postId },
-              data: { score: { decrement: 2 } },
-            })
+                where: { id: postId },
+                data: { score: { decrement: 2 } },
+              })
 
         break
       default:
@@ -229,13 +230,13 @@ export const downvote = async ({ input }: MutationupvoteArgs) => {
     updatedEntity =
       entityType === 'COMMENT'
         ? db.comment.update({
-          where: { id: commentId },
-          data: { score: { decrement: 1 } },
-        })
+            where: { id: commentId },
+            data: { score: { decrement: 1 } },
+          })
         : db.post.update({
-          where: { id: postId },
-          data: { score: { decrement: 1 } },
-        })
+            where: { id: postId },
+            data: { score: { decrement: 1 } },
+          })
   }
 
   const [responseVote, responseEntity] = await db.$transaction([

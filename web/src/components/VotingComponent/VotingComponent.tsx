@@ -1,7 +1,7 @@
-import { useState } from "react"
-import { abbreviateNumberPlusMinus50Million } from "src/utils/string"
-import { MyVoteValue, TotalVotes } from "../Business/businessLogic"
-import { UpIcon, DownIcon } from "../Icons/icons"
+import { useState } from 'react'
+import { abbreviateNumberPlusMinus50Million } from 'src/utils/string'
+import { MyVoteValue, TotalVotes } from '../Business/businessLogic'
+import { UpIcon, DownIcon } from '../Icons/icons'
 
 type ComponentProps = {
   myVoteValue: MyVoteValue
@@ -12,7 +12,6 @@ type ComponentProps = {
 }
 
 const VotingComponent = (props: ComponentProps) => {
-
   const { myVoteValue, totalVotesSum, onUpvote, onDownvote, disable } = props
 
   const [disabled, setDisabled] = useState<boolean>(false)
@@ -35,12 +34,28 @@ const VotingComponent = (props: ComponentProps) => {
   const _disable = disable || disabled
 
   return (
-    <div className="flex flex-row gap-2 items-center justify-center">
-      <button onClick={upvote} disabled={_disable} title="👍" className={`${_disable ? "disabled" : ""} btn btn-sm ${IUpVoted ? "btn-success" : "btn-outline"} gap-2`}>
+    <div className="flex flex-row items-center justify-center gap-2">
+      <button
+        onClick={upvote}
+        disabled={_disable}
+        title="👍"
+        className={`${_disable ? 'disabled' : ''} btn-sm btn ${
+          IUpVoted ? 'btn-success' : 'btn-outline'
+        } gap-2`}
+      >
         <UpIcon />
       </button>
-      <p className="text-xl min-w-[32px] text-center">{abbreviateNumberPlusMinus50Million(totalVotesSum)}</p>
-      <button onClick={downvote} disabled={_disable} title="👎" className={`${_disable ? "disabled" : ""} btn btn-sm ${IDownVoted ? "btn-error" : "btn-outline"} gap-2`}>
+      <p className="!m-0 min-w-[32px] text-center text-xl">
+        {abbreviateNumberPlusMinus50Million(totalVotesSum)}
+      </p>
+      <button
+        onClick={downvote}
+        disabled={_disable}
+        title="👎"
+        className={`${_disable ? 'disabled' : ''} btn-sm btn ${
+          IDownVoted ? 'btn-error' : 'btn-outline'
+        } gap-2`}
+      >
         <DownIcon />
       </button>
     </div>

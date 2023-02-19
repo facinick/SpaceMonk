@@ -2,7 +2,9 @@ import { create, StateCreator } from 'zustand'
 
 const resetters: (() => void)[] = []
 
-const createZustandChildrenStore = (<T extends unknown>(f: StateCreator<T> | undefined) => {
+const createZustandChildrenStore = (<T extends unknown>(
+  f: StateCreator<T> | undefined
+) => {
   if (f === undefined) return create
   const store = create(f)
   const initialState = store.getState()
@@ -18,7 +20,4 @@ const resetZustandStore = () => {
   }
 }
 
-export {
-  createZustandChildrenStore,
-  resetZustandStore
-}
+export { createZustandChildrenStore, resetZustandStore }

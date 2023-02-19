@@ -13,27 +13,34 @@ import { useThemeStore } from './store/zustand/themeStore'
 import { Initialize } from './components/Init/Initialize'
 
 const App = () => {
-
-  const { switchToPreferredDarkTheme, switchToPreferredLightTheme, theme } = useThemeStore()
+  const { switchToPreferredDarkTheme, switchToPreferredLightTheme, theme } =
+    useThemeStore()
 
   useEffect(() => {
-    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', event => {
-      event.matches ? switchToPreferredDarkTheme() : switchToPreferredLightTheme();
-    })
+    window
+      .matchMedia('(prefers-color-scheme: dark)')
+      .addEventListener('change', (event) => {
+        event.matches
+          ? switchToPreferredDarkTheme()
+          : switchToPreferredLightTheme()
+      })
 
     return () => {
-      window.matchMedia('(prefers-color-scheme: dark)').removeEventListener('change', event => {
-        event.matches ? switchToPreferredDarkTheme() : switchToPreferredLightTheme();
-      })
+      window
+        .matchMedia('(prefers-color-scheme: dark)')
+        .removeEventListener('change', (event) => {
+          event.matches
+            ? switchToPreferredDarkTheme()
+            : switchToPreferredLightTheme()
+        })
     }
   }, [])
 
   useEffect(() => {
-    document.querySelector('html').setAttribute('data-theme', theme);
+    document.querySelector('html').setAttribute('data-theme', theme)
   }, [theme])
 
   return (
-    //@ts-ignore
     <FatalErrorBoundary page={FatalErrorPage}>
       <RedwoodProvider titleTemplate="%PageTitle | %AppTitle">
         <AuthProvider>
@@ -44,7 +51,8 @@ const App = () => {
           </RedwoodApolloProvider>
         </AuthProvider>
       </RedwoodProvider>
-    </FatalErrorBoundary>)
+    </FatalErrorBoundary>
+  )
 }
 
 export default App

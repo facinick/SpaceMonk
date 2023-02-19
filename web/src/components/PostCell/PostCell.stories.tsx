@@ -16,15 +16,15 @@ export const failure: ComponentStory<typeof Failure> = (args) => {
 }
 
 export const successSimple: ComponentStory<typeof Success> = (args) => {
-  return Success ? <Success post = {singlePost} {...args} /> : <></>
+  return Success ? <Success post={singlePost} {...args} /> : <></>
 }
 
 export const successBigSentence: ComponentStory<typeof Success> = (args) => {
-  return Success ? <Success post = {singlePostBig} {...args} /> : <></>
+  return Success ? <Success post={singlePostBig} {...args} /> : <></>
 }
 
 export const successBigWord: ComponentStory<typeof Success> = (args) => {
-  return Success ? <Success post = {singlePostBigNoGap} {...args} /> : <></>
+  return Success ? <Success post={singlePostBigNoGap} {...args} /> : <></>
 }
 
 export default { title: 'Cells/PostCell' }

@@ -25,7 +25,10 @@ export const jsonDisplay = (obj: unknown) => {
   )
 }
 
-export const truncate = (value: string | number, by = MAX_STRING_LENGTH): [string, boolean] => {
+export const truncate = (
+  value: string | number,
+  by = MAX_STRING_LENGTH
+): [string, boolean] => {
   let output = value?.toString() ?? ''
 
   let truncated = false
@@ -39,8 +42,8 @@ export const truncate = (value: string | number, by = MAX_STRING_LENGTH): [strin
 }
 
 export function titleCaseWord(word: string) {
-  if (!word) return word;
-  return word[0].toUpperCase() + word.substr(1).toLowerCase();
+  if (!word) return word
+  return word[0].toUpperCase() + word.substr(1).toLowerCase()
 }
 
 export const jsonTruncate = (obj: unknown) => {

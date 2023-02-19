@@ -1,6 +1,13 @@
 import type { PostsQuery } from 'types/graphql'
 import type { CellSuccessProps, CellFailureProps } from '@redwoodjs/web'
-import { back, Link, navigate, NavLink, routes, useLocation } from "@redwoodjs/router"
+import {
+  back,
+  Link,
+  navigate,
+  NavLink,
+  routes,
+  useLocation,
+} from '@redwoodjs/router'
 import PostCard from '../PostCard/PostCard'
 import { truncate } from 'src/lib/formatters'
 
@@ -27,15 +34,26 @@ export const Failure = ({ error }: CellFailureProps) => (
 )
 
 export const Success = ({ posts }: CellSuccessProps<PostsQuery>) => {
-
   return (
-    <ul className="flex flex-col gap-8 max-w-[720px]">
+    <ul className="flex max-w-[720px] flex-col gap-8">
       {posts.map((post) => {
         const [bodyPlainText, truncated] = truncate(post.bodyPlainText, 250)
         return (
           <li className="flex items-center justify-center" key={post.id}>
-            <PostCard bodyPlainText={bodyPlainText} key={post.id} createdAt={post.createdAt} truncated={truncated} body={post.body} title={post.title} headerImageUrl={post.headerImageUrl || `https://loremflickr.com/1920/720`} id={post.id} />
-          </li>)
+            <PostCard
+              bodyPlainText={bodyPlainText}
+              key={post.id}
+              createdAt={post.createdAt}
+              truncated={truncated}
+              body={post.body}
+              title={post.title}
+              headerImageUrl={
+                post.headerImageUrl || `https://loremflickr.com/1920/720`
+              }
+              id={post.id}
+            />
+          </li>
+        )
       })}
     </ul>
   )

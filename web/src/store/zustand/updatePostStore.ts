@@ -42,7 +42,7 @@ const useUpdatePostStore = createZustandChildrenStore<UpdatePostStore>()(
       set({ headerImageUrl })
     },
     reset: () => set(initialState),
-  }),
+  })
 )
 
 export { useUpdatePostStore, UpdatePostStore }

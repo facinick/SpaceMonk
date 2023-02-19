@@ -1,7 +1,5 @@
 import type { Decoded } from '@redwoodjs/api'
 import { AuthenticationError, ForbiddenError } from '@redwoodjs/graphql-server'
-import { parseJWT } from '@redwoodjs/api'
-
 import { db } from './db'
 
 /**
@@ -29,13 +27,9 @@ export const getCurrentUser = async (session: Decoded) => {
   const user = await db.user.findUnique({
     where: { id: session.id },
     include: {
-      userRoles: true
-    }
+      userRoles: true,
+    },
   })
-
-  const mappedRoles = user.userRoles.map((userRole) => userRole.name)
-
-  Object.assign(user, { roles: mappedRoles })['roles'];
 
   return user
 }
@@ -53,7 +47,7 @@ export const isAuthenticated = (): boolean => {
  * When checking role membership, roles can be a single value, a list, or none.
  * You can use Prisma enums too (if you're using them for roles), just import your enum type from `@prisma/client`
  */
-type AllowedRoles = string | string[] | undefined
+type AllowedRoles = String[]
 
 /**
  * Checks if the currentUser is authenticated (and assigned one of the given roles)
@@ -63,37 +57,18 @@ type AllowedRoles = string | string[] | undefined
  * @returns {boolean} - Returns true if the currentUser is logged in and assigned one of the given roles,
  * or when no roles are provided to check against. Otherwise returns false.
  */
-export const hasRole = (roles: AllowedRoles): boolean => {
+export const hasRole = (allowedRoles: AllowedRoles): boolean => {
   if (!isAuthenticated()) {
     return false
   }
 
-  const currentUserRoles = context.currentUser?.roles
+  const currentUserRoles = context.currentUser.userRoles.map(
+    (userRole) => userRole.name
+  )
 
-  if (typeof roles === 'string') {
-    if (typeof currentUserRoles === 'string') {
-      // roles to check is a string, currentUser.roles is a string
-      return currentUserRoles === roles
-    } else if (Array.isArray(currentUserRoles)) {
-      // roles to check is a string, currentUser.roles is an array
-      return currentUserRoles?.some((allowedRole) => roles === allowedRole)
-    }
-  }
-
-  if (Array.isArray(roles)) {
-    if (Array.isArray(currentUserRoles)) {
-      // roles to check is an array, currentUser.roles is an array
-      return currentUserRoles?.some((allowedRole) =>
-        roles.includes(allowedRole)
-      )
-    } else if (typeof currentUserRoles === 'string') {
-      // roles to check is an array, currentUser.roles is a string
-      return roles.some((allowedRole) => currentUserRoles === allowedRole)
-    }
-  }
-
-  // roles not found
-  return false
+  return currentUserRoles.some((currentUserRole) =>
+    allowedRoles.includes(currentUserRole)
+  )
 }
 
 /**
@@ -120,7 +95,11 @@ export const requireAuth = ({ roles }: { roles?: AllowedRoles } = {}) => {
   }
 }
 
-export const requireOwnerAccess = ({ id }: { id: typeof context.currentUser.id }) => {
+export const requireOwnerAccess = ({
+  id,
+}: {
+  id: typeof context.currentUser.id
+}) => {
   requireAuth({})
 
   if (id !== context.currentUser.id) {
@@ -131,31 +110,32 @@ export const requireOwnerAccess = ({ id }: { id: typeof context.currentUser.id }
 export const requireCommentOwner = async ({ id }: { id: number }) => {
   requireAuth({})
 
-  const userId: number = context.currentUser?.id
-  const comment = await db.post.findMany({
+  const comment = await db.comment.findUnique({
     where: {
       id,
-      authorId: userId,
     },
   })
 
-  if (!comment) {
+  if (comment.authorId !== context.currentUser.id) {
     throw new ForbiddenError("You don't have access to do that.")
   }
 }
 
-export const requirePostOwner = async ({ id }: { id: number }): Promise<boolean> => {
-  const userId: number = context.currentUser?.id;
-  const post = await db.post.findMany({
+export const requirePostOwner = async ({
+  id,
+}: {
+  id: number
+}): Promise<boolean> => {
+  const userId: number = context.currentUser?.id
+  const post = await db.post.findUnique({
     where: {
       id,
-      authorId: userId,
     },
-  });
+  })
 
-  if (post) {
-    return true;
+  if (post.id === id) {
+    return true
   } else {
-    return false;
+    return false
   }
 }

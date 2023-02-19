@@ -16,11 +16,11 @@ export const MY_DATA_QUERY = gql`
       }
     }
   }
-`;
+`
 
 export const ALL_POSTS_QUERY = gql`
   query ALL_POSTS {
-    posts{
+    posts {
       id
       author {
         id
@@ -33,13 +33,13 @@ export const ALL_POSTS_QUERY = gql`
       }
     }
   }
-`;
+`
 
 export const POST_BY_ID_QUERY = gql`
-# your params will crom from here
-  query POST_BY_ID ($id: Int!) {
-# actual query is below, ex: post(id: 4)
-    post(id: $id){
+  # your params will crom from here
+  query POST_BY_ID($id: Int!) {
+    # actual query is below, ex: post(id: 4)
+    post(id: $id) {
       id
       title
       body
@@ -61,11 +61,11 @@ export const POST_BY_ID_QUERY = gql`
       }
     }
   }
-`;
+`
 
 export const COMMENTS_BY_POST_ID_QUERY = gql`
-  query COMMENTS_BY_POST_ID ($input: CommentsByPostIdInput!) {
-    commentsByPostId(input: $input){
+  query COMMENTS_BY_POST_ID($input: CommentsByPostIdInput!) {
+    commentsByPostId(input: $input) {
       id
       body
       createdAt
@@ -85,7 +85,7 @@ export const COMMENTS_BY_POST_ID_QUERY = gql`
       }
     }
   }
-`;
+`
 
 // const MY_QUERY = gql`
 //   query ($arg1: Int, $arg2: String) {

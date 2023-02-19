@@ -4,8 +4,8 @@
 // ```tsx
 // import type { ComponentStory } from '@storybook/react'
 //
-// export const generated: ComponentStory<typeof ThemeShuffle> = (args) => {
-//   return <ThemeShuffle {...args} />
+// export const generated: ComponentStory<typeof ImageLoaderAndViewer> = (args) => {
+//   return <ImageLoaderAndViewer {...args} />
 // }
 // ```
 //
@@ -13,13 +13,13 @@
 
 import type { ComponentMeta } from '@storybook/react'
 
-import ThemeShuffle from './ThemeShuffle'
+import ImageLoaderAndViewer from './ImageLoaderAndViewer'
 
 export const generated = () => {
-  return <ThemeShuffle />
+  return <ImageLoaderAndViewer />
 }
 
 export default {
-  title: 'Components/ThemeShuffle',
-  component: ThemeShuffle,
-} as ComponentMeta<typeof ThemeShuffle>
+  title: 'Components/ImageLoaderAndViewer',
+  component: ImageLoaderAndViewer,
+} as ComponentMeta<typeof ImageLoaderAndViewer>

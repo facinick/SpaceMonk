@@ -1,4 +1,8 @@
-import type { QueryResolvers, MutationResolvers, PostResolvers } from 'types/graphql'
+import type {
+  QueryResolvers,
+  MutationResolvers,
+  PostResolvers,
+} from 'types/graphql'
 
 import { db } from 'src/lib/db'
 import { requireAuth, requirePostOwner } from 'src/lib/auth'
@@ -7,10 +11,11 @@ export const posts: QueryResolvers['posts'] = () => {
   return db.post.findMany()
 }
 
-export const post: QueryResolvers['post'] = ({ id }) => {
-  return db.post.findUnique({
+export const post: QueryResolvers['post'] = async ({ id }) => {
+  const post = await db.post.findUnique({
     where: { id },
   })
+  return post
 }
 
 export const createPost: MutationResolvers['createPost'] = ({ input }) => {
@@ -19,8 +24,8 @@ export const createPost: MutationResolvers['createPost'] = ({ input }) => {
   return db.post.create({
     data: {
       authorId,
-      ...input
-    }
+      ...input,
+    },
   })
 }
 
@@ -35,11 +40,17 @@ export const updatePost: MutationResolvers['updatePost'] = ({ id, input }) => {
 export const deletePost: MutationResolvers['deletePost'] = ({ id }) => {
   requirePostOwner({ id })
   return db.post.delete({
-    where: { id },
+    where: {
+      id,
+    },
+    include: {
+      author: true,
+      votes: true,
+    },
   })
 }
 
-export const Post: PostResolvers = {
+export const Post: Partial<PostResolvers> = {
   author: (_obj, { root }) =>
     db.post.findUnique({ where: { id: root.id } }).author(),
   activity: async (_obj, { root }) =>

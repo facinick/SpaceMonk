@@ -72,8 +72,8 @@ model Vote {
   commentId  Int?
   // prisma relations
   user       User     @relation(fields: [userId], references: [id])
-  post       Post?    @relation(fields: [postId], references: [id])
-  comment    Comment? @relation(fields: [commentId], references: [id])
+  post       Post?    @relation(fields: [postId], references: [id], onDelete: Cascade)
+  comment    Comment? @relation(fields: [commentId], references: [id], onDelete: Cascade)
 }
 
 model Comment {
@@ -88,7 +88,7 @@ model Comment {
   // prisma relations
   votes           Vote[]
   author          User      @relation(fields: [authorId], references: [id])
-  post            Post      @relation(fields: [postId], references: [id])
+  post            Post      @relation(fields: [postId], references: [id], onDelete: Cascade)
   parentCommentId Int?
   parent          Comment?  @relation("parentChildComment", fields: [parentCommentId], references: [id])
   comments        Comment[] @relation("parentChildComment")

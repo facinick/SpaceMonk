@@ -14,38 +14,38 @@ export const schema = gql`
   # votes     Vote[]                                             #
   #--------------------------------------------------------------#
   type Post {
-    id: Int!#-----------------------------------------#public
-    title: String!#-----------------------------------#public
-    body: String!#------------------------------------#public
-    bodyPlainText: String!#---------------------------#public
-    headerImageUrl: String#---------------------------#public
+    id: Int! #-----------------------------------------#public
+    title: String! #-----------------------------------#public
+    body: String! #------------------------------------#public
+    bodyPlainText: String! #---------------------------#public
+    headerImageUrl: String #---------------------------#public
     #authorId: Int!#----------------------------------#not_available
-    score: Int!#--------------------------------------#public
-    createdAt: DateTime!#-----------------------------#public
-    updatedAt: DateTime!#-----------------------------#public
-    activity: Int!#-----------------------------------#public
-    author: User!#------------------------------------#public
-    comments: [Comment]!#-----------------------------#public
-    votes: [Vote]!#-----------------------------------#public
+    score: Int! #--------------------------------------#public
+    createdAt: DateTime! #-----------------------------#public
+    updatedAt: DateTime! #-----------------------------#public
+    activity: Int! #-----------------------------------#public
+    author: User! #------------------------------------#public
+    comments: [Comment]! #-----------------------------#public
+    votes: [Vote]! #-----------------------------------#public
   }
 
   type Query {
-    posts: [Post]! @skipAuth#-------------------------#public
-    post(id: Int!): Post @skipAuth#-------------------#public
+    posts: [Post]! @skipAuth #-------------------------#public
+    post(id: Int!): Post @skipAuth #-------------------#public
   }
 
   input CreatePostInput {
     title: String!
     body: String!
     bodyPlainText: String!
-    headerImageUrl: String      #@optional_input
+    headerImageUrl: String #@optional_input
   }
 
   input UpdatePostInput {
     title: String
     body: String
     bodyPlainText: String
-    headerImageUrl: String      #@optional_input
+    headerImageUrl: String #@optional_input
   }
 
   type Mutation {

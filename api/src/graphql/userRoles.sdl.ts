@@ -8,10 +8,10 @@ export const schema = gql`
   # userId    Int                                                #
   #--------------------------------------------------------------#
   type UserRole {
-    id: Int!#---------------------------#public
+    id: Int! #---------------------------#public
     # createdAt: DateTime!--------------#not_available
     # updatedAt: DateTime!--------------#not_available
-    name: String!#----------------------#public
+    name: String! #----------------------#public
     # user: User#-----------------------#not_available
     # userId: Int#----------------------#not_available
   }

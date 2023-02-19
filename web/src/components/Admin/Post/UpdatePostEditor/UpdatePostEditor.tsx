@@ -1,15 +1,16 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 
 import { navigate, routes } from '@redwoodjs/router'
-import { useMutation } from '@redwoodjs/web'
+import { CellSuccessProps, useMutation } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/toast'
 
 import { RTEditor } from 'src/components/Editor/RTEditor'
 import { isImageValid } from 'src/hooks/useImageValidator'
-import { Post, UpdatePostMutation } from 'types/graphql'
+import { EditPostById, Post, UpdatePostMutation } from 'types/graphql'
 import { useUpdatePostStore } from 'src/store/zustand/updatePostStore'
 import { TipTapEditor } from 'src/components/Editor/TipTapEditor'
 import { wait } from 'src/utils/typescript'
+import { CancelIcon, PencilIcon } from 'src/components/Icons/icons'
 
 const UPDATE_POST_MUTATION = gql`
   mutation UpdatePostMutation($id: Int!, $input: UpdatePostInput!) {
@@ -26,32 +27,43 @@ const UPDATE_POST_MUTATION = gql`
 
 interface ComponentProps {
   id: number
-  post: Post
+  post: EditPostById['post']
 }
 
 export function UpdatePostEditor({ id, post }: ComponentProps) {
-
   const editorRef = useRef(null)
-  const { title, body, headerImageUrl, setTitle, setBody, setHeaderImageUrl, reset, setBodyPlainText, bodyPlainText } = useUpdatePostStore()
+  const {
+    title,
+    body,
+    headerImageUrl,
+    setTitle,
+    setBody,
+    setHeaderImageUrl,
+    reset,
+    setBodyPlainText,
+    bodyPlainText,
+  } = useUpdatePostStore()
 
-  const [updatePost, { loading }] = useMutation<UpdatePostMutation>(UPDATE_POST_MUTATION, {
-    onCompleted: (data) => {
-      toast.success('Post updated')
-      reset()
-      wait({ seconds: 0.5 })
-      navigate(routes.postdetailed({ id: data.updatePost.id }))
-    },
-    onError: (error) => {
-      toast.error(error.message)
-    },
-  })
+  const [updatePost, { loading }] = useMutation<UpdatePostMutation>(
+    UPDATE_POST_MUTATION,
+    {
+      onCompleted: (data) => {
+        toast.success('Post updated')
+        reset()
+        wait({ seconds: 0.5 })
+        navigate(routes.post({ id: data.updatePost.id }))
+      },
+      onError: (error) => {
+        toast.error(error.message)
+      },
+    }
+  )
 
   useEffect(() => {
     setTitle(post.title)
     setBody(post.body)
-    setHeaderImageUrl(post.headerImageUrl || "")
+    setHeaderImageUrl(post.headerImageUrl || '')
   }, [post])
-
 
   const initialBodyValue = useMemo(() => {
     return post.body
@@ -66,15 +78,20 @@ export function UpdatePostEditor({ id, post }: ComponentProps) {
     setTitle(title)
   }
 
-  const onBodyChange = ({ newHtmlValue, newPlainTextValue }: {
-    newHtmlValue: string;
-    newPlainTextValue: string;
+  const onBodyChange = ({
+    newHtmlValue,
+    newPlainTextValue,
+  }: {
+    newHtmlValue: string
+    newPlainTextValue: string
   }) => {
     setBody(newHtmlValue)
     setBodyPlainText(newPlainTextValue)
   }
 
-  const onHeaderImageUrlChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const onHeaderImageUrlChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
     event.preventDefault()
     const headerImageUrl = event.target.value
     setHeaderImageUrl(headerImageUrl)
@@ -113,10 +130,17 @@ export function UpdatePostEditor({ id, post }: ComponentProps) {
           title: _title,
           body: _body,
           bodyPlainText: bodyPlainText.trim(),
-          ...(_headerImageUrl && { headerImageUrl: _headerImageUrl })
-        }
+          ...(_headerImageUrl && { headerImageUrl: _headerImageUrl }),
+        },
       },
     })
+  }
+
+  const cancel = () => {
+    const confirmation: string | null = prompt('press F to cancel')
+    if (confirmation === 'F') {
+      navigate(routes.post({ id }))
+    }
   }
 
   const disableInputs = loading && _validatingHeaderImageUrl
@@ -125,15 +149,33 @@ export function UpdatePostEditor({ id, post }: ComponentProps) {
 
   return (
     <>
-      <div className='flex flex-col gap-5 items-center w-[100%] sm:w-[80%]'>
+      <div className="flex w-[100%] flex-col items-center gap-5 sm:w-[80%]">
+        {/* TITLE EDIT */}
         <div className="form-control w-full">
-          <input disabled={disableInputs} required onChange={onTitleChange} value={title} type="text" placeholder="Title: Make every letter count" className="input input-bordered w-full" />
+          <input
+            disabled={disableInputs}
+            required
+            onChange={onTitleChange}
+            value={title}
+            type="text"
+            placeholder="Title: Make every letter count"
+            className="input-bordered input w-full"
+          />
         </div>
 
+        {/* HEADER IMAGE URL EDIT */}
         <div className="form-control w-full">
-          <input disabled={disableInputs} onChange={onHeaderImageUrlChange} value={headerImageUrl} type="text" placeholder="Image url" className="input input-bordered w-full" />
+          <input
+            disabled={disableInputs}
+            onChange={onHeaderImageUrlChange}
+            value={headerImageUrl}
+            type="text"
+            placeholder="Image url"
+            className="input-bordered input w-full"
+          />
         </div>
 
+        {/* BODY EDIT */}
         <TipTapEditor
           onEditorChange={onBodyChange}
           disable={disableInputs}
@@ -141,10 +183,27 @@ export function UpdatePostEditor({ id, post }: ComponentProps) {
           initialValue={initialBodyValue}
           value={body}
         />
-        <div className='flex flex-row gap-5 ml-auto'>
-          {isEdited && <button className="btn-primary btn" disabled={disableInputs} onClick={onSubmit}>
-            {disableInputs ? "Updated" : "Update"}
-          </button>}
+
+        {/* BOTTON ACTIONS: CANCEL AND EDIT */}
+        <div className="flex w-full justify-between gap-2">
+          <button
+            className="btn-secondary btn"
+            disabled={disableInputs}
+            onClick={cancel}
+          >
+            Cancel
+            <CancelIcon />
+          </button>
+          {isEdited && (
+            <button
+              className="btn-primary btn"
+              disabled={disableInputs}
+              onClick={onSubmit}
+            >
+              {disableInputs ? 'Updated' : 'Update'}
+              <PencilIcon />
+            </button>
+          )}
         </div>
       </div>
     </>

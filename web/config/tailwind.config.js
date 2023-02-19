@@ -9,6 +9,5 @@ module.exports = {
     base: true,
     utils: true,
     prefix: '',
-    darkTheme: 'dark',
   },
 }
