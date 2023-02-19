@@ -1,5 +1,3 @@
-import { persist, createJSONStorage } from 'zustand/middleware'
-
 import { createZustandChildrenStore } from './store'
 
 type State = {

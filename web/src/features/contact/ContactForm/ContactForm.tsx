@@ -126,7 +126,7 @@ const ContactForm = () => {
             <button
               disabled={disableInput}
               type="submit"
-              className="btn btn-primary btn-sm gap-2"
+              className="btn-primary btn-sm btn gap-2"
             >
               {submitting
                 ? Constants.submitButtonTextBusy

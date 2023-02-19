@@ -46,6 +46,6 @@ export const schema = gql`
 
   type Mutation {
     createUser(input: CreateUserInput!): User! @skipAuth
-    deleteUser(id: Int!): User! @requireAuth(roles: "admin")
+    deleteUser(id: Int!): User! @requireAuth(roles: ["admin"])
   }
 `

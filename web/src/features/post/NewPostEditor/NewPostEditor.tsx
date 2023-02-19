@@ -157,7 +157,7 @@ export function NewPostEditor() {
         />
         <div className="ml-auto flex flex-row gap-5">
           <button
-            className="btn btn-secondary gap-2"
+            className="btn-secondary btn gap-2"
             disabled={disableInputs}
             onClick={onClearInputs}
           >
@@ -165,7 +165,7 @@ export function NewPostEditor() {
             <TrashIcon />
           </button>
           <button
-            className="btn btn-primary gap-2"
+            className="btn-primary btn gap-2"
             disabled={disableInputs}
             onClick={onSubmit}
           >

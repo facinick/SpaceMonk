@@ -43,7 +43,7 @@ const DeletePostButton = (props: ComponentProps) => {
     <button
       disabled={disableInput}
       title="Delete this post"
-      className={`btn btn-error btn-sm gap-2 ${disableInput ? 'disabled' : ''}`}
+      className={`btn-error btn-sm btn gap-2 ${disableInput ? 'disabled' : ''}`}
       onClick={initiatePostDelete}
     >
       {deletingButtonText} {<TrashIcon />}

@@ -177,7 +177,7 @@ export function UpdatePostEditor({ post }: ComponentProps) {
         {/* BOTTON ACTIONS: CANCEL AND EDIT */}
         <div className="flex w-full justify-between gap-2">
           <button
-            className="btn btn-secondary"
+            className="btn-secondary btn"
             disabled={disableInputs}
             onClick={cancel}
           >
@@ -186,7 +186,7 @@ export function UpdatePostEditor({ post }: ComponentProps) {
           </button>
           {isEdited && (
             <button
-              className="btn btn-primary"
+              className="btn-primary btn"
               disabled={disableInputs}
               onClick={onSubmit}
             >

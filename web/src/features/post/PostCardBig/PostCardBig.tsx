@@ -81,7 +81,7 @@ const PostCardBig = (props: ComponentProps) => {
           {isAuthorizedToModify && (
             <button
               title="Edit this post"
-              className="btn btn-primary btn-sm gap-2"
+              className="btn-primary btn-sm btn gap-2"
               onClick={openUpdatePostEditor}
             >
               Edit {<EditPostIcon />}

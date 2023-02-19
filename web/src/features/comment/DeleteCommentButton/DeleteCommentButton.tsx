@@ -36,7 +36,7 @@ const DeleteCommentButton = (props: ComponentProps) => {
     <button
       disabled={disableInput}
       title="Delete this comment"
-      className={`btn btn-error btn-sm scale-50 gap-2 opacity-0 transition group-hover:scale-100 group-hover:opacity-100 ${
+      className={`btn-error btn-sm btn scale-50 gap-2 opacity-0 transition group-hover:scale-100 group-hover:opacity-100 ${
         disableInput ? 'disabled' : ''
       }`}
       onClick={initiateCommentDelete}

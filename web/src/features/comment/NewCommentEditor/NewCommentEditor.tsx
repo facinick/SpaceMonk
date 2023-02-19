@@ -118,7 +118,7 @@ function NewCommentEditor(props: ComponentProps) {
           <button
             disabled={disableInputs}
             onClick={submit}
-            className={`btn btn-primary btn-sm gap-2 ${
+            className={`btn-primary btn-sm btn gap-2 ${
               disableInputs ? 'disabled' : ''
             }`}
           >

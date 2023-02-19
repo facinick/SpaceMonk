@@ -7,7 +7,7 @@ export const schema = gql`
   }
 
   type Query {
-    contacts: [Contact!]! @requireAuth(roles: "admin")
+    contacts: [Contact!]! @requireAuth(roles: ["admin"])
   }
 
   input CreateContactInput {
