@@ -21224,6 +21224,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-hotkeys-hook@npm:^4.3.5":
+  version: 4.3.5
+  resolution: "react-hotkeys-hook@npm:4.3.5"
+  peerDependencies:
+    react: ">=16.8.1"
+    react-dom: ">=16.8.1"
+  checksum: d393999c5d57cde76298aa9e6c1983f543ad583577af6881082703b72bd9dc1090e66b244d16bf4664cd9106dec865c0dcf4bcc23ccfc2b21e99ea14b70763b6
+  languageName: node
+  linkType: hard
+
 "react-html-parser@npm:^2.0.2":
   version: 2.0.2
   resolution: "react-html-parser@npm:2.0.2"
@@ -25080,6 +25090,7 @@ __metadata:
     react: 17.0.2
     react-color: ^2.19.3
     react-dom: 17.0.2
+    react-hotkeys-hook: ^4.3.5
     react-html-parser: ^2.0.2
     tailwindcss: ^3.2.6
     tinycolor2: ^1.6.0

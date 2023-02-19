@@ -1,3 +1,4 @@
+import { useThemeModeToggle } from 'src/hooks/useThemeModeToggle'
 import { useThemeStore } from 'src/store/zustand/themeStore'
 import {
   ArrowRightIcon,
@@ -7,28 +8,13 @@ import {
 } from '../Icons/icons'
 
 const ModeToggle = () => {
-  const {
-    isDarkTheme,
-    isLightTheme,
-    theme,
-    switchToPreferredDarkTheme,
-    switchToPreferredLightTheme,
-    switchToPreferredMerryLandTheme,
-  } = useThemeStore()
+  const { isDarkTheme, isLightTheme } = useThemeStore()
 
   const darkMode = isDarkTheme()
   const lightMode = isLightTheme()
   const merryLandMod = !darkMode && !lightMode
 
-  const switchMode = () => {
-    if (isDarkTheme()) {
-      switchToPreferredLightTheme()
-    } else if (isLightTheme()) {
-      switchToPreferredMerryLandTheme()
-    } else {
-      switchToPreferredDarkTheme()
-    }
-  }
+  const { switchMode } = useThemeModeToggle({})
 
   return (
     <button className="flex justify-between" onClick={switchMode}>
@@ -39,6 +25,7 @@ const ModeToggle = () => {
       {darkMode && <LightModeIcon />}
       {lightMode && <MerryLandIcon />}
       {merryLandMod && <DarkModeIcon />}
+      <kbd className="kbd">`</kbd>
     </button>
   )
 }

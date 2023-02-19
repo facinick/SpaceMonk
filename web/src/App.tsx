@@ -11,6 +11,8 @@ import './index.css'
 import { useEffect } from 'react'
 import { useThemeStore } from './store/zustand/themeStore'
 import { Initialize } from './components/Init/Initialize'
+import { HotkeysProvider } from 'react-hotkeys-hook'
+import { ApphotKeys } from './components/HotKeys/AppHotKeys'
 
 const App = () => {
   const { switchToPreferredDarkTheme, switchToPreferredLightTheme, theme } =
@@ -46,7 +48,11 @@ const App = () => {
         <AuthProvider>
           <RedwoodApolloProvider useAuth={useAuth}>
             <Initialize>
-              <Routes />
+              <HotkeysProvider initiallyActiveScopes={['app']}>
+                <ApphotKeys>
+                  <Routes />
+                </ApphotKeys>
+              </HotkeysProvider>
             </Initialize>
           </RedwoodApolloProvider>
         </AuthProvider>

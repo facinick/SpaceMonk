@@ -14,9 +14,11 @@ export function Initialize({ children }: ComponentProps) {
 
   useAuthentication({
     onLogin: async function (currentUser: CurrentUser) {
+      console.log(`logged in`)
       await getMyData()
       await getAllPosts()
     },
+    onLogout: () => console.log(`logged out`),
   })
 
   useEffect(() => {

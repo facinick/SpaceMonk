@@ -1,29 +1,17 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 
 import { navigate, routes } from '@redwoodjs/router'
-import { CellSuccessProps, useMutation } from '@redwoodjs/web'
+import { useMutation } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/toast'
 
-import { RTEditor } from 'src/components/Editor/RTEditor'
 import { isImageValid } from 'src/hooks/useImageValidator'
-import { EditPostById, Post, UpdatePostMutation } from 'types/graphql'
+import { EditPostById, UpdatePostMutation } from 'types/graphql'
 import { useUpdatePostStore } from 'src/store/zustand/updatePostStore'
 import { TipTapEditor } from 'src/components/Editor/TipTapEditor'
 import { wait } from 'src/utils/typescript'
 import { CancelIcon, PencilIcon } from 'src/components/Icons/icons'
-
-const UPDATE_POST_MUTATION = gql`
-  mutation UpdatePostMutation($id: Int!, $input: UpdatePostInput!) {
-    updatePost(id: $id, input: $input) {
-      id
-      title
-      body
-      headerImageUrl
-      createdAt
-      updatedAt
-    }
-  }
-`
+import { ALL_POSTS_QUERY } from 'src/graphql/queries'
+import { UPDATE_POST_MUTATION } from 'src/graphql/mutations'
 
 interface ComponentProps {
   id: number
@@ -56,6 +44,7 @@ export function UpdatePostEditor({ id, post }: ComponentProps) {
       onError: (error) => {
         toast.error(error.message)
       },
+      refetchQueries: [ALL_POSTS_QUERY],
     }
   )
 
@@ -187,7 +176,7 @@ export function UpdatePostEditor({ id, post }: ComponentProps) {
         {/* BOTTON ACTIONS: CANCEL AND EDIT */}
         <div className="flex w-full justify-between gap-2">
           <button
-            className="btn-secondary btn"
+            className="btn btn-secondary"
             disabled={disableInputs}
             onClick={cancel}
           >
@@ -196,7 +185,7 @@ export function UpdatePostEditor({ id, post }: ComponentProps) {
           </button>
           {isEdited && (
             <button
-              className="btn-primary btn"
+              className="btn btn-primary"
               disabled={disableInputs}
               onClick={onSubmit}
             >

@@ -4,8 +4,8 @@ import { UPVOTE_MUTATION, DOWNVOTE_MUTATION } from 'src/graphql/mutations'
 import { COMMENTS_BY_POST_ID_QUERY } from 'src/graphql/queries'
 import { useAuthentication } from 'src/hooks/useAuthentication'
 import { abbreviateNumberPlusMinus50Million } from 'src/utils/string'
-import { COMMENTS_BY_POST_ID, Vote } from 'types/graphql'
-import { MyVoteValue, TotalVotes } from '../Business/businessLogic'
+import { COMMENTS_BY_POST_ID } from 'types/graphql'
+import { MyVoteValue } from '../Business/businessLogic'
 import { UpIcon, DownIcon } from '../Icons/icons'
 
 type ComponentProps = {
@@ -31,7 +31,11 @@ const VotingComponentVerticle = (props: ComponentProps) => {
 
   const myVote = useMemo(() => {
     const vote = currentUserOrFalse
-      ? votes.filter((vote) => vote.user.id === currentUserOrFalse.id)
+      ? votes.filter(
+          (vote) =>
+            vote.user.id === currentUserOrFalse.id &&
+            vote.entityType === 'COMMENT'
+        )
       : []
     return vote
   }, [currentUserOrFalse, votes])

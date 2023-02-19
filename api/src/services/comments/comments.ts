@@ -71,20 +71,8 @@ export const deleteComment: MutationResolvers['deleteComment'] = async ({
 }) => {
   await requireCommentOwner({ id })
 
-  // const commentToDelete = await db.comment.findUnique({ where: { id } })
-  // const votesToDelete = await db.comment.findUnique({ where: { id } }).votes()
-  // const author = await db.comment.findUnique({ where: { id } }).votes()
-
   const comment = await db.comment.delete({
     where: { id },
-    include: {
-      author: true,
-      votes: {
-        include: {
-          user: true,
-        },
-      },
-    },
   })
 
   return comment
@@ -93,8 +81,8 @@ export const deleteComment: MutationResolvers['deleteComment'] = async ({
 export const Comment: Partial<CommentResolvers> = {
   activity: async (_obj, { root }) =>
     db.comment.count({ where: { parentCommentId: root.id } }),
-  // votes: (_obj, { root }) =>
-  //   db.comment.findUnique({ where: { id: root.id } }).votes(),
+  votes: (_obj, { root }) =>
+    db.comment.findUnique({ where: { id: root.id } }).votes(),
   post: (_obj, { root }) =>
     db.comment
       .findUnique({
@@ -134,11 +122,13 @@ export const Comment: Partial<CommentResolvers> = {
       },
     })
   },
-  // author: (_obj, { root }) => {
-  //   return db.comment.findUnique({
-  //     where: {
-  //       id: root.id
-  //     }
-  //   }).author()
-  // },
+  author: (_obj, { root }) => {
+    return db.comment
+      .findUnique({
+        where: {
+          id: root.id,
+        },
+      })
+      .author()
+  },
 }

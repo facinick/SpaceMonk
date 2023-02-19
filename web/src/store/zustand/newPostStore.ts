@@ -22,7 +22,7 @@ type NewPostStore = State & Actions
 const initialState: State = {
   title: '',
   bodyPlainText: '',
-  body: '',
+  body: '<p></p>',
   headerImageUrl: '',
 }
 

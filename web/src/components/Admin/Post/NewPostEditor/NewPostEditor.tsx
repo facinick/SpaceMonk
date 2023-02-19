@@ -1,29 +1,15 @@
 import { useMemo, useRef, useState } from 'react'
 import { useMutation } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/toast'
-
 import { TipTapEditor } from 'src/components/Editor/TipTapEditor'
 import { isImageValid } from 'src/hooks/useImageValidator'
 import { useNewPostStore } from 'src/store/zustand/newPostStore'
-import { CreatePostMutation } from 'types/graphql'
 import { navigate, routes } from '@redwoodjs/router'
 import { wait } from 'src/utils/typescript'
-import {
-  NewPostIcon,
-  PencilIcon,
-  PlusIcon,
-  ReloadIcon,
-  SendRightIcon,
-  TrashIcon,
-} from 'src/components/Icons/icons'
+import { PlusIcon, TrashIcon } from 'src/components/Icons/icons'
+import { ALL_POSTS_QUERY } from 'src/graphql/queries'
+import { CREATE_POST_MUTATION } from 'src/graphql/mutations'
 
-const CREATE_POST_MUTATION = gql`
-  mutation CreatePostMutation($input: CreatePostInput!) {
-    createPost(input: $input) {
-      id
-    }
-  }
-`
 export function NewPostEditor() {
   const {
     title,
@@ -37,20 +23,18 @@ export function NewPostEditor() {
     reset,
   } = useNewPostStore()
 
-  const [createPost, { loading }] = useMutation<CreatePostMutation>(
-    CREATE_POST_MUTATION,
-    {
-      onCompleted: (data) => {
-        toast.success('Post created')
-        reset()
-        wait({ seconds: 0.5 })
-        navigate(routes.post({ id: data.createPost.id }))
-      },
-      onError: (error) => {
-        toast.error(error.message)
-      },
-    }
-  )
+  const [createPost, { loading }] = useMutation(CREATE_POST_MUTATION, {
+    onCompleted: (data) => {
+      toast.success('Post created')
+      reset()
+      wait({ seconds: 0.5 })
+      navigate(routes.post({ id: data.createPost.id }))
+    },
+    onError: (error) => {
+      toast.error(error.message)
+    },
+    refetchQueries: [ALL_POSTS_QUERY],
+  })
 
   const editorRef = useRef(null)
   const initialBodyValue = useMemo(() => {
@@ -106,6 +90,7 @@ export function NewPostEditor() {
       await setValidatingHeaderImageUrl((_state) => true)
       const isValid = await isImageValid(headerImageUrl)
       if (!isValid) {
+        await setValidatingHeaderImageUrl((_state) => false)
         toast.error(`Header image URL is not okay`)
         return
       }
@@ -148,7 +133,7 @@ export function NewPostEditor() {
           />
         </div>
 
-        <div className="input-group w-full">
+        <div className="form-control w-full">
           <input
             disabled={disableInputs}
             onChange={onHeaderImageUrlChange}
@@ -157,9 +142,6 @@ export function NewPostEditor() {
             placeholder="Image url"
             className="input-bordered input w-full"
           />
-          <button onClick={loadRandomHeaderImage} className="btn-square btn">
-            <ReloadIcon />
-          </button>
         </div>
 
         <TipTapEditor
@@ -171,7 +153,7 @@ export function NewPostEditor() {
         />
         <div className="ml-auto flex flex-row gap-5">
           <button
-            className="btn-secondary btn gap-2"
+            className="btn btn-secondary gap-2"
             disabled={disableInputs}
             onClick={onClearInputs}
           >
@@ -179,7 +161,7 @@ export function NewPostEditor() {
             <TrashIcon />
           </button>
           <button
-            className="btn-primary btn gap-2"
+            className="btn btn-primary gap-2"
             disabled={disableInputs}
             onClick={onSubmit}
           >

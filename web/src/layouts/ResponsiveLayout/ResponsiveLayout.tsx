@@ -1,6 +1,6 @@
 import { Link, navigate, NavLink, routes, useLocation } from '@redwoodjs/router'
 import { Toaster } from '@redwoodjs/web/dist/toast'
-import { useEffect, useMemo, useState } from 'react'
+import { useMemo } from 'react'
 import { useAuth } from 'src/auth'
 import {
   BlogIcon,
@@ -11,7 +11,6 @@ import {
   NewPostIcon,
   ResetThemeIcon,
   UserRegisterIcon,
-  ViewPostsIcon,
 } from 'src/components/Icons/icons'
 import ModeToggle from 'src/components/ModeToggle/ModeToggle'
 import ThemeSelectComponent from 'src/components/ThemeSelectComponent/ThemeSelectComponent'
@@ -139,6 +138,7 @@ const ResponsiveLayout = ({ children }: ResponsiveLayoutProps) => {
                   {/* TOGLE DARK MARRYLAND NIGHT MODES */}
                   <li key={`/toggle_modes`}>
                     <ModeToggle />
+                    {/* <kbd className="kbd">`</kbd> */}
                   </li>
                   {/* RESET THEME */}
                   <li key={`/reset_theme`}>

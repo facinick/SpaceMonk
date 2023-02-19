@@ -23,11 +23,16 @@ export const Failure = ({
 
 export const Success = ({
   commentsByPostId,
-  postId,
+  input,
 }: CellSuccessProps<COMMENTS_BY_POST_ID, COMMENTS_BY_POST_IDVariables> & {
-  postId: number
+  input: {
+    postId: number
+  }
 }) => {
   return (
-    <PostCardBigCommentSection postId={postId} comments={commentsByPostId} />
+    <PostCardBigCommentSection
+      postId={input.postId}
+      comments={commentsByPostId}
+    />
   )
 }

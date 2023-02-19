@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useAuth } from 'src/auth'
 import { usePrevious } from './usePrevious'
 
@@ -6,12 +6,14 @@ export type CurrentUser = ReturnType<typeof useAuth>['currentUser']
 
 interface HookProps {
   onLogin?: (currentUser: CurrentUser) => void
+  onLogout?: () => void
   debug?: boolean
 }
 
 export function useAuthentication({
   debug = false,
   onLogin,
+  onLogout,
 }: HookProps): CurrentUser | false {
   const { isAuthenticated, currentUser } = useAuth()
   const wasAuthenticated = usePrevious(isAuthenticated)
@@ -68,6 +70,7 @@ export function useAuthentication({
         if (debug) {
           console.log(`real logout [MAKE API CALLS]`)
         }
+        onLogout?.()
       } else {
         if (debug) {
           console.log(`false logout 3`)

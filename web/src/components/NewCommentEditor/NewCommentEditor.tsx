@@ -6,9 +6,8 @@ import { COMMENTS_BY_POST_ID_QUERY } from 'src/graphql/queries'
 import { prose_classes } from '../Editor/TipTapEditor'
 import { toast } from '@redwoodjs/web/toast'
 import { useNewCommentStore } from 'src/store/zustand/newCommentStore'
-import { ChatBubbleIcon, SendRightIcon } from '../Icons/icons'
-import { isNumber, wait } from 'src/utils/typescript'
-import { useAuth } from 'src/auth'
+import { ChatBubbleIcon } from '../Icons/icons'
+import { wait } from 'src/utils/typescript'
 import { useAuthentication } from 'src/hooks/useAuthentication'
 
 type ComponentProps = {}
@@ -21,6 +20,13 @@ function NewCommentEditor(props: ComponentProps) {
   const currentUserOrFalse = useAuthentication({})
   const [disable, setDisable] = useState<boolean>(false)
   const body = data[postId]
+
+  // to initialise body to "" in the Record<postId, body>
+  // otherwise when you press submit, a call of trim() on undefined
+  // will throw an error
+  useEffect(() => {
+    setBody(postId, '')
+  }, [])
 
   const [createComment, { loading: loading_upvote, data: data_upvote }] =
     useMutation(CREATE_COMMENT_MUTATION, {
@@ -97,7 +103,7 @@ function NewCommentEditor(props: ComponentProps) {
           <button
             disabled={disableInputs}
             onClick={submit}
-            className={`btn-primary btn-sm btn gap-2 ${
+            className={`btn btn-primary btn-sm gap-2 ${
               disableInputs ? 'disabled' : ''
             }`}
           >

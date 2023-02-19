@@ -6,11 +6,6 @@ import { EditPostIcon } from '../Icons/icons'
 import { prose_classes } from '../Editor/TipTapEditor'
 import { POST_BY_ID } from 'types/graphql'
 import { VotingComponent } from '../VotingComponent/VotingComponent'
-import { useMemo } from 'react'
-import { MyVoteValue } from '../Business/businessLogic'
-import { useMutation } from '@redwoodjs/web'
-import { DOWNVOTE_MUTATION, UPVOTE_MUTATION } from 'src/graphql/mutations'
-import { POST_BY_ID_QUERY } from 'src/graphql/queries'
 import DeletePostButton from '../DeletePostButton/DeletePostButton'
 interface ComponentProps {
   post: POST_BY_ID['post']
@@ -21,67 +16,21 @@ const PostCardBig = (props: ComponentProps) => {
   const { id, title, body, headerImageUrl, createdAt, author, score, votes } =
     post
   const { username, id: authodId } = author
-  const totalVotesSum = score
 
   const currentUserOrFalse = useAuth().currentUser
     ? useAuth().currentUser
     : false
 
-  const [upvote, { loading: loading_upvote, data: data_upvote }] = useMutation(
-    UPVOTE_MUTATION,
-    {
-      refetchQueries: [POST_BY_ID_QUERY],
-    }
-  )
-
-  const [downvote, { loading: loading_downvote, data: data_downvote }] =
-    useMutation(DOWNVOTE_MUTATION, {
-      refetchQueries: [POST_BY_ID_QUERY],
-    })
-
-  // const isAdmin = hasRole(['admin'])
   const isCreator =
     currentUserOrFalse !== false && currentUserOrFalse.id === authodId
   const isAuthorizedToModify = isCreator
   const isAuthorizedToDelete = isCreator
 
-  const myVote = useMemo(() => {
-    if (currentUserOrFalse === false) {
-      return []
-    }
-    return votes.filter((vote) => vote.user.id === currentUserOrFalse.id)
-  }, [votes, currentUserOrFalse])
-
-  const myVoteValue = (myVote.length === 1 ? myVote[0].value : 0) as MyVoteValue
   const parsedBodyHtml = useParseHtml(body)
   const readableTime = new Date(createdAt).toDateString()
 
   const openUpdatePostEditor = () => {
     navigate(routes.editPost({ id }))
-  }
-
-  const onUpvote = async () => {
-    await upvote({
-      variables: {
-        input: {
-          entityType: 'POST',
-          postId: id,
-          commentId: null,
-        },
-      },
-    })
-  }
-
-  const onDownVote = async () => {
-    await downvote({
-      variables: {
-        input: {
-          entityType: 'POST',
-          postId: id,
-          commentId: null,
-        },
-      },
-    })
   }
 
   return (
@@ -120,15 +69,14 @@ const PostCardBig = (props: ComponentProps) => {
       {/* Footer */}
       <aside className="flex flex-row items-center justify-between">
         <VotingComponent
+          votes={votes}
+          score={score}
+          postId={post.id}
           disable={currentUserOrFalse === false}
-          myVoteValue={myVoteValue}
-          totalVotesSum={totalVotesSum}
-          onUpvote={onUpvote}
-          onDownvote={onDownVote}
         />
         {/* Admin Section */}
         <div className="flex gap-2">
-          {isAuthorizedToModify && (
+          {isAuthorizedToDelete && (
             <DeletePostButton postId={post.id}></DeletePostButton>
           )}
           {isAuthorizedToModify && (

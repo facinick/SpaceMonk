@@ -10,6 +10,7 @@ export const MY_DATA_QUERY = gql`
       }
       votes {
         id
+        entityType
       }
       comments {
         id
@@ -22,6 +23,12 @@ export const ALL_POSTS_QUERY = gql`
   query ALL_POSTS {
     posts {
       id
+      title
+      body
+      headerImageUrl
+      bodyPlainText
+      createdAt
+      updatedAt
       author {
         id
       }
@@ -30,6 +37,7 @@ export const ALL_POSTS_QUERY = gql`
       }
       votes {
         id
+        entityType
       }
     }
   }
@@ -58,6 +66,7 @@ export const POST_BY_ID_QUERY = gql`
           id
           username
         }
+        entityType
       }
     }
   }
@@ -82,6 +91,7 @@ export const COMMENTS_BY_POST_ID_QUERY = gql`
           id
           username
         }
+        entityType
       }
     }
   }
