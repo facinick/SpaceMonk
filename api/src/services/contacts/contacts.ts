@@ -6,15 +6,9 @@ import { ROLE } from 'src/functions/auth'
 import { requireAuth } from 'src/lib/auth'
 
 export const contacts: QueryResolvers['contacts'] = () => {
-  requireAuth({ roles: ROLE.ADMIN })
+  requireAuth({ roles: [ROLE.ADMIN] })
   return db.contact.findMany()
 }
-
-// export const contact: QueryResolvers['contact'] = ({ id }) => {
-//   return db.contact.findUnique({
-//     where: { id },
-//   })
-// }
 
 export const createContact: MutationResolvers['createContact'] = ({
   input,
@@ -32,19 +26,3 @@ export const createContact: MutationResolvers['createContact'] = ({
     data: input,
   })
 }
-
-// export const updateContact: MutationResolvers['updateContact'] = ({
-//   id,
-//   input,
-// }) => {
-//   return db.contact.update({
-//     data: input,
-//     where: { id },
-//   })
-// }
-
-// export const deleteContact: MutationResolvers['deleteContact'] = ({ id }) => {
-//   return db.contact.delete({
-//     where: { id },
-//   })
-// }

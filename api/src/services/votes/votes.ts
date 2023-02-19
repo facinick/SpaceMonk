@@ -1,5 +1,4 @@
-import { useRequireAuth } from '@redwoodjs/graphql-server'
-import { ServerError } from 'src/error/ServerError'
+import { DatabaseError } from 'src/error/ServerError'
 import { requireAuth } from 'src/lib/auth'
 import { db } from 'src/lib/db'
 import type {
@@ -102,9 +101,9 @@ export const upvote = async ({ input }: MutationupvoteArgs) => {
 
         break
       default:
-        throw new ServerError({
-          message: `A vote in db exists that doesn't have a type, couldn't proceed with upvote!`,
-        })
+        throw new DatabaseError(
+          `A vote in db exists that doesn't have a type, couldn't proceed with upvote!`
+        )
     }
   }
 
@@ -212,9 +211,9 @@ export const downvote = async ({ input }: MutationupvoteArgs) => {
 
         break
       default:
-        throw new ServerError({
-          message: `A vote in db exists that doesn't have a type, couldn't proceed with upvote!`,
-        })
+        throw new DatabaseError(
+          `A vote in db exists that doesn't have a type, couldn't proceed with upvote!`
+        )
     }
   }
 
@@ -253,7 +252,7 @@ export const downvote = async ({ input }: MutationupvoteArgs) => {
   return response
 }
 
-export const Vote: VoteResolvers = {
+export const Vote: Partial<VoteResolvers> = {
   user: (_obj, { root }) =>
     db.vote.findUnique({ where: { id: root.id } }).user(),
   post: (_obj, { root }) =>

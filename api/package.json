@@ -5,6 +5,7 @@
   "dependencies": {
     "@redwoodjs/api": "4.1.2",
     "@redwoodjs/auth-dbauth-api": "4.1.2",
-    "@redwoodjs/graphql-server": "4.1.2"
+    "@redwoodjs/graphql-server": "4.1.2",
+    "modern-errors": "^5.5.1"
   }
 }
