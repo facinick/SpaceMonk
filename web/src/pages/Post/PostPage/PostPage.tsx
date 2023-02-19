@@ -15,7 +15,7 @@ const PostPage = (props: PageProps) => {
   return (
     <>
       <MetaTags title="Post" description="Post page" />
-      <div className="flex flex-col gap-3">
+      <div className="flex flex-col items-center gap-3">
         {/* BACK BUTTON */}
         <div className={`w-full rounded-lg`}>
           <button

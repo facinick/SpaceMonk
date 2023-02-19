@@ -3,7 +3,7 @@ type NoProsePostLayoutProps = {
 }
 
 const NoProsePostLayout = ({ children }: NoProsePostLayoutProps) => {
-  return <div className={`max-w-[768px]`}>{children}</div>
+  return <div className={`w-full  max-w-[768px]`}>{children}</div>
 }
 
 export default NoProsePostLayout

@@ -5,7 +5,9 @@ type PostLayoutProps = {
 }
 
 const PostLayout = ({ children }: PostLayoutProps) => {
-  return <div className={`${prose_classes} max-w-[768px]`}>{children}</div>
+  return (
+    <div className={`${prose_classes} w-full max-w-[768px]`}>{children}</div>
+  )
 }
 
 export default PostLayout

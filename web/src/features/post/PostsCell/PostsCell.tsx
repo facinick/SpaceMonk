@@ -9,7 +9,7 @@ export const QUERY = ALL_POSTS_QUERY
 export const beforeQuery = (props) => {
   return {
     variables: props,
-    // fetchPolicy: 'cache-first',
+    fetchPolicy: 'cache-first',
   }
 }
 

@@ -32,7 +32,9 @@ const PostCardBig = (props: ComponentProps) => {
   }
 
   return (
-    <div className={`border-current-color w-full rounded-lg border p-5`}>
+    <div
+      className={`border-current-color w-full items-center rounded-lg border p-5`}
+    >
       {/* Header */}
       <div className="relative inline-block w-full">
         <img
