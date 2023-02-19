@@ -1,6 +1,6 @@
 import { navigate, routes } from '@redwoodjs/router'
 import { MetaTags } from '@redwoodjs/web'
-import { HomeIcon } from 'src/components/Icons/icons'
+import { HomeIcon } from 'src/features/Icons/icons'
 import ResponsiveLayout from 'src/layouts/ResponsiveLayout/ResponsiveLayout'
 
 const Constants = {
@@ -22,7 +22,7 @@ export default () => (
               <p className="py-6">{Constants.message2}</p>
               <button
                 onClick={() => navigate(routes.home())}
-                className="btn-primary btn gap-2"
+                className="btn btn-primary gap-2"
               >
                 Home
                 <HomeIcon />

@@ -1,5 +1,5 @@
 import { MetaTags } from '@redwoodjs/web'
-import { ContactAdminForm } from 'src/components/ContactAdminForm/ContactAdminForm'
+import { ContactAdminForm } from 'src/features/contact/ContactAdminForm/ContactAdminForm'
 
 const HomePage = () => {
   return (

@@ -4,15 +4,15 @@ import { RedwoodApolloProvider } from '@redwoodjs/web/apollo'
 import FatalErrorPage from 'src/pages/FatalErrorPage'
 import Routes from 'src/Routes'
 
-import './scaffold.css'
+import './css/scaffold.css'
 import { AuthProvider, useAuth } from './auth'
 
-import './index.css'
+import './css/index.css'
 import { useEffect } from 'react'
 import { useThemeStore } from './store/zustand/themeStore'
-import { Initialize } from './components/Init/Initialize'
 import { HotkeysProvider } from 'react-hotkeys-hook'
-import { ApphotKeys } from './components/HotKeys/AppHotKeys'
+import { Initialize } from './features/Init/Initialize'
+import { ApphotKeys } from './features/keyboard_support/HotKeys/AppHotKeys'
 
 const App = () => {
   const { switchToPreferredDarkTheme, switchToPreferredLightTheme, theme } =

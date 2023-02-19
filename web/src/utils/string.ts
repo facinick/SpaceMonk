@@ -1,3 +1,5 @@
+const MAX_STRING_LENGTH = 250
+
 function rgbToHex(rgb: string): string {
   // Remove the "rgb(" and ")" characters from the input string
   const rgbValues = rgb.slice(4, -1).split(',')
@@ -34,4 +36,25 @@ function abbreviateNumberPlusMinus50Million(number: number): string {
   return shortNumber + suffixes[suffixNum]
 }
 
-export { rgbToHex, capitalizeFirstLetter, abbreviateNumberPlusMinus50Million }
+function truncate(
+  value: string | number,
+  by = MAX_STRING_LENGTH
+): [string, boolean] {
+  let output = value?.toString() ?? ''
+
+  let truncated = false
+
+  if (output.length > by) {
+    output = output.substring(0, by)
+    truncated = true
+  }
+
+  return [output, truncated]
+}
+
+export {
+  rgbToHex,
+  capitalizeFirstLetter,
+  abbreviateNumberPlusMinus50Million,
+  truncate,
+}

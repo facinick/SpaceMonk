@@ -3,17 +3,17 @@ import { Toaster } from '@redwoodjs/web/dist/toast'
 import { useMemo } from 'react'
 import { useAuth } from 'src/auth'
 import {
+  HomeIcon,
   BlogIcon,
   BurgerMenuIcon,
-  HomeIcon,
-  LoginIcon,
-  LogoutIcon,
   NewPostIcon,
-  ResetThemeIcon,
+  LoginIcon,
   UserRegisterIcon,
-} from 'src/components/Icons/icons'
-import ModeToggle from 'src/components/ModeToggle/ModeToggle'
-import ThemeSelectComponent from 'src/components/ThemeSelectComponent/ThemeSelectComponent'
+  ResetThemeIcon,
+  LogoutIcon,
+} from 'src/features/Icons/icons'
+import ThemeModeToggleComponent from 'src/features/theme/ThemeModeToggleComponent/ThemeModeToggleComponent'
+import ThemeSelectComponent from 'src/features/theme/ThemeSelectComponent/ThemeSelectComponent'
 import { useThemeStore } from 'src/store/zustand/themeStore'
 import { wait } from 'src/utils/misc'
 
@@ -137,7 +137,7 @@ const ResponsiveLayout = ({ children }: ResponsiveLayoutProps) => {
                   )}
                   {/* TOGLE DARK MARRYLAND NIGHT MODES */}
                   <li key={`/toggle_modes`}>
-                    <ModeToggle />
+                    <ThemeModeToggleComponent />
                     {/* <kbd className="kbd">`</kbd> */}
                   </li>
                   {/* RESET THEME */}
