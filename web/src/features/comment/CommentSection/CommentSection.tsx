@@ -52,7 +52,7 @@ const CommentSection = ({ comments, postId }: ComponentProps) => {
               <article className="group !my-0 flex w-full flex-col justify-between self-stretch rounded-2xl bg-base-100 px-4 py-5">
                 {body}
                 <div className="flex flex-row justify-between">
-                  <div className="text-gray-700 dark:text-gray-400">
+                  <div className="brightness-75">
                     <address className="author inline-block">
                       @
                       <a rel="author" href="#">

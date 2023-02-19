@@ -31,8 +31,13 @@ export function UpdatePostEditor({ post }: ComponentProps) {
     bodyPlainText,
   } = useUpdatePostStore()
 
-  const { id } = post
+  let definedServerHeaderImageUrl = post.headerImageUrl
+    ? post.headerImageUrl
+    : ''
+  let definedClientHeaderImageUrl = headerImageUrl ? headerImageUrl : ''
 
+  const { id } = post
+  //@ts-ignore
   const [updatePost, { loading }] = useMutation<updatePost>(
     UPDATE_POST_MUTATION,
     {
@@ -52,7 +57,7 @@ export function UpdatePostEditor({ post }: ComponentProps) {
   useEffect(() => {
     setTitle(post.title)
     setBody(post.body)
-    setHeaderImageUrl(post.headerImageUrl || '')
+    setHeaderImageUrl(definedServerHeaderImageUrl)
   }, [post])
 
   const initialBodyValue = useMemo(() => {
@@ -91,7 +96,7 @@ export function UpdatePostEditor({ post }: ComponentProps) {
     event.preventDefault()
     const _title = title.trim()
     const _body = body.trim()
-    const _headerImageUrl = headerImageUrl.trim()
+    const _headerImageUrl = definedClientHeaderImageUrl.trim()
 
     if (_title === '') {
       toast.error(`Title cannot be empty`)
@@ -135,11 +140,16 @@ export function UpdatePostEditor({ post }: ComponentProps) {
 
   const disableInputs = loading && _validatingHeaderImageUrl
 
-  const isEdited = post.body !== body
+  const isEdited =
+    post.body !== body ||
+    post.title != title ||
+    definedServerHeaderImageUrl !== definedClientHeaderImageUrl
 
   return (
     <>
-      <div className="flex w-[100%] flex-col items-center gap-5 sm:w-[80%]">
+      <div
+        className={`flex w-full flex-col items-center gap-5 rounded-lg border border-base-200 p-5`}
+      >
         {/* TITLE EDIT */}
         <div className="form-control w-full">
           <input
@@ -158,7 +168,7 @@ export function UpdatePostEditor({ post }: ComponentProps) {
           <input
             disabled={disableInputs}
             onChange={onHeaderImageUrlChange}
-            value={headerImageUrl}
+            value={definedClientHeaderImageUrl}
             type="text"
             placeholder="Image url"
             className="input-bordered input w-full"
@@ -190,7 +200,7 @@ export function UpdatePostEditor({ post }: ComponentProps) {
               disabled={disableInputs}
               onClick={onSubmit}
             >
-              {disableInputs ? 'Updated' : 'Update'}
+              {disableInputs ? 'Updating' : 'Update'}
               <PencilIcon />
             </button>
           )}

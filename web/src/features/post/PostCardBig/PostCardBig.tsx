@@ -2,7 +2,6 @@ import { useParseHtml } from 'src/hooks/useParseHtml'
 import { useAuth } from 'src/auth'
 import { navigate, routes } from '@redwoodjs/router'
 import { EditPostIcon } from '../../Icons/icons'
-import { prose_classes } from '../../editor/TIpTapEditor'
 import { POST_BY_ID } from 'types/graphql'
 import DeletePostButton from '../DeletePostButton/DeletePostButton'
 import { PostVotingComponent } from 'src/features/vote/VotingComponent/PostVotingComponent'
@@ -33,9 +32,7 @@ const PostCardBig = (props: ComponentProps) => {
   }
 
   return (
-    <div
-      className={`${prose_classes} border-current-color w-full max-w-2xl rounded-lg border p-5`}
-    >
+    <div className={`border-current-color w-full rounded-lg border p-5`}>
       {/* Header */}
       <div className="relative inline-block w-full">
         <img

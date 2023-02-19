@@ -1,7 +1,7 @@
 import { navigate, routes } from '@redwoodjs/router'
 import { MetaTags } from '@redwoodjs/web'
-import { prose_classes } from 'src/features/editor/TIpTapEditor'
 import { BackIcon } from 'src/features/Icons/icons'
+//@ts-ignore
 import UpdatePostCell from 'src/features/post/UpdatePostCell/UpdatePostCell'
 
 interface PageProps {
@@ -13,20 +13,20 @@ const PostPage = (props: PageProps) => {
 
   return (
     <>
-      <MetaTags title="Post" description="Post page" />
-      <div className="flex w-full flex-col items-center gap-8">
+      <MetaTags title="Post" description="Edit Post page" />
+      <div className="flex flex-col gap-3">
         {/* BACK BUTTON */}
-        <div className={`${prose_classes} w-full max-w-2xl rounded-lg`}>
+        <div className={`w-full rounded-lg`}>
           <button
             title="Go Back"
-            onClick={() => navigate(routes.blog())}
-            className="btn btn-link btn-sm gap-2"
+            onClick={() => navigate(routes.post({ id }))}
+            className="btn-sm btn gap-2"
           >
             <BackIcon />
             Back
           </button>
         </div>
-        {/* POST */}
+        {/* POST EDITOR*/}
         <UpdatePostCell id={id} />
       </div>
     </>

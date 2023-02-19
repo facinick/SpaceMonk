@@ -1,5 +1,4 @@
 import { Link, routes } from '@redwoodjs/router'
-import { prose_classes } from '../../editor/TIpTapEditor'
 
 interface ComponentProps {
   headerImageUrl?: string
@@ -32,7 +31,7 @@ const PostCard = (props: ComponentProps) => {
             alt=""
           />
         </figure>
-        <div className={`card-body w-[100%] ${prose_classes}`}>
+        <div className={`card-body w-[100%]`}>
           <h5
             style={{
               overflowWrap: 'anywhere',
@@ -46,10 +45,7 @@ const PostCard = (props: ComponentProps) => {
             {bodyPlainText}
             {truncated && <span> ... read more</span>}
           </div>
-          <time
-            className="text-gray-700 dark:text-gray-400"
-            dateTime={createdAt}
-          >
+          <time className="brightness-75" dateTime={createdAt}>
             {new Date(createdAt).toDateString()}
           </time>
         </div>

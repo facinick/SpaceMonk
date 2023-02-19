@@ -43,6 +43,7 @@ const App = () => {
   }, [theme])
 
   return (
+    //@ts-ignore
     <FatalErrorBoundary page={FatalErrorPage}>
       <RedwoodProvider titleTemplate="%PageTitle | %AppTitle">
         <AuthProvider>

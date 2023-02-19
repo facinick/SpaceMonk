@@ -21,7 +21,7 @@ const initialState: State = {
   title: '',
   bodyPlainText: '',
   body: '',
-  headerImageUrl: '',
+  headerImageUrl: null,
 }
 
 const useUpdatePostStore = createZustandChildrenStore<UpdatePostStore>()(

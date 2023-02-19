@@ -77,7 +77,7 @@ const ResponsiveLayout = ({ children }: ResponsiveLayoutProps) => {
           <div className="flex justify-end">
             <div className="flex items-center justify-center gap-2">
               {/* BLOG LINK */}
-              <Link to={routes.blog()} className="btn btn-primary btn-sm gap-2">
+              <Link to={routes.blog()} className="btn-primary btn-sm btn gap-2">
                 Blog
                 <BlogIcon />
               </Link>
@@ -88,7 +88,7 @@ const ResponsiveLayout = ({ children }: ResponsiveLayoutProps) => {
                 {/* BURGER MENU ICON */}
                 <label
                   tabIndex={0}
-                  className="btn btn-ghost rounded-btn btn-sm"
+                  className="btn-ghost rounded-btn btn-sm btn"
                 >
                   <BurgerMenuIcon />
                 </label>
@@ -166,7 +166,7 @@ const ResponsiveLayout = ({ children }: ResponsiveLayoutProps) => {
             </div>
           </div>
         </div>
-        <div className="navbar rounded-box px-3">
+        <div className="rounded-box px-3">
           <div className="flex-1 gap-2">
             <div className="breadcrumbs text-sm">
               <ul>
@@ -179,8 +179,8 @@ const ResponsiveLayout = ({ children }: ResponsiveLayoutProps) => {
         </div>
       </header>
       {/* main content */}
-      <main className="bg-base-300 text-base-content">
-        <div className="flex h-[100%] min-h-[100vh] flex-col items-center px-4 py-8">
+      <main className="grow bg-base-300 text-base-content">
+        <div className="h-min-[calc(100%-152px)] flex h-[100%] flex-col items-center px-4 py-8">
           {children}
         </div>
       </main>

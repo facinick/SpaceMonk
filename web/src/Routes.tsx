@@ -9,6 +9,8 @@
 
 import { Router, Route, Private, Set, Redirect, routes } from '@redwoodjs/router'
 import { useAuth } from './auth'
+import NoProsePostLayout from './layouts/NoProsePostLayout/NoProsePostLayout'
+import PostLayout from './layouts/PostLayout/PostLayout'
 import ResponsiveLayout from './layouts/ResponsiveLayout/ResponsiveLayout'
 
 const Routes = () => {
@@ -17,14 +19,20 @@ const Routes = () => {
       <Set wrap={ResponsiveLayout}>
         {/* Public Routes */}
         <Private unauthenticated="home">
-          <Route path="/posts/new" page={PostNewPostPage} name="newPost" />
-          <Route path="/posts/{id:Int}/edit" page={PostEditPostPage} name="editPost" />
+          <Set wrap={PostLayout}>
+            <Route path="/posts/new" page={PostNewPostPage} name="newPost" />
+            <Route path="/posts/{id:Int}/edit" page={PostEditPostPage} name="editPost" />
+          </Set>
         </Private>
 
         {/* Public Routes */}
         <Route path="/" page={HomePage} name="home" />
-        <Route path="/blog" page={BlogPage} name="blog" />
-        <Route path="/post/{id:Int}" page={PostPostPage} name="post" />
+        <Set wrap={PostLayout}>
+          <Route path="/post/{id:Int}" page={PostPostPage} name="post" />
+        </Set>
+        <Set wrap={NoProsePostLayout}>
+          <Route path="/blog" page={BlogPage} name="blog" />
+        </Set>
         <Route path="/login" page={LoginPage} name="login" />
         <Route path="/signup" page={SignupPage} name="signup" />
       </Set>

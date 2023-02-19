@@ -4,6 +4,7 @@ const BlogPage = () => {
   return (
     <>
       <MetaTags title="Blog" description="Blog page" />
+      {/* ALL POSTS VIEWER */}
       <PostsCell />
     </>
   )

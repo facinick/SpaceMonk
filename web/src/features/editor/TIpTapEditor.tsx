@@ -396,5 +396,5 @@ const TipTapEditor = React.forwardRef<Editor, EditorProps>((props, ref) => {
   )
 })
 
-export const prose_classes = `prose prose-sm sm:prose lg:prose-lg xl:prose-2xl`
+export const prose_classes = `prose prose-sm sm:prose md:prose-md lg:prose-lg`
 export { TipTapEditor }

@@ -23,9 +23,9 @@ export const Failure = ({ error }: CellFailureProps) => (
 
 export const Success = ({ posts }: CellSuccessProps<ALL_POSTS>) => {
   return (
-    <ul className="flex max-w-[720px] flex-col gap-8">
+    <ul className="flex flex-col gap-8">
       {posts.map((post) => {
-        const [bodyPlainText, truncated] = truncate(post.bodyPlainText, 250)
+        const [bodyPlainText, truncated] = truncate(post.bodyPlainText, 150)
         return (
           <li className="flex items-center justify-center" key={post.id}>
             <PostCard

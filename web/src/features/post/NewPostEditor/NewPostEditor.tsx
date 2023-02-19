@@ -124,7 +124,9 @@ export function NewPostEditor() {
 
   return (
     <>
-      <div className="flex w-[100%] flex-col items-center gap-5 sm:w-[80%]">
+      <div
+        className={`flex w-full flex-col items-center gap-5 rounded-lg border border-base-200 p-5`}
+      >
         <div className="form-control w-full">
           <input
             disabled={disableInputs}
