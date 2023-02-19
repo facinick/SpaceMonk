@@ -126,3 +126,11 @@ export const CREATE_CONTACT_MUTATION = gql`
     }
   }
 `
+
+export const CREATE_CONTACT_ADMIN_MUTATION = gql`
+  mutation createContactAdmin($input: CreateContactAdminInput!) {
+    createContactAdmin(input: $input) {
+      id
+    }
+  }
+`

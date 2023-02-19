@@ -1,11 +1,11 @@
 import { MetaTags } from '@redwoodjs/web'
-import ContactForm from 'src/components/ContactForm/ContactForm'
+import { ContactAdminForm } from 'src/components/ContactAdminForm/ContactAdminForm'
 
 const HomePage = () => {
   return (
     <>
       <MetaTags title="Home" description="Home page" />
-      <ContactForm />
+      <ContactAdminForm />
     </>
   )
 }

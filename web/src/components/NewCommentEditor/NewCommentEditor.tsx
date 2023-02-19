@@ -10,6 +10,7 @@ import { ChatBubbleIcon } from '../Icons/icons'
 import { useAuthentication } from 'src/hooks/useAuthentication'
 import { wait } from 'src/utils/misc'
 import { createComment } from 'types/graphql'
+import { isBetween } from 'src/utils/validations'
 
 type ComponentProps = {}
 
@@ -62,6 +63,17 @@ function NewCommentEditor(props: ComponentProps) {
       return
     }
 
+    if (
+      !isBetween({
+        value: _body.length,
+        lower: 10,
+        upper: 200,
+      })
+    ) {
+      toast.error(`Comment must be within 10 to 200 chars long :/`)
+      return
+    }
+
     await createComment({
       variables: {
         input: {
@@ -93,8 +105,10 @@ function NewCommentEditor(props: ComponentProps) {
             disabled={disableInputs}
             value={body}
             required
+            minLength={10}
+            maxLength={200}
             onChange={onBodyChange}
-            placeholder="Say something worth saying"
+            placeholder="Say something worth saying (in 10-200 letters)"
           ></textarea>
           <label className="label">
             <span className="label-text-alt">ʇuǝɯɯoƆ</span>
@@ -104,7 +118,7 @@ function NewCommentEditor(props: ComponentProps) {
           <button
             disabled={disableInputs}
             onClick={submit}
-            className={`btn btn-primary btn-sm gap-2 ${
+            className={`btn-primary btn-sm btn gap-2 ${
               disableInputs ? 'disabled' : ''
             }`}
           >

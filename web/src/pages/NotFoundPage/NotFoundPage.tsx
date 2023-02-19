@@ -1,44 +1,36 @@
+import { navigate, routes } from '@redwoodjs/router'
+import { MetaTags } from '@redwoodjs/web'
+import { HomeIcon } from 'src/components/Icons/icons'
+import ResponsiveLayout from 'src/layouts/ResponsiveLayout/ResponsiveLayout'
+
+const Constants = {
+  header: '🙅 ?!?!! 🙅',
+  message1: 'Chasing after the unattainable is the fun part. - Dean Potter',
+  message2: "Not here though, this page doesn't fucking exist!",
+}
+
 export default () => (
-  <main>
-    <style
-      dangerouslySetInnerHTML={{
-        __html: `
-              html, body {
-                margin: 0;
-              }
-              html * {
-                box-sizing: border-box;
-              }
-              main {
-                display: flex;
-                align-items: center;
-                font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
-                text-align: center;
-                background-color: #E2E8F0;
-                height: 100vh;
-              }
-              section {
-                background-color: white;
-                border-radius: 0.25rem;
-                width: 32rem;
-                padding: 1rem;
-                margin: 0 auto;
-                box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
-              }
-              h1 {
-                font-size: 2rem;
-                margin: 0;
-                font-weight: 500;
-                line-height: 1;
-                color: #2D3748;
-              }
-            `,
-      }}
-    />
-    <section>
-      <h1>
-        <span>404 Page Not Found</span>
-      </h1>
-    </section>
-  </main>
+  <>
+    <ResponsiveLayout>
+      <MetaTags title="Not Found" description="404 error page" />
+      <div className="flex w-full flex-col items-center gap-8">
+        <div className="hero rounded bg-base-200">
+          <div className="hero-content text-center">
+            <div className="max-w-md">
+              <h1 className="text-5xl font-bold">{Constants.header}</h1>
+              <p className="py-6">{Constants.message1}</p>
+              <p className="py-6">{Constants.message2}</p>
+              <button
+                onClick={() => navigate(routes.home())}
+                className="btn-primary btn gap-2"
+              >
+                Home
+                <HomeIcon />
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ResponsiveLayout>
+  </>
 )

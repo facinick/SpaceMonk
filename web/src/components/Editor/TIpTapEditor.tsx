@@ -348,7 +348,7 @@ const TipTapEditor = React.forwardRef<Editor, EditorProps>((props, ref) => {
       Text,
       TextStyle,
       Placeholder.configure({
-        placeholder: 'Write something … Nice',
+        placeholder: 'Write something … Nice 🙃',
       }),
       TextAlign.configure({
         types: ['heading', 'paragraph'],

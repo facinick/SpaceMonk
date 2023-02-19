@@ -1,36 +1,29 @@
 import { MetaTags } from '@redwoodjs/web'
 import { useMutation } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/toast'
-import { createContact } from 'types/graphql'
 import { FormEvent, useRef } from 'react'
-import {
-  MessageIcon,
-  PhoneIcon,
-  SendRightIcon,
-  UserLoginIcon,
-} from '../Icons/icons'
-import { CREATE_CONTACT_MUTATION } from 'src/graphql/mutations'
+import { MessageIcon, SendRightIcon, UserLoginIcon } from '../Icons/icons'
+import { CREATE_CONTACT_ADMIN_MUTATION } from 'src/graphql/mutations'
+import { createContactAdmin } from 'types/graphql'
 
 const Constants = {
-  formTitle: 'Ping Admin',
+  formTitle: 'Ping Admin.. Ping him!',
   name: 'Name',
   namePlaceholder: 'Nick',
-  phone: 'Phone',
-  phonePlaceholder: '9283746372 (10 Digits)',
   message: 'Message',
-  messagePlaceholder: 'Leave blank to just get a call back!',
+  messagePlaceholder: 'Hello',
   submitButtonText: 'Submit',
   submitButtonTextBusy: 'Submitting',
 }
 
-const ContactForm = () => {
+const ContactAdminForm = () => {
   const formRef = useRef<HTMLFormElement>(null)
 
-  const [create, { loading }] = useMutation<createContact>(
-    CREATE_CONTACT_MUTATION,
+  const [create, { loading }] = useMutation<createContactAdmin>(
+    CREATE_CONTACT_ADMIN_MUTATION,
     {
       onCompleted: () => {
-        toast.success(`Submitted! You'll get a call back shortly!`)
+        toast.success(`Pinged!`)
       },
       onError: () => {
         toast.error(`Couldn't submit, don't know why!`)
@@ -44,13 +37,11 @@ const ContactForm = () => {
     const formData = new FormData(formRef.current)
 
     const name = formData.get('name')
-    const phone = formData.get('phone')
     const message = formData.get('message')
 
     const contactFormData = {
       name: name,
-      phone: phone,
-      ...(message !== '' && { message: message }),
+      message: message,
     }
 
     create({ variables: { input: contactFormData } })
@@ -87,24 +78,6 @@ const ContactForm = () => {
               </label>
             </div>
             <div>
-              <label htmlFor="phone" className="label">
-                <span className="label-text">{Constants.phone}</span>
-              </label>
-              <label className="input-group">
-                <span>
-                  <PhoneIcon />
-                </span>
-                <input
-                  type="text"
-                  disabled={disableInput}
-                  id="phone"
-                  placeholder={Constants.phonePlaceholder}
-                  className="input-bordered input w-full"
-                  required
-                />
-              </label>
-            </div>
-            <div>
               <label htmlFor="message" className="label">
                 <span className="label-text">{Constants.message}</span>
               </label>
@@ -114,10 +87,12 @@ const ContactForm = () => {
                   <MessageIcon />
                 </span>
                 <input
-                  max={200}
+                  maxLength={200}
+                  minLength={10}
                   disabled={disableInput}
                   type="text"
                   id="message"
+                  required
                   placeholder={Constants.messagePlaceholder}
                   className="input-bordered input w-full"
                 />
@@ -140,4 +115,4 @@ const ContactForm = () => {
   )
 }
 
-export default ContactForm
+export { ContactAdminForm }
