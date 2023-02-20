@@ -8,6 +8,13 @@ import { CellError } from '../../redwood/CellWrapper/Error'
 
 export const QUERY = POST_BY_ID_QUERY
 
+export const beforeQuery = (props) => {
+  return {
+    variables: props,
+    fetchPolicy: 'cache-first',
+  }
+}
+
 export const Loading = () => <CellLoading />
 
 export const Empty = () => <CellEmpty itemName="Post" />

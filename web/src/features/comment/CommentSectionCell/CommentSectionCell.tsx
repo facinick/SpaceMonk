@@ -11,6 +11,13 @@ import { CommentSection } from '../CommentSection/CommentSection'
 
 export const QUERY = COMMENTS_BY_POST_ID_QUERY
 
+export const beforeQuery = (props) => {
+  return {
+    variables: props,
+    fetchPolicy: 'cache-first',
+  }
+}
+
 export const Loading = () => <CellLoading />
 
 export const Empty = () => <CellEmpty itemName="comments" />
