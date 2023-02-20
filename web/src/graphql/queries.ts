@@ -98,3 +98,18 @@ export const COMMENTS_BY_POST_ID_QUERY = gql`
     }
   }
 `
+
+export const CONTACT_ADMINS_QUERY = gql`
+  query CONTACT_ADMINS {
+    contactAdmins {
+      id
+      name
+      message
+      createdAt
+      user {
+        id
+        username
+      }
+    }
+  }
+`

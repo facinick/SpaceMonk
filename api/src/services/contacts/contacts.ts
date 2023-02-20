@@ -6,7 +6,7 @@ import { ROLE } from 'src/functions/auth'
 import { requireAuth } from 'src/lib/auth'
 
 export const contacts: QueryResolvers['contacts'] = () => {
-  requireAuth({ roles: ROLE.ADMIN })
+  requireAuth([ROLE.ADMIN])
   return db.contact.findMany()
 }
 

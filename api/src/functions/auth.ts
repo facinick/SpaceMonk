@@ -9,7 +9,7 @@ export enum ROLE {
   MEMBER = 'member',
 }
 
-export const DEFAULT_ROLE = ROLE.ADMIN
+export const DEFAULT_ROLE = ROLE.MEMBER
 
 export const handler = async (
   event: APIGatewayProxyEvent,

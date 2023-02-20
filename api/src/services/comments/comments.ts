@@ -51,7 +51,7 @@ export const comment: QueryResolvers['comment'] = ({ id }) => {
 export const createComment: MutationResolvers['createComment'] = async ({
   input,
 }) => {
-  requireAuth({})
+  requireAuth()
   const authorId = context.currentUser.id
   const comment = await db.comment.create({
     data: {

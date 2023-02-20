@@ -1,4 +1,3 @@
-import { useRequireAuth } from '@redwoodjs/graphql-server'
 import { ServerError } from 'src/error/ServerError'
 import { requireAuth } from 'src/lib/auth'
 import { db } from 'src/lib/db'
@@ -34,7 +33,7 @@ export const vote = ({ id }) => {
 }
 
 export const upvote = async ({ input }: MutationupvoteArgs) => {
-  requireAuth({})
+  requireAuth()
 
   const { postId, commentId, entityType } = input
 
@@ -144,7 +143,7 @@ export const upvote = async ({ input }: MutationupvoteArgs) => {
 }
 
 export const downvote = async ({ input }: MutationupvoteArgs) => {
-  requireAuth({})
+  requireAuth()
 
   const { postId, commentId, entityType } = input
 

@@ -31,6 +31,10 @@ export const getCurrentUser = async (session: Decoded) => {
     },
   })
 
+  // this is just so redwood can check for roles when we do hasRole(['admin]) in web side
+  const userRoles = user.userRoles
+  user['roles'] = userRoles.map((userRole) => userRole.name)
+
   return user
 }
 
@@ -85,7 +89,7 @@ export const hasRole = (allowedRoles: AllowedRoles): boolean => {
  *
  * @see https://github.com/redwoodjs/redwood/tree/main/packages/auth for examples
  */
-export const requireAuth = ({ roles }: { roles?: AllowedRoles } = {}) => {
+export const requireAuth = (roles: AllowedRoles = []) => {
   if (!isAuthenticated()) {
     throw new AuthenticationError("You don't have permission to do that.")
   }
@@ -100,7 +104,7 @@ export const requireOwnerAccess = ({
 }: {
   id: typeof context.currentUser.id
 }) => {
-  requireAuth({})
+  requireAuth()
 
   if (id !== context.currentUser.id) {
     throw new ForbiddenError("You don't have access to do that.")
@@ -108,7 +112,7 @@ export const requireOwnerAccess = ({
 }
 
 export const requireCommentOwner = async ({ id }: { id: number }) => {
-  requireAuth({})
+  requireAuth()
 
   const comment = await db.comment.findUnique({
     where: {
@@ -133,7 +137,7 @@ export const requirePostOwner = async ({
     },
   })
 
-  if (post.id === id) {
+  if (post.authorId === userId) {
     return true
   } else {
     return false

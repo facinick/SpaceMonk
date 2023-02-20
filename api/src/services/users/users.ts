@@ -2,7 +2,6 @@ import type {
   QueryResolvers,
   MutationResolvers,
   UserRelationResolvers,
-  UserRole,
 } from 'types/graphql'
 
 import { db } from 'src/lib/db'
@@ -54,7 +53,7 @@ export const createUser: MutationResolvers['createUser'] = ({ input }) => {
 }
 
 export const deleteUser: MutationResolvers['deleteUser'] = ({ id }) => {
-  requireAuth({ roles: [ROLE.ADMIN] })
+  requireAuth([ROLE.ADMIN])
   return db.user.delete({
     where: { id },
   })
