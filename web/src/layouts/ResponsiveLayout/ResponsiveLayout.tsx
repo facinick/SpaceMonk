@@ -11,6 +11,7 @@ import {
   UserRegisterIcon,
   ResetThemeIcon,
   LogoutIcon,
+  UserLoginIcon,
 } from 'src/features/Icons/icons'
 import ThemeModeToggleComponent from 'src/features/theme/ThemeModeToggleComponent/ThemeModeToggleComponent'
 import ThemeSelectComponent from 'src/features/theme/ThemeSelectComponent/ThemeSelectComponent'
@@ -97,6 +98,21 @@ const ResponsiveLayout = ({ children }: ResponsiveLayoutProps) => {
                   tabIndex={0}
                   className="dropdown-content menu rounded-box mt-4 w-60 gap-y-2 bg-base-100 p-2 shadow"
                 >
+                  {/* PROFILE */}
+                  {isAutenticated && (
+                    <li key={'profile'}>
+                      <NavLink
+                        className={'flex justify-between'}
+                        activeClassName="active"
+                        to={routes.profile({
+                          username: currentUserOrFalse.username,
+                        })}
+                      >
+                        <UserLoginIcon />
+                        {`View Profile`}
+                      </NavLink>
+                    </li>
+                  )}
                   {/* CREATE POST */}
                   {isAuthorizedToCreate && (
                     <li key={'create post'}>

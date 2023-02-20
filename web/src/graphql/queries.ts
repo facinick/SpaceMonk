@@ -113,3 +113,20 @@ export const CONTACT_ADMINS_QUERY = gql`
     }
   }
 `
+export const USER_PROFILE_BY_USERNAME_QUERY = gql`
+  query USER_PROFLIE_BY_USERNAME($username: String!) {
+    userProfileByUsername(username: $username) {
+      id
+      bio
+      profilePictureUrl
+      headerImageUrl
+      name
+      age
+      city
+      interests
+      user {
+        username
+      }
+    }
+  }
+`

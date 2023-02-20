@@ -33,6 +33,7 @@ const Routes = () => {
         <Set wrap={NoProsePostLayout}>
           <Route path="/blog" page={BlogPage} name="blog" />
         </Set>
+        <Route path="/profile/{username:String}" page={ProfilePage} name="profile" />
         <Route path="/login" page={LoginPage} name="login" />
         <Route path="/signup" page={SignupPage} name="signup" />
       </Set>

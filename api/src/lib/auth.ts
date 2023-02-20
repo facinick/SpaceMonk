@@ -94,7 +94,8 @@ export const requireAuth = (roles: AllowedRoles = []) => {
     throw new AuthenticationError("You don't have permission to do that.")
   }
 
-  if (roles && !hasRole(roles)) {
+  if (roles.length > 0 && !hasRole(roles)) {
+    console.log(`fucked`)
     throw new ForbiddenError("You don't have access to do that.")
   }
 }
@@ -114,13 +115,14 @@ export const requireOwnerAccess = ({
 export const requireCommentOwner = async ({ id }: { id: number }) => {
   requireAuth()
 
+  const userId: number = context.currentUser.id
   const comment = await db.comment.findUnique({
     where: {
       id,
     },
   })
 
-  if (comment.authorId !== context.currentUser.id) {
+  if (comment.authorId !== userId) {
     throw new ForbiddenError("You don't have access to do that.")
   }
 }
@@ -130,7 +132,9 @@ export const requirePostOwner = async ({
 }: {
   id: number
 }): Promise<boolean> => {
-  const userId: number = context.currentUser?.id
+  requireAuth()
+
+  const userId: number = context.currentUser.id
   const post = await db.post.findUnique({
     where: {
       id,
