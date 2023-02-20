@@ -20,24 +20,26 @@ export const MY_DATA_QUERY = gql`
 `
 
 export const ALL_POSTS_QUERY = gql`
-  query ALL_POSTS {
-    posts {
-      id
-      title
-      body
-      headerImageUrl
-      bodyPlainText
-      createdAt
-      updatedAt
-      author {
+  query ALL_POSTS($query: PaginationInput) {
+    posts(query: $query) {
+      posts {
         id
-      }
-      comments {
-        id
-      }
-      votes {
-        id
-        entityType
+        title
+        body
+        headerImageUrl
+        bodyPlainText
+        createdAt
+        updatedAt
+        author {
+          id
+        }
+        comments {
+          id
+        }
+        votes {
+          id
+          entityType
+        }
       }
     }
   }
@@ -96,11 +98,3 @@ export const COMMENTS_BY_POST_ID_QUERY = gql`
     }
   }
 `
-
-// const MY_QUERY = gql`
-//   query ($arg1: Int, $arg2: String) {
-//     posts(arg1: $arg1, arg2: $arg1) {
-//       id
-//     }
-//   }
-// `;

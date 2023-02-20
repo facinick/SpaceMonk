@@ -13,6 +13,28 @@ export const schema = gql`
   # comments  Comment[]                                          #
   # votes     Vote[]                                             #
   #--------------------------------------------------------------#
+
+  input PaginationCursor {
+    id: Int
+  }
+
+  type NextPaginationCursor {
+    id: Int
+  }
+
+  input OrderBy {
+    key: String
+    order: String
+  }
+
+  input PaginationInput {
+    skip: Int
+    take: Int
+    cursor: PaginationCursor
+    #  createdAt activity score
+    orderBy: OrderBy
+    filter: String
+  }
   type Post {
     id: Int! #-----------------------------------------#public
     title: String! #-----------------------------------#public
@@ -30,8 +52,16 @@ export const schema = gql`
   }
 
   type Query {
-    posts: [Post]! @skipAuth #-------------------------#public
+    # posts: [Post]! @skipAuth #-------------------------#public
+    posts(query: PaginationInput): PaginationResponse! @skipAuth #-------------------------#public
     post(id: Int!): Post @skipAuth #-------------------#public
+  }
+
+  type PaginationResponse {
+    posts: [Post]!
+    cursor: NextPaginationCursor
+    count: Int!
+    end: Boolean!
   }
 
   input CreatePostInput {

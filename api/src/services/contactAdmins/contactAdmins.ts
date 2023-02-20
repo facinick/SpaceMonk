@@ -1,5 +1,4 @@
 import type { QueryResolvers, MutationResolvers } from 'types/graphql'
-
 import { db } from 'src/lib/db'
 import { requireAuth } from 'src/lib/auth'
 
@@ -11,9 +10,11 @@ export const contactAdmins: QueryResolvers['contactAdmins'] = () => {
 export const createContactAdmin: MutationResolvers['createContactAdmin'] = ({
   input,
 }) => {
-  return db.contactAdmin.create({
+  const contactAdmin = db.contactAdmin.create({
     data: input,
   })
+
+  return contactAdmin
 }
 
 export const deleteContactAdmin: MutationResolvers['deleteContactAdmin'] = ({
