@@ -13,8 +13,12 @@ export const schema = gql`
     user: User!
   }
 
+  input UserPresenceQueryInput {
+    orderBy: OrderBy!
+  }
+
   type Query {
-    userPresences: [UserPresenceResponse!]! @requireAuth
+    userPresences(query: PaginationInput): [UserPresenceResponse!]! @requireAuth
     userPresenceByUserId(userId: Int!): UserPresenceResponse @requireAuth
   }
 

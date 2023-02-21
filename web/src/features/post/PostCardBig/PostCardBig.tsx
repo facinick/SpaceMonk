@@ -1,6 +1,6 @@
 import { useParseHtml } from 'src/hooks/useParseHtml'
 import { useAuth } from 'src/auth'
-import { navigate, routes } from '@redwoodjs/router'
+import { Link, navigate, routes } from '@redwoodjs/router'
 import { EditPostIcon } from '../../Icons/icons'
 import { POST_BY_ID } from 'types/graphql'
 import DeletePostButton from '../DeletePostButton/DeletePostButton'
@@ -54,9 +54,14 @@ const PostCardBig = (props: ComponentProps) => {
       {/* Author */}
       <address className="author">
         By{' '}
-        <a rel="author" href="#">
+        <Link
+          rel="author"
+          to={routes.profile({
+            username,
+          })}
+        >
           @{username}
-        </a>
+        </Link>
       </address>
       on{' '}
       <time className="inline" title={readableTime} dateTime={createdAt}>

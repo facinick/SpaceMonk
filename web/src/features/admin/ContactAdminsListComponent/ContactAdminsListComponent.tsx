@@ -1,3 +1,4 @@
+import { Link, routes } from '@redwoodjs/router'
 import { CellSuccessProps } from '@redwoodjs/web'
 import { CONTACT_ADMINS } from 'types/graphql'
 
@@ -22,9 +23,14 @@ const ContactAdminsListComponent = ({ contactAdmins }: ComponentProps) => {
                   {contactAdmin.user?.username && (
                     <address className="author">
                       By{' '}
-                      <a rel="author" href="#">
+                      <Link
+                        rel="author"
+                        to={routes.profile({
+                          username: contactAdmin.user?.username,
+                        })}
+                      >
                         @{contactAdmin.user?.username}
-                      </a>
+                      </Link>
                     </address>
                   )}
                   {!contactAdmin.user?.username && (

@@ -1,3 +1,4 @@
+import { Link, routes } from '@redwoodjs/router'
 import { formatTimeDifferenceFromNow } from 'src/utils/string'
 import { USER_PRESENCE } from 'types/graphql'
 
@@ -22,36 +23,19 @@ const ActiveUsersComponent = (props: ComponentProps) => {
           </thead>
           <tbody>
             {activeUsers.map((activeUser, index) => {
-              const ls = new Date(activeUser.lastSeen)
-
-              // console.log(
-              //   `user: ${
-              //     activeUser.user.username
-              //   } => lastSeen: ${ls} / ${ls.getTime()}`
-              // )
-
-              // console.log(
-              //   `user: ${
-              //     activeUser.user.username
-              //   } => now: ${getCurrentUTCTime()} / ${getCurrentUTCTime().getTime()}`
-              // )
-
-              // console.log(
-              //   `user ${
-              //     activeUser.user.username
-              //   } : ${ls} last seen: ${formatTimeDifferenceFromNow(
-              //     new Date(activeUser.lastSeen)
-              //   )}`
-              // )
-
               return (
                 <tr key={index}>
                   <th>{index}</th>
                   <td>
                     <address>
-                      <a rel="author" href="#">
+                      <Link
+                        rel="author"
+                        to={routes.profile({
+                          username: activeUser.user.username,
+                        })}
+                      >
                         @{activeUser.user.username}
-                      </a>
+                      </Link>
                     </address>
                   </td>
                   <td>

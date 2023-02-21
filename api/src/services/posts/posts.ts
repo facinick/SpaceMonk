@@ -8,7 +8,7 @@ import type {
 import { db } from 'src/lib/db'
 import { requireAuth, requirePostOwner } from 'src/lib/auth'
 
-function removeUndefinedKeys<T>(obj: T): T {
+export function removeUndefinedKeys<T>(obj: T): T {
   // If obj is not an object or is null, return obj
   if (typeof obj !== 'object' || obj === null) {
     return obj

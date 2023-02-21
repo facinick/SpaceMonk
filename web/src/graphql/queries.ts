@@ -134,7 +134,7 @@ export const USER_PROFILE_BY_USERNAME_QUERY = gql`
 
 export const USER_PRESENCE_QUERY = gql`
   query USER_PRESENCE {
-    userPresences {
+    userPresences(query: { orderBy: { key: "lastSeen", order: "desc" } }) {
       id
       lastSeen
       userId

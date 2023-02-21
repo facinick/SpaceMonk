@@ -25,6 +25,18 @@ model User {
   contactAdmins       ContactAdmin[]
   profile             UserProfile?   @relation("profile")
   UserPresence        UserPresence?  @relation("presence")
+  followers           Follows[]      @relation("following")
+  following           Follows[]      @relation("follower")
+}
+
+model Follows {
+  id          Int  @id @default(autoincrement())
+  follower    User @relation("follower", fields: [followerId], references: [id])
+  followerId  Int
+  following   User @relation("following", fields: [followingId], references: [id])
+  followingId Int
+
+  @@unique([followerId, followingId])
 }
 
 model UserPresence {

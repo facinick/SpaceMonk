@@ -3,6 +3,7 @@ import type { COMMENTS_BY_POST_ID } from 'types/graphql'
 import DeleteCommentButton from '../DeleteCommentButton/DeleteCommentButton'
 import { prose_classes } from '../../editor/TIpTapEditor'
 import { CommentVotingComponent } from '../../vote/VotingComponent/CommentVotingComponent'
+import { Link, routes } from '@redwoodjs/router'
 
 interface ComponentProps {
   comments: COMMENTS_BY_POST_ID['commentsByPostId']
@@ -54,10 +55,14 @@ const CommentSection = ({ comments, postId }: ComponentProps) => {
                 <div className="flex flex-row justify-between">
                   <div className="brightness-75">
                     <address className="author inline-block">
-                      @
-                      <a rel="author" href="#">
-                        {username}
-                      </a>
+                      <Link
+                        rel="author"
+                        to={routes.profile({
+                          username,
+                        })}
+                      >
+                        @{username}
+                      </Link>
                     </address>
                     <span>{' on '}</span>
                     <time
