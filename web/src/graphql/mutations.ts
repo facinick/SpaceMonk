@@ -134,3 +134,12 @@ export const CREATE_CONTACT_ADMIN_MUTATION = gql`
     }
   }
 `
+
+export const UPDATE_USER_PRESENCE_MUTATION = gql`
+  mutation updateUserPresence {
+    updateUserPresence {
+      id
+      lastSeen
+    }
+  }
+`

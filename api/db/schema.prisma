@@ -24,6 +24,16 @@ model User {
   comments            Comment[]
   contactAdmins       ContactAdmin[]
   profile             UserProfile?   @relation("profile")
+  UserPresence        UserPresence?  @relation("presence")
+}
+
+model UserPresence {
+  id       Int      @id @default(autoincrement())
+  lastSeen DateTime @default(now())
+  userId   Int
+  user     User     @relation("presence", fields: [userId], references: [id])
+
+  @@unique([userId])
 }
 
 model UserProfile {

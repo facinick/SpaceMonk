@@ -1,8 +1,11 @@
-import { useEffect } from 'react'
+import { useMutation } from '@redwoodjs/web'
+import { useCallback, useEffect } from 'react'
+import { UPDATE_USER_PRESENCE_MUTATION } from 'src/graphql/mutations'
 import { MY_DATA_QUERY, ALL_POSTS_QUERY } from 'src/graphql/queries'
 import { CurrentUser, useAuthentication } from 'src/hooks/useAuthentication'
 import { useLazyQueryModded } from 'src/hooks/useLazyQuery'
 import { useThemeStore } from 'src/store/zustand/themeStore'
+import { debounce } from 'src/utils/misc'
 
 type ComponentProps = {
   children?: React.ReactElement
@@ -13,6 +16,7 @@ export function Initialize({ children }: ComponentProps) {
   const [getAllPosts, { data: data_all_posts }] =
     useLazyQueryModded(ALL_POSTS_QUERY)
 
+  const [updatePresence] = useMutation(UPDATE_USER_PRESENCE_MUTATION)
   const { switchToPreferredDarkTheme, switchToPreferredLightTheme, theme } =
     useThemeStore()
 
@@ -40,13 +44,26 @@ export function Initialize({ children }: ComponentProps) {
     document.querySelector('html').setAttribute('data-theme', theme)
   }, [theme])
 
+  const runOnMouseMove = useCallback(
+    debounce(async () => {
+      console.log(`updating user presence`)
+      await updatePresence()
+      console.log(`updated`)
+    }, 5000),
+    []
+  )
+
   useAuthentication({
     onLogin: async function (currentUser: CurrentUser) {
       console.log(`logged in`)
       await getMyData()
       await getAllPosts()
+      document.addEventListener('mousemove', runOnMouseMove)
     },
-    onLogout: () => console.log(`logged out`),
+    onLogout: async function () {
+      console.log(`logged out`)
+      document.removeEventListener('mousemove', runOnMouseMove)
+    },
   })
 
   return <>{children}</>

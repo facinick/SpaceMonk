@@ -131,3 +131,16 @@ export const USER_PROFILE_BY_USERNAME_QUERY = gql`
     }
   }
 `
+
+export const USER_PRESENCE_QUERY = gql`
+  query USER_PRESENCE {
+    userPresences {
+      id
+      lastSeen
+      userId
+      user {
+        username
+      }
+    }
+  }
+`

@@ -127,6 +127,20 @@ export const handler = async (
               },
             ],
           },
+          UserPresence: {
+            create: {
+              lastSeen: new Date(
+                Date.UTC(
+                  new Date().getUTCFullYear(),
+                  new Date().getUTCMonth(),
+                  new Date().getUTCDay(),
+                  new Date().getUTCHours(),
+                  new Date().getUTCMinutes(),
+                  new Date().getUTCSeconds()
+                )
+              ),
+            },
+          },
         },
       })
     },

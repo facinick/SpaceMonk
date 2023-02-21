@@ -1,3 +1,5 @@
+import { getCurrentUTCTime } from './misc'
+
 const MAX_STRING_LENGTH = 250
 
 function rgbToHex(rgb: string): string {
@@ -52,9 +54,45 @@ function truncate(
   return [output, truncated]
 }
 
+function formatTimeDifferenceFromNow(time: Date) {
+  return formatTimeDifference(time, getCurrentUTCTime())
+}
+
+function formatTimeDifference(someTImeAgo: Date, now: Date): string {
+  const diffMs = now.getTime() - someTImeAgo.getTime()
+
+  const diffSecs = Math.round(diffMs / 1000)
+
+  if (diffSecs < 60) {
+    return `Just now`
+  }
+
+  const diffMins = Math.round(diffSecs / 60)
+  if (diffMins < 60) {
+    return `${diffMins} minutes ago`
+  }
+
+  const diffHours = Math.round(diffMins / 60)
+  if (diffHours < 24) {
+    return `${diffHours} hours ago`
+  }
+
+  if (diffHours < 72) {
+    return `a couple days ago`
+  }
+
+  const diffDays = Math.round(diffHours / 24)
+  if (diffDays < 7) {
+    return `within a week`
+  }
+
+  return 'Long time ago'
+}
+
 export {
   rgbToHex,
   capitalizeFirstLetter,
   abbreviateNumberPlusMinus50Million,
   truncate,
+  formatTimeDifferenceFromNow,
 }
