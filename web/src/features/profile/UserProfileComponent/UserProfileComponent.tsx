@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import { UserLoginIcon } from 'src/features/Icons/icons'
 import { USER_PROFLIE_BY_USERNAME } from 'types/graphql'
 
 interface ComponentProps {
@@ -18,34 +19,87 @@ const AnimatedUsernamBanner = ({ username }: { username: string }) => {
   return (
     <div className="parent relative h-6 w-full overflow-hidden">
       <div className=" absolute top-0 left-0 flex h-full items-center gap-4">
-        <p ref={unitRef} className="first ch bg-accent">
-          @{username}
+        <p
+          ref={unitRef}
+          className="first parallelogram_clip pointer-events-none bg-accent px-5"
+        >
+          <span className="text-accent-content">@{username}</span>
         </p>
-        <p className="ch bg-accent">@{username}</p>
-        <p className="ch bg-accent">@{username}</p>
-        <p className="ch bg-accent">@{username}</p>
-        <p className="ch bg-accent">@{username}</p>
-        <p className="ch bg-accent">@{username}</p>
-        <p className="ch bg-accent">@{username}</p>
-        <p className="ch bg-accent">@{username}</p>
-        <p className="ch bg-accent">@{username}</p>
-        <p className="ch bg-accent">@{username}</p>
-        <p className="ch bg-accent">@{username}</p>
-        <p className="ch bg-accent">@{username}</p>
-        <p className="ch bg-accent">@{username}</p>
-        <p className="ch bg-accent">@{username}</p>
-        <p className="ch bg-accent">@{username}</p>
-        <p className="ch bg-accent">@{username}</p>
-        <p className="ch bg-accent">@{username}</p>
-        <p className="ch bg-accent">@{username}</p>
-        <p className="ch bg-accent">@{username}</p>
-        <p className="ch bg-accent">@{username}</p>
-        <p className="ch bg-accent">@{username}</p>
-        <p className="ch bg-accent">@{username}</p>
-        <p className="ch bg-accent">@{username}</p>
-        <p className="ch bg-accent">@{username}</p>
-        <p className="ch bg-accent">@{username}</p>
-        <p className="ch bg-accent">@{username}</p>
+        <p className="parallelogram_clip pointer-events-none bg-accent px-5">
+          <span className="text-accent-content">@{username}</span>
+        </p>
+        <p className="parallelogram_clip pointer-events-none bg-accent px-5">
+          <span className="text-accent-content">@{username}</span>
+        </p>
+        <p className="parallelogram_clip pointer-events-none bg-accent px-5">
+          <span className="text-accent-content">@{username}</span>
+        </p>
+        <p className="parallelogram_clip pointer-events-none bg-accent px-5">
+          <span className="text-accent-content">@{username}</span>
+        </p>
+        <p className="parallelogram_clip pointer-events-none bg-accent px-5">
+          <span className="text-accent-content">@{username}</span>
+        </p>
+        <p className="parallelogram_clip pointer-events-none bg-accent px-5">
+          <span className="text-accent-content">@{username}</span>
+        </p>
+        <p className="parallelogram_clip pointer-events-none bg-accent px-5">
+          <span className="text-accent-content">@{username}</span>
+        </p>
+        <p className="parallelogram_clip pointer-events-none bg-accent px-5">
+          <span className="text-accent-content">@{username}</span>
+        </p>
+        <p className="parallelogram_clip pointer-events-none bg-accent px-5">
+          <span className="text-accent-content">@{username}</span>
+        </p>
+        <p className="parallelogram_clip pointer-events-none bg-accent px-5">
+          <span className="text-accent-content">@{username}</span>
+        </p>
+        <p className="parallelogram_clip pointer-events-none bg-accent px-5">
+          <span className="text-accent-content">@{username}</span>
+        </p>
+        <p className="parallelogram_clip pointer-events-none bg-accent px-5">
+          <span className="text-accent-content">@{username}</span>
+        </p>
+        <p className="parallelogram_clip pointer-events-none bg-accent px-5">
+          <span className="text-accent-content">@{username}</span>
+        </p>
+        <p className="parallelogram_clip pointer-events-none bg-accent px-5">
+          <span className="text-accent-content">@{username}</span>
+        </p>
+        <p className="parallelogram_clip pointer-events-none bg-accent px-5">
+          <span className="text-accent-content">@{username}</span>
+        </p>
+        <p className="parallelogram_clip pointer-events-none bg-accent px-5">
+          <span className="text-accent-content">@{username}</span>
+        </p>
+        <p className="parallelogram_clip pointer-events-none bg-accent px-5">
+          <span className="text-accent-content">@{username}</span>
+        </p>
+        <p className="parallelogram_clip pointer-events-none bg-accent px-5">
+          <span className="text-accent-content">@{username}</span>
+        </p>
+        <p className="parallelogram_clip pointer-events-none bg-accent px-5">
+          <span className="text-accent-content">@{username}</span>
+        </p>
+        <p className="parallelogram_clip pointer-events-none bg-accent px-5">
+          <span className="text-accent-content">@{username}</span>
+        </p>
+        <p className="parallelogram_clip pointer-events-none bg-accent px-5">
+          <span className="text-accent-content">@{username}</span>
+        </p>
+        <p className="parallelogram_clip pointer-events-none bg-accent px-5">
+          <span className="text-accent-content">@{username}</span>
+        </p>
+        <p className="parallelogram_clip pointer-events-none bg-accent px-5">
+          <span className="text-accent-content">@{username}</span>
+        </p>
+        <p className="parallelogram_clip pointer-events-none bg-accent px-5">
+          <span className="text-accent-content">@{username}</span>
+        </p>
+        <p className="parallelogram_clip pointer-events-none bg-accent px-5">
+          <span className="text-accent-content">@{username}</span>
+        </p>
       </div>
       <style>
         {`
@@ -69,28 +123,29 @@ const AnimatedUsernamBanner = ({ username }: { username: string }) => {
 const UserProfileComponent = (props: ComponentProps) => {
   const { userProfileByUsername } = props
 
+  const fallbackAvatar = !userProfileByUsername.profilePictureUrl
+
   return (
     <div className="w-full max-w-[768px]">
       {/* PROFILE */}
       <div className="relative aspect-[15/10] sm:aspect-[30/10]">
-        {/* AVATAR */}
-        <div className="avatar absolute left-1/2 bottom-0 z-10 -translate-x-1/2 translate-y-1/2 transform">
+        {/* PROFILE > AVATAR */}
+        <div className="avatar absolute left-1/2 bottom-0 z-10 -translate-x-1/2 translate-y-1/2 transform rounded-full">
           <div className="w-24 rounded-full ring ring-primary ring-offset-2 ring-offset-base-100">
-            <img src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
+            {!fallbackAvatar && (
+              <img src={userProfileByUsername.profilePictureUrl} />
+            )}
+            {fallbackAvatar && <UserLoginIcon w={'100%'} h={'100%'} />}
           </div>
         </div>
 
-        {/* HEADER */}
+        {/* PROFILE > HEADER */}
         <div className="absolute h-full w-full">
           <img
             className="h-full w-full object-cover"
-            src="https://user-images.githubusercontent.com/513929/53929982-e5497700-404c-11e9-8393-dece0b196c98.png"
+            src={userProfileByUsername.headerImageUrl}
           />
-          {/* <address className="author">
-            <a rel="author" href="#">
-              @{userProfileByUsername.user.username}
-            </a>
-          </address> */}
+          {/* PROFILE > HEADER > BANNER */}
           <AnimatedUsernamBanner
             username={userProfileByUsername.user.username}
           />

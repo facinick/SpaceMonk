@@ -17,28 +17,27 @@ export const userProfile: QueryResolvers['userProfile'] = ({ id }) => {
   })
 }
 
-export const userProfileByUsername: QueryResolvers['userProfile'] = async ({
-  username,
-}) => {
-  const user = await db.user.findUnique({ where: { username } })
+export const userProfileByUsername: QueryResolvers['userProfileByUsername'] =
+  async ({ username }) => {
+    const user = await db.user.findUnique({ where: { username } })
 
-  if (!user) {
-    throw new ServerError({
-      message: `User @${username} doesn't exist, how about that?`,
+    if (!user) {
+      throw new ServerError({
+        message: `User @${username} doesn't exist, how about that?`,
+      })
+    }
+
+    const profile = await db.userProfile.findUnique({
+      where: {
+        userId: user.id,
+      },
+      include: {
+        user: true,
+      },
     })
+
+    return profile
   }
-
-  const profile = await db.userProfile.findUnique({
-    where: {
-      userId: user.id,
-    },
-    include: {
-      user: true,
-    },
-  })
-
-  return profile
-}
 
 export const createUserProfile: MutationResolvers['createUserProfile'] = ({
   input,
@@ -67,7 +66,7 @@ export const deleteUserProfile: MutationResolvers['deleteUserProfile'] = ({
 }
 
 export const UserProfile: UserProfileRelationResolvers = {
-  User: (_obj, { root }) => {
-    return db.userProfile.findUnique({ where: { id: root?.id } }).User()
+  user: (_obj, { root }) => {
+    return db.userProfile.findUnique({ where: { id: root?.id } }).user()
   },
 }

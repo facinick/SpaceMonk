@@ -1,4 +1,6 @@
 import { MetaTags } from '@redwoodjs/web'
+
+//@ts-ignore
 import UserProfileCell from 'src/features/profile/UserProfileCell/UserProfileCell'
 interface PageProps {
   username: string

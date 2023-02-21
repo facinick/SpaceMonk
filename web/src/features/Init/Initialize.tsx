@@ -1,5 +1,7 @@
 import { useEffect } from 'react'
+import { MY_DATA_QUERY, ALL_POSTS_QUERY } from 'src/graphql/queries'
 import { CurrentUser, useAuthentication } from 'src/hooks/useAuthentication'
+import { useLazyQueryModded } from 'src/hooks/useLazyQuery'
 import { useThemeStore } from 'src/store/zustand/themeStore'
 
 type ComponentProps = {
@@ -7,9 +9,9 @@ type ComponentProps = {
 }
 
 export function Initialize({ children }: ComponentProps) {
-  // const [getMyData, { data: data_my_data }] = useLazyQueryModded(MY_DATA_QUERY)
-  // const [getAllPosts, { data: data_all_posts }] =
-  //   useLazyQueryModded(ALL_POSTS_QUERY)
+  const [getMyData, { data: data_my_data }] = useLazyQueryModded(MY_DATA_QUERY)
+  const [getAllPosts, { data: data_all_posts }] =
+    useLazyQueryModded(ALL_POSTS_QUERY)
 
   const { switchToPreferredDarkTheme, switchToPreferredLightTheme, theme } =
     useThemeStore()
@@ -41,8 +43,8 @@ export function Initialize({ children }: ComponentProps) {
   useAuthentication({
     onLogin: async function (currentUser: CurrentUser) {
       console.log(`logged in`)
-      // await getMyData()
-      // await getAllPosts()
+      await getMyData()
+      await getAllPosts()
     },
     onLogout: () => console.log(`logged out`),
   })

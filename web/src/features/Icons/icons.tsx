@@ -1,12 +1,14 @@
-export const LoginIcon = () => {
+export const LoginIcon = ({ w = '1.5rem', h = '1.5rem' }) => {
   return (
     <svg
+      width={w ? w : '1.5rem'}
+      height={h ? h : '1.5rem'}
       xmlns="http://www.w3.org/2000/svg"
       fill="none"
       viewBox="0 0 24 24"
       strokeWidth={1.5}
       stroke="currentColor"
-      className="h-6 w-6"
+      // className="h-6 w-6"
     >
       <path
         strokeLinecap="round"
@@ -17,15 +19,17 @@ export const LoginIcon = () => {
   )
 }
 
-export const LogoutIcon = () => {
+export const LogoutIcon = ({ w = '1.5rem', h = '1.5rem' }) => {
   return (
     <svg
+      width={w ? w : '1.5rem'}
+      height={h ? h : '1.5rem'}
       xmlns="http://www.w3.org/2000/svg"
       fill="none"
       viewBox="0 0 24 24"
       strokeWidth={1.5}
       stroke="currentColor"
-      className="h-6 w-6"
+      // className="h-6 w-6"
     >
       <path
         strokeLinecap="round"
@@ -36,15 +40,17 @@ export const LogoutIcon = () => {
   )
 }
 
-export const PasswordIcon = () => {
+export const PasswordIcon = ({ w = '1.5rem', h = '1.5rem' }) => {
   return (
     <svg
+      width={w ? w : '1.5rem'}
+      height={h ? h : '1.5rem'}
       xmlns="http://www.w3.org/2000/svg"
       fill="none"
       viewBox="0 0 24 24"
       strokeWidth={1.5}
       stroke="currentColor"
-      className="h-6 w-6"
+      // className="h-6 w-6"
     >
       <path
         strokeLinecap="round"
@@ -54,15 +60,17 @@ export const PasswordIcon = () => {
     </svg>
   )
 }
-export const UserLoginIcon = () => {
+export const UserLoginIcon = ({ w = '1.5rem', h = '1.5rem' }) => {
   return (
     <svg
+      width={w ? w : '1.5rem'}
+      height={h ? h : '1.5rem'}
       xmlns="http://www.w3.org/2000/svg"
       fill="none"
       viewBox="0 0 24 24"
       strokeWidth={1.5}
       stroke="currentColor"
-      className="h-6 w-6"
+      // className="h-full w-full"
     >
       <path
         strokeLinecap="round"
@@ -72,15 +80,17 @@ export const UserLoginIcon = () => {
     </svg>
   )
 }
-export const UserRegisterIcon = () => {
+export const UserRegisterIcon = ({ w = '1.5rem', h = '1.5rem' }) => {
   return (
     <svg
+      width={w ? w : '1.5rem'}
+      height={h ? h : '1.5rem'}
       xmlns="http://www.w3.org/2000/svg"
       fill="none"
       viewBox="0 0 24 24"
       strokeWidth={1.5}
       stroke="currentColor"
-      className="h-6 w-6"
+      // className="h-6 w-6"
     >
       <path
         strokeLinecap="round"
@@ -90,15 +100,17 @@ export const UserRegisterIcon = () => {
     </svg>
   )
 }
-export const DarkModeIcon = () => {
+export const DarkModeIcon = ({ w = '1.5rem', h = '1.5rem' }) => {
   return (
     <svg
+      width={w ? w : '1.5rem'}
+      height={h ? h : '1.5rem'}
       xmlns="http://www.w3.org/2000/svg"
       fill="none"
       viewBox="0 0 24 24"
       strokeWidth="1.5"
       stroke="currentColor"
-      className="h-6 w-6"
+      // className="h-6 w-6"
     >
       <path
         strokeLinecap="round"
@@ -108,15 +120,17 @@ export const DarkModeIcon = () => {
     </svg>
   )
 }
-export const MerryLandIcon = () => {
+export const MerryLandIcon = ({ w = '1.5rem', h = '1.5rem' }) => {
   return (
     <svg
+      width={w ? w : '1.5rem'}
+      height={h ? h : '1.5rem'}
       xmlns="http://www.w3.org/2000/svg"
       fill="none"
       viewBox="0 0 24 24"
       strokeWidth={1.5}
       stroke="currentColor"
-      className="h-6 w-6"
+      // className="h-6 w-6"
     >
       <path
         strokeLinecap="round"
@@ -126,15 +140,17 @@ export const MerryLandIcon = () => {
     </svg>
   )
 }
-export const LightModeIcon = () => {
+export const LightModeIcon = ({ w = '1.5rem', h = '1.5rem' }) => {
   return (
     <svg
+      width={w ? w : '1.5rem'}
+      height={h ? h : '1.5rem'}
       xmlns="http://www.w3.org/2000/svg"
       fill="none"
       viewBox="0 0 24 24"
       strokeWidth={1.5}
       stroke="currentColor"
-      className="h-6 w-6"
+      // className="h-6 w-6"
     >
       <path
         strokeLinecap="round"
@@ -144,15 +160,17 @@ export const LightModeIcon = () => {
     </svg>
   )
 }
-export const ResetThemeIcon = () => {
+export const ResetThemeIcon = ({ w = '1.5rem', h = '1.5rem' }) => {
   return (
     <svg
+      width={w ? w : '1.5rem'}
+      height={h ? h : '1.5rem'}
       xmlns="http://www.w3.org/2000/svg"
       fill="none"
       viewBox="0 0 24 24"
       strokeWidth={1.5}
       stroke="currentColor"
-      className="h-6 w-6"
+      // className="h-6 w-6"
     >
       <path
         strokeLinecap="round"
@@ -162,15 +180,17 @@ export const ResetThemeIcon = () => {
     </svg>
   )
 }
-export const NewPostIcon = () => {
+export const NewPostIcon = ({ w = '1.5rem', h = '1.5rem' }) => {
   return (
     <svg
+      width={w ? w : '1.5rem'}
+      height={h ? h : '1.5rem'}
       xmlns="http://www.w3.org/2000/svg"
       fill="none"
       viewBox="0 0 24 24"
       strokeWidth={1.5}
       stroke="currentColor"
-      className="h-6 w-6"
+      // className="h-6 w-6"
     >
       <path
         strokeLinecap="round"
@@ -180,15 +200,17 @@ export const NewPostIcon = () => {
     </svg>
   )
 }
-export const EditPostIcon = () => {
+export const EditPostIcon = ({ w = '1.5rem', h = '1.5rem' }) => {
   return (
     <svg
+      width={w ? w : '1.5rem'}
+      height={h ? h : '1.5rem'}
       xmlns="http://www.w3.org/2000/svg"
       fill="none"
       viewBox="0 0 24 24"
       strokeWidth={1.5}
       stroke="currentColor"
-      className="h-6 w-6"
+      // className="h-6 w-6"
     >
       <path
         strokeLinecap="round"
@@ -198,15 +220,17 @@ export const EditPostIcon = () => {
     </svg>
   )
 }
-export const SelectThemeIcon = () => {
+export const SelectThemeIcon = ({ w = '1.5rem', h = '1.5rem' }) => {
   return (
     <svg
+      width={w ? w : '1.5rem'}
+      height={h ? h : '1.5rem'}
       xmlns="http://www.w3.org/2000/svg"
       fill="none"
       viewBox="0 0 24 24"
       strokeWidth={1.5}
       stroke="currentColor"
-      className="h-6 w-6"
+      // className="h-6 w-6"
     >
       <path
         strokeLinecap="round"
@@ -216,15 +240,17 @@ export const SelectThemeIcon = () => {
     </svg>
   )
 }
-export const PhoneIcon = () => {
+export const PhoneIcon = ({ w = '1.5rem', h = '1.5rem' }) => {
   return (
     <svg
+      width={w ? w : '1.5rem'}
+      height={h ? h : '1.5rem'}
       xmlns="http://www.w3.org/2000/svg"
       fill="none"
       viewBox="0 0 24 24"
       strokeWidth={1.5}
       stroke="currentColor"
-      className="h-6 w-6"
+      // className="h-6 w-6"
     >
       <path
         strokeLinecap="round"
@@ -234,15 +260,17 @@ export const PhoneIcon = () => {
     </svg>
   )
 }
-export const MessageIcon = () => {
+export const MessageIcon = ({ w = '1.5rem', h = '1.5rem' }) => {
   return (
     <svg
+      width={w ? w : '1.5rem'}
+      height={h ? h : '1.5rem'}
       xmlns="http://www.w3.org/2000/svg"
       fill="none"
       viewBox="0 0 24 24"
       strokeWidth={1.5}
       stroke="currentColor"
-      className="h-6 w-6"
+      // className="h-6 w-6"
     >
       <path
         strokeLinecap="round"
@@ -252,15 +280,17 @@ export const MessageIcon = () => {
     </svg>
   )
 }
-export const NameIcon = () => {
+export const NameIcon = ({ w = '1.5rem', h = '1.5rem' }) => {
   return (
     <svg
+      width={w ? w : '1.5rem'}
+      height={h ? h : '1.5rem'}
       xmlns="http://www.w3.org/2000/svg"
       fill="none"
       viewBox="0 0 24 24"
       strokeWidth={1.5}
       stroke="currentColor"
-      className="h-6 w-6"
+      // className="h-6 w-6"
     >
       <path
         strokeLinecap="round"
@@ -270,15 +300,17 @@ export const NameIcon = () => {
     </svg>
   )
 }
-export const BlogIcon = () => {
+export const BlogIcon = ({ w = '1.5rem', h = '1.5rem' }) => {
   return (
     <svg
+      width={w ? w : '1.5rem'}
+      height={h ? h : '1.5rem'}
       xmlns="http://www.w3.org/2000/svg"
       fill="none"
       viewBox="0 0 24 24"
       strokeWidth="1.5"
       stroke="currentColor"
-      className="h-6 w-6"
+      // className="h-6 w-6"
     >
       <path
         strokeLinecap="round"
@@ -288,15 +320,17 @@ export const BlogIcon = () => {
     </svg>
   )
 }
-export const ViewPostsIcon = () => {
+export const ViewPostsIcon = ({ w = '1.5rem', h = '1.5rem' }) => {
   return (
     <svg
+      width={w ? w : '1.5rem'}
+      height={h ? h : '1.5rem'}
       xmlns="http://www.w3.org/2000/svg"
       fill="none"
       viewBox="0 0 24 24"
       strokeWidth={1.5}
       stroke="currentColor"
-      className="h-6 w-6"
+      // className="h-6 w-6"
     >
       <path
         strokeLinecap="round"
@@ -306,15 +340,17 @@ export const ViewPostsIcon = () => {
     </svg>
   )
 }
-export const CancelIcon = () => {
+export const CancelIcon = ({ w = '1.5rem', h = '1.5rem' }) => {
   return (
     <svg
+      width={w ? w : '1.5rem'}
+      height={h ? h : '1.5rem'}
       xmlns="http://www.w3.org/2000/svg"
       fill="none"
       viewBox="0 0 24 24"
       strokeWidth={1.5}
       stroke="currentColor"
-      className="h-6 w-6"
+      // className="h-6 w-6"
     >
       <path
         strokeLinecap="round"
@@ -324,15 +360,17 @@ export const CancelIcon = () => {
     </svg>
   )
 }
-export const TrashIcon = () => {
+export const TrashIcon = ({ w = '1.5rem', h = '1.5rem' }) => {
   return (
     <svg
+      width={w ? w : '1.5rem'}
+      height={h ? h : '1.5rem'}
       xmlns="http://www.w3.org/2000/svg"
       fill="none"
       viewBox="0 0 24 24"
       strokeWidth={1.5}
       stroke="currentColor"
-      className="h-6 w-6"
+      // className="h-6 w-6"
     >
       <path
         strokeLinecap="round"
@@ -342,15 +380,17 @@ export const TrashIcon = () => {
     </svg>
   )
 }
-export const BackIcon = () => {
+export const BackIcon = ({ w = '1.5rem', h = '1.5rem' }) => {
   return (
     <svg
+      width={w ? w : '1.5rem'}
+      height={h ? h : '1.5rem'}
       xmlns="http://www.w3.org/2000/svg"
       fill="none"
       viewBox="0 0 24 24"
       strokeWidth={1.5}
       stroke="currentColor"
-      className="h-6 w-6"
+      // className="h-6 w-6"
     >
       <path
         strokeLinecap="round"
@@ -360,15 +400,17 @@ export const BackIcon = () => {
     </svg>
   )
 }
-export const HomeIcon = () => {
+export const HomeIcon = ({ w = '1.5rem', h = '1.5rem' }) => {
   return (
     <svg
+      width={w ? w : '1.5rem'}
+      height={h ? h : '1.5rem'}
       xmlns="http://www.w3.org/2000/svg"
       fill="none"
       viewBox="0 0 24 24"
       strokeWidth={1.5}
       stroke="currentColor"
-      className="h-6 w-6"
+      // className="h-6 w-6"
     >
       <path
         strokeLinecap="round"
@@ -378,15 +420,17 @@ export const HomeIcon = () => {
     </svg>
   )
 }
-export const ArrowRightIcon = () => {
+export const ArrowRightIcon = ({ w = '1.5rem', h = '1.5rem' }) => {
   return (
     <svg
+      width={w ? w : '1.5rem'}
+      height={h ? h : '1.5rem'}
       xmlns="http://www.w3.org/2000/svg"
       fill="none"
       viewBox="0 0 24 24"
       strokeWidth={1.5}
       stroke="currentColor"
-      className="h-6 w-6"
+      // className="h-6 w-6"
     >
       <path
         strokeLinecap="round"
@@ -396,15 +440,17 @@ export const ArrowRightIcon = () => {
     </svg>
   )
 }
-export const SendRightIcon = () => {
+export const SendRightIcon = ({ w = '1.5rem', h = '1.5rem' }) => {
   return (
     <svg
+      width={w ? w : '1.5rem'}
+      height={h ? h : '1.5rem'}
       xmlns="http://www.w3.org/2000/svg"
       fill="none"
       viewBox="0 0 24 24"
       strokeWidth={1.5}
       stroke="currentColor"
-      className="h-6 w-6"
+      // className="h-6 w-6"
     >
       <path
         strokeLinecap="round"
@@ -415,15 +461,17 @@ export const SendRightIcon = () => {
   )
 }
 
-export const ChatBubbleIcon = () => {
+export const ChatBubbleIcon = ({ w = '1.5rem', h = '1.5rem' }) => {
   return (
     <svg
+      width={w ? w : '1.5rem'}
+      height={h ? h : '1.5rem'}
       xmlns="http://www.w3.org/2000/svg"
       fill="none"
       viewBox="0 0 24 24"
       strokeWidth={1.5}
       stroke="currentColor"
-      className="h-6 w-6"
+      // className="h-6 w-6"
     >
       <path
         strokeLinecap="round"
@@ -433,15 +481,17 @@ export const ChatBubbleIcon = () => {
     </svg>
   )
 }
-export const UpIcon = () => {
+export const UpIcon = ({ w = '1.5rem', h = '1.5rem' }) => {
   return (
     <svg
+      width={w ? w : '1.5rem'}
+      height={h ? h : '1.5rem'}
       xmlns="http://www.w3.org/2000/svg"
       fill="none"
       viewBox="0 0 24 24"
       strokeWidth={1.5}
       stroke="currentColor"
-      className="h-6 w-6"
+      // className="h-6 w-6"
     >
       <path
         strokeLinecap="round"
@@ -452,15 +502,17 @@ export const UpIcon = () => {
   )
 }
 
-export const DownIcon = () => {
+export const DownIcon = ({ w = '1.5rem', h = '1.5rem' }) => {
   return (
     <svg
+      width={w ? w : '1.5rem'}
+      height={h ? h : '1.5rem'}
       xmlns="http://www.w3.org/2000/svg"
       fill="none"
       viewBox="0 0 24 24"
       strokeWidth={1.5}
       stroke="currentColor"
-      className="h-6 w-6"
+      // className="h-6 w-6"
     >
       <path
         strokeLinecap="round"
@@ -471,15 +523,17 @@ export const DownIcon = () => {
   )
 }
 
-export const VotesIcon = () => {
+export const VotesIcon = ({ w = '1.5rem', h = '1.5rem' }) => {
   return (
     <svg
+      width={w ? w : '1.5rem'}
+      height={h ? h : '1.5rem'}
       xmlns="http://www.w3.org/2000/svg"
       fill="none"
       viewBox="0 0 24 24"
       strokeWidth={1.5}
       stroke="currentColor"
-      className="h-6 w-6"
+      // className="h-6 w-6"
     >
       <path
         strokeLinecap="round"
@@ -490,13 +544,15 @@ export const VotesIcon = () => {
   )
 }
 
-export const BurgerMenuIcon = () => {
+export const BurgerMenuIcon = ({ w = '1.5rem', h = '1.5rem' }) => {
   return (
     <svg
+      width={w ? w : '1.5rem'}
+      height={h ? h : '1.5rem'}
       xmlns="http://www.w3.org/2000/svg"
       fill="none"
       viewBox="0 0 24 24"
-      className="inline-block h-5 w-5 stroke-current"
+      className="inline-block stroke-current"
     >
       <path
         strokeLinecap="round"
@@ -508,11 +564,13 @@ export const BurgerMenuIcon = () => {
   )
 }
 
-export const AlertErrorIcon = () => {
+export const AlertErrorIcon = ({ w = '1.5rem', h = '1.5rem' }) => {
   return (
     <svg
+      width={w ? w : '1.5rem'}
+      height={h ? h : '1.5rem'}
       xmlns="http://www.w3.org/2000/svg"
-      className="strokeCurrent flexShrink-0 h-6 w-6"
+      className="strokeCurrent flexShrink-0 "
       fill="none"
       viewBox="0 0 24 24"
     >
@@ -526,11 +584,13 @@ export const AlertErrorIcon = () => {
   )
 }
 
-export const AlertSuccessIcon = () => {
+export const AlertSuccessIcon = ({ w = '1.5rem', h = '1.5rem' }) => {
   return (
     <svg
+      width={w ? w : '1.5rem'}
+      height={h ? h : '1.5rem'}
       xmlns="http://www.w3.org/2000/svg"
-      className="h-6 w-6 flex-shrink-0 stroke-current"
+      className="flex-shrink-0 stroke-current"
       fill="none"
       viewBox="0 0 24 24"
     >
@@ -544,11 +604,13 @@ export const AlertSuccessIcon = () => {
   )
 }
 
-export const AlertWarningIcon = () => {
+export const AlertWarningIcon = ({ w = '1.5rem', h = '1.5rem' }) => {
   return (
     <svg
+      width={w ? w : '1.5rem'}
+      height={h ? h : '1.5rem'}
       xmlns="http://www.w3.org/2000/svg"
-      className="h-6 w-6 flex-shrink-0 stroke-current"
+      className=" flex-shrink-0 stroke-current"
       fill="none"
       viewBox="0 0 24 24"
     >
@@ -562,13 +624,15 @@ export const AlertWarningIcon = () => {
   )
 }
 
-export const AlertInfoIcon = () => {
+export const AlertInfoIcon = ({ w = '1.5rem', h = '1.5rem' }) => {
   return (
     <svg
+      width={w ? w : '1.5rem'}
+      height={h ? h : '1.5rem'}
       xmlns="http://www.w3.org/2000/svg"
       fill="none"
       viewBox="0 0 24 24"
-      className="h-6 w-6 flex-shrink-0 stroke-current"
+      className="flex-shrink-0 stroke-current"
     >
       <path
         strokeLinecap="round"
@@ -580,15 +644,17 @@ export const AlertInfoIcon = () => {
   )
 }
 
-export const ReloadIcon = () => {
+export const ReloadIcon = ({ w = '1.5rem', h = '1.5rem' }) => {
   return (
     <svg
+      width={w ? w : '1.5rem'}
+      height={h ? h : '1.5rem'}
       xmlns="http://www.w3.org/2000/svg"
       fill="none"
       viewBox="0 0 24 24"
       strokeWidth="1.5"
       stroke="currentColor"
-      className="h-6 w-6"
+      // className="h-6 w-6"
     >
       <path
         strokeLinecap="round"
@@ -599,15 +665,17 @@ export const ReloadIcon = () => {
   )
 }
 
-export const PencilIcon = () => {
+export const PencilIcon = ({ w = '1.5rem', h = '1.5rem' }) => {
   return (
     <svg
+      width={w ? w : '1.5rem'}
+      height={h ? h : '1.5rem'}
       xmlns="http://www.w3.org/2000/svg"
       fill="none"
       viewBox="0 0 24 24"
       strokeWidth={1.5}
       stroke="currentColor"
-      className="h-6 w-6"
+      // className="h-6 w-6"
     >
       <path
         strokeLinecap="round"
@@ -618,15 +686,17 @@ export const PencilIcon = () => {
   )
 }
 
-export const PlusIcon = () => {
+export const PlusIcon = ({ w = '1.5rem', h = '1.5rem' }) => {
   return (
     <svg
+      width={w ? w : '1.5rem'}
+      height={h ? h : '1.5rem'}
       xmlns="http://www.w3.org/2000/svg"
       fill="none"
       viewBox="0 0 24 24"
       strokeWidth={1.5}
       stroke="currentColor"
-      className="h-6 w-6"
+      // className="h-6 w-6"
     >
       <path
         strokeLinecap="round"

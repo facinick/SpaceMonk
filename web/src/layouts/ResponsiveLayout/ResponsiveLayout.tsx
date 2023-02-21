@@ -108,7 +108,9 @@ const ResponsiveLayout = ({ children }: ResponsiveLayoutProps) => {
                           username: currentUserOrFalse.username,
                         })}
                       >
-                        <UserLoginIcon />
+                        <div className="h-6 w-6">
+                          <UserLoginIcon />
+                        </div>
                         {`View Profile`}
                       </NavLink>
                     </li>
