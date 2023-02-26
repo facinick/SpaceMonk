@@ -16,7 +16,7 @@ const App = () => {
   return (
     //@ts-ignore
     <FatalErrorBoundary page={FatalErrorPage}>
-      <RedwoodProvider titleTemplate="%PageTitle | %AppTitle">
+      <RedwoodProvider titleTemplate="%AppTitle / %PageTitle">
         <AuthProvider>
           <RedwoodApolloProvider useAuth={useAuth}>
             <Initialize>
