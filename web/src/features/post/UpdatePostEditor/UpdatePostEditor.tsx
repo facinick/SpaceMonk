@@ -12,6 +12,7 @@ import { ALL_POSTS_QUERY } from 'src/graphql/queries'
 import { UPDATE_POST_MUTATION } from 'src/graphql/mutations'
 import { wait } from 'src/utils/misc'
 import { POST_BY_ID } from 'types/graphql'
+import { useBreakpoint } from 'src/hooks/useBreakpoint'
 
 interface ComponentProps {
   post: POST_BY_ID['post']
@@ -145,6 +146,10 @@ export function UpdatePostEditor({ post }: ComponentProps) {
     post.title != title ||
     definedServerHeaderImageUrl !== definedClientHeaderImageUrl
 
+  const { isMin } = useBreakpoint()
+
+  const renderText = isMin('sm')
+
   return (
     <>
       <div
@@ -191,7 +196,7 @@ export function UpdatePostEditor({ post }: ComponentProps) {
             disabled={disableInputs}
             onClick={cancel}
           >
-            Cancel
+            {renderText && 'Cancel'}
             <CancelIcon />
           </button>
           {isEdited && (
@@ -200,7 +205,7 @@ export function UpdatePostEditor({ post }: ComponentProps) {
               disabled={disableInputs}
               onClick={onSubmit}
             >
-              {disableInputs ? 'Updating' : 'Update'}
+              {renderText && disableInputs ? 'Updating' : 'Update'}
               <PencilIcon />
             </button>
           )}

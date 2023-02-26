@@ -10,6 +10,7 @@ import { ALL_POSTS_QUERY } from 'src/graphql/queries'
 import { CREATE_POST_MUTATION } from 'src/graphql/mutations'
 import { wait } from 'src/utils/misc'
 import { createPost } from 'types/graphql'
+import { useBreakpoint } from 'src/hooks/useBreakpoint'
 
 export function NewPostEditor() {
   const {
@@ -122,6 +123,10 @@ export function NewPostEditor() {
 
   const disableInputs = loading || _validatingHeaderImageUrl
 
+  const { isMin } = useBreakpoint()
+
+  const renderText = isMin('sm')
+
   return (
     <>
       <div
@@ -163,7 +168,7 @@ export function NewPostEditor() {
             disabled={disableInputs}
             onClick={onClearInputs}
           >
-            clear
+            {renderText && 'clear'}
             <TrashIcon />
           </button>
           <button
@@ -171,7 +176,7 @@ export function NewPostEditor() {
             disabled={disableInputs}
             onClick={onSubmit}
           >
-            {disableInputs ? 'Creating' : 'Create'}
+            {renderText && disableInputs ? 'Creating' : 'Create'}
             <PlusIcon />
           </button>
         </div>

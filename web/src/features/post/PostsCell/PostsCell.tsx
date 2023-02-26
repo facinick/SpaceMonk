@@ -3,6 +3,7 @@ import PostCard from '../PostCard/PostCard'
 import { ALL_POSTS_QUERY } from 'src/graphql/queries'
 import { ALL_POSTS } from 'types/graphql'
 import { truncate } from 'src/utils/string'
+import { CellLoading } from 'src/features/redwood/CellWrapper/Loading'
 
 export const QUERY = ALL_POSTS_QUERY
 
@@ -13,7 +14,7 @@ export const beforeQuery = (props) => {
   }
 }
 
-export const Loading = () => <div>Loading...</div>
+export const Loading = () => <CellLoading />
 
 export const isEmpty = ({ posts }) => {
   if (posts.posts.length === 0) {

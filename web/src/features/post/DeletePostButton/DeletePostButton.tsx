@@ -2,6 +2,7 @@ import { navigate, routes } from '@redwoodjs/router'
 import { useMutation } from '@redwoodjs/web'
 import { DELETE_POST_MUTATION } from 'src/graphql/mutations'
 import { ALL_POSTS_QUERY } from 'src/graphql/queries'
+import { useBreakpoint } from 'src/hooks/useBreakpoint'
 import { wait } from 'src/utils/misc'
 import { deletePost } from 'types/graphql'
 import { TrashIcon } from '../../Icons/icons'
@@ -39,6 +40,10 @@ const DeletePostButton = (props: ComponentProps) => {
   const disableInput = loading
   const deletingButtonText = loading ? 'Deleting..' : 'Delete'
 
+  const { isMin } = useBreakpoint()
+
+  const renderText = isMin('sm')
+
   return (
     <button
       disabled={disableInput}
@@ -46,7 +51,8 @@ const DeletePostButton = (props: ComponentProps) => {
       className={`btn-error btn-sm btn gap-2 ${disableInput ? 'disabled' : ''}`}
       onClick={initiatePostDelete}
     >
-      {deletingButtonText} {<TrashIcon />}
+      {renderText && deletingButtonText}
+      <TrashIcon />
     </button>
   )
 }

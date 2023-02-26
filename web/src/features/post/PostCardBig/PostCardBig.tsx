@@ -5,6 +5,7 @@ import { EditPostIcon } from '../../Icons/icons'
 import { POST_BY_ID } from 'types/graphql'
 import DeletePostButton from '../DeletePostButton/DeletePostButton'
 import { PostVotingComponent } from 'src/features/vote/VotingComponent/PostVotingComponent'
+import { useBreakpoint } from 'src/hooks/useBreakpoint'
 interface ComponentProps {
   post: POST_BY_ID['post']
 }
@@ -30,6 +31,10 @@ const PostCardBig = (props: ComponentProps) => {
   const openUpdatePostEditor = () => {
     navigate(routes.editPost({ id }))
   }
+
+  const { isMin } = useBreakpoint()
+
+  const renderText = isMin('sm')
 
   return (
     <div
@@ -88,7 +93,8 @@ const PostCardBig = (props: ComponentProps) => {
               className="btn-primary btn-sm btn gap-2"
               onClick={openUpdatePostEditor}
             >
-              Edit {<EditPostIcon />}
+              {renderText && 'Edit'}
+              {<EditPostIcon />}
             </button>
           )}
         </div>
