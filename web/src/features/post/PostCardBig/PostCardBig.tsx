@@ -36,6 +36,8 @@ const PostCardBig = (props: ComponentProps) => {
 
   const renderText = isMin('sm')
 
+  const renderSmallButtons = isMin('sm')
+
   return (
     <div
       className={`border-current-color w-full items-center rounded-lg border p-5`}

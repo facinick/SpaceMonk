@@ -7,7 +7,7 @@ import { useAuth } from 'src/auth'
 import { useAuthentication } from 'src/hooks/useAuthentication'
 
 const Constants = {
-  formTitle: 'Admin Sign In',
+  formTitle: 'Sign the F In',
   username: 'Username',
   usernamePlaceholder: 'Username',
   password: 'Password',
@@ -96,7 +96,7 @@ const LoginPage = () => {
             <button
               disabled={disableInputs}
               type="submit"
-              className="btn btn-primary btn-sm"
+              className="btn-primary btn-sm btn"
             >
               {Constants.signInButtonText}
             </button>

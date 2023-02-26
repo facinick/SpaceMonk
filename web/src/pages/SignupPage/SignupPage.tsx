@@ -1,22 +1,14 @@
 import { FormEvent, useRef } from 'react'
 import { useEffect } from 'react'
 
-import {
-  Form,
-  Label,
-  TextField,
-  PasswordField,
-  FieldError,
-  Submit,
-} from '@redwoodjs/forms'
-import { Link, navigate, routes } from '@redwoodjs/router'
+import { navigate, routes } from '@redwoodjs/router'
 import { MetaTags } from '@redwoodjs/web'
-import { toast, Toaster } from '@redwoodjs/web/toast'
+import { toast } from '@redwoodjs/web/toast'
 
 import { useAuth } from 'src/auth'
 
 const Constants = {
-  formTitle: 'Admin Sign Up',
+  formTitle: 'Sign the F Up',
   username: 'Username',
   usernamePlaceholder: 'Username',
   password: 'Password',
@@ -106,7 +98,7 @@ const SignupPage = () => {
             <button
               disabled={disableInputs}
               type="submit"
-              className="btn btn-primary btn-sm"
+              className="btn-primary btn-sm btn"
             >
               {Constants.signUpButtonText}
             </button>

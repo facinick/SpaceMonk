@@ -81,7 +81,7 @@ const PostVotingComponent = (props: ComponentProps) => {
         onClick={onUpvote}
         disabled={_disable}
         title="👍"
-        className={`${_disable ? 'disabled' : ''} btn btn-sm ${
+        className={`${_disable ? 'disabled' : ''} btn-sm btn ${
           IUpVoted ? 'btn-success' : 'btn-outline'
         } gap-2`}
       >
@@ -94,7 +94,7 @@ const PostVotingComponent = (props: ComponentProps) => {
         onClick={onDownvote}
         disabled={_disable}
         title="👎"
-        className={`${_disable ? 'disabled' : ''} btn btn-sm ${
+        className={`${_disable ? 'disabled' : ''} btn-sm btn ${
           IDownVoted ? 'btn-error' : 'btn-outline'
         } gap-2`}
       >
