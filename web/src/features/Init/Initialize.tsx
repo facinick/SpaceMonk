@@ -1,7 +1,11 @@
 import { useMutation } from '@redwoodjs/web'
 import { useCallback, useEffect } from 'react'
 import { UPDATE_USER_PRESENCE_MUTATION } from 'src/graphql/mutations'
-import { MY_DATA_QUERY, ALL_POSTS_QUERY } from 'src/graphql/queries'
+import {
+  MY_DATA_QUERY,
+  ALL_POSTS_QUERY,
+  MY_FOLLOWING_QUERY,
+} from 'src/graphql/queries'
 import { CurrentUser, useAuthentication } from 'src/hooks/useAuthentication'
 import { useLazyQueryModded } from 'src/hooks/useLazyQuery'
 import { useThemeStore } from 'src/store/zustand/themeStore'
@@ -15,6 +19,8 @@ export function Initialize({ children }: ComponentProps) {
   const [getMyData, { data: data_my_data }] = useLazyQueryModded(MY_DATA_QUERY)
   const [getAllPosts, { data: data_all_posts }] =
     useLazyQueryModded(ALL_POSTS_QUERY)
+  const [getAllFollowing, { data: data_all_following }] =
+    useLazyQueryModded(MY_FOLLOWING_QUERY)
 
   const [updatePresence] = useMutation(UPDATE_USER_PRESENCE_MUTATION)
   const { switchToPreferredDarkTheme, switchToPreferredLightTheme, theme } =

@@ -1,7 +1,8 @@
 import { MetaTags } from '@redwoodjs/web'
+import { useMemo } from 'react'
+import UserProfileCell from 'src/features/profile/UserProfileCell'
 
 //@ts-ignore
-import UserProfileCell from 'src/features/profile/UserProfileCell/UserProfileCell'
 interface PageProps {
   username: string
 }
@@ -9,10 +10,15 @@ interface PageProps {
 const ProfilePage = (props: PageProps) => {
   const { username } = props
 
+  const profileCell = useMemo(
+    () => <UserProfileCell username={username} />,
+    [username]
+  )
+
   return (
     <>
       <MetaTags title="Profile" description="Profile page" />
-      <UserProfileCell username={username} />
+      {profileCell}
     </>
   )
 }

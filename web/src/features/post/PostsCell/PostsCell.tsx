@@ -15,6 +15,12 @@ export const beforeQuery = (props) => {
 
 export const Loading = () => <div>Loading...</div>
 
+export const isEmpty = ({ posts }) => {
+  if (posts.posts.length === 0) {
+    return true
+  } else return false
+}
+
 export const Empty = () => <div>No Posts.. Such Empty!</div>
 
 export const Failure = ({ error }: CellFailureProps) => (

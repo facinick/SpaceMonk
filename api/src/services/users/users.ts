@@ -30,6 +30,8 @@ export const me: QueryResolvers['user'] = async () => {
       votes: true,
       comments: true,
       posts: true,
+      followers: true,
+      following: true,
     },
   })
   return user
@@ -72,5 +74,11 @@ export const User: UserRelationResolvers = {
   },
   comments: (_obj, { root }) => {
     return db.user.findUnique({ where: { id: root.id } }).comments()
+  },
+  followers: (_obj, { root }) => {
+    return db.user.findUnique({ where: { id: root.id } }).followers()
+  },
+  following: (_obj, { root }) => {
+    return db.user.findUnique({ where: { id: root.id } }).following()
   },
 }

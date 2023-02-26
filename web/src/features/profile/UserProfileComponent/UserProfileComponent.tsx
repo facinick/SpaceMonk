@@ -1,127 +1,19 @@
-import { useEffect, useRef, useState } from 'react'
 import { UserLoginIcon } from 'src/features/Icons/icons'
+import { useAuthentication } from 'src/hooks/useAuthentication'
 import { USER_PROFLIE_BY_USERNAME } from 'types/graphql'
-
+import { AnimatedUsernamBanner } from '../UserProfileUsernameBannerComponent'
+import FollowUnfollowCell from 'src/features/follow_unfollow/FollowUnfollowCell'
 interface ComponentProps {
   userProfileByUsername: USER_PROFLIE_BY_USERNAME['userProfileByUsername']
 }
 
-const AnimatedUsernamBanner = ({ username }: { username: string }) => {
-  const unitRef = useRef<HTMLParagraphElement>(null)
-  const [width, setWidth] = useState<number>()
-
-  useEffect(() => {
-    if (unitRef?.current) {
-      setWidth(unitRef?.current.clientWidth + 16)
-    }
-  }, [unitRef])
-
-  return (
-    <div className="parent relative h-6 w-full overflow-hidden">
-      <div className=" absolute top-0 left-0 flex h-full items-center gap-4">
-        <p
-          ref={unitRef}
-          className="first parallelogram_clip pointer-events-none bg-accent px-5"
-        >
-          <span className="text-accent-content">@{username}</span>
-        </p>
-        <p className="parallelogram_clip pointer-events-none bg-accent px-5">
-          <span className="text-accent-content">@{username}</span>
-        </p>
-        <p className="parallelogram_clip pointer-events-none bg-accent px-5">
-          <span className="text-accent-content">@{username}</span>
-        </p>
-        <p className="parallelogram_clip pointer-events-none bg-accent px-5">
-          <span className="text-accent-content">@{username}</span>
-        </p>
-        <p className="parallelogram_clip pointer-events-none bg-accent px-5">
-          <span className="text-accent-content">@{username}</span>
-        </p>
-        <p className="parallelogram_clip pointer-events-none bg-accent px-5">
-          <span className="text-accent-content">@{username}</span>
-        </p>
-        <p className="parallelogram_clip pointer-events-none bg-accent px-5">
-          <span className="text-accent-content">@{username}</span>
-        </p>
-        <p className="parallelogram_clip pointer-events-none bg-accent px-5">
-          <span className="text-accent-content">@{username}</span>
-        </p>
-        <p className="parallelogram_clip pointer-events-none bg-accent px-5">
-          <span className="text-accent-content">@{username}</span>
-        </p>
-        <p className="parallelogram_clip pointer-events-none bg-accent px-5">
-          <span className="text-accent-content">@{username}</span>
-        </p>
-        <p className="parallelogram_clip pointer-events-none bg-accent px-5">
-          <span className="text-accent-content">@{username}</span>
-        </p>
-        <p className="parallelogram_clip pointer-events-none bg-accent px-5">
-          <span className="text-accent-content">@{username}</span>
-        </p>
-        <p className="parallelogram_clip pointer-events-none bg-accent px-5">
-          <span className="text-accent-content">@{username}</span>
-        </p>
-        <p className="parallelogram_clip pointer-events-none bg-accent px-5">
-          <span className="text-accent-content">@{username}</span>
-        </p>
-        <p className="parallelogram_clip pointer-events-none bg-accent px-5">
-          <span className="text-accent-content">@{username}</span>
-        </p>
-        <p className="parallelogram_clip pointer-events-none bg-accent px-5">
-          <span className="text-accent-content">@{username}</span>
-        </p>
-        <p className="parallelogram_clip pointer-events-none bg-accent px-5">
-          <span className="text-accent-content">@{username}</span>
-        </p>
-        <p className="parallelogram_clip pointer-events-none bg-accent px-5">
-          <span className="text-accent-content">@{username}</span>
-        </p>
-        <p className="parallelogram_clip pointer-events-none bg-accent px-5">
-          <span className="text-accent-content">@{username}</span>
-        </p>
-        <p className="parallelogram_clip pointer-events-none bg-accent px-5">
-          <span className="text-accent-content">@{username}</span>
-        </p>
-        <p className="parallelogram_clip pointer-events-none bg-accent px-5">
-          <span className="text-accent-content">@{username}</span>
-        </p>
-        <p className="parallelogram_clip pointer-events-none bg-accent px-5">
-          <span className="text-accent-content">@{username}</span>
-        </p>
-        <p className="parallelogram_clip pointer-events-none bg-accent px-5">
-          <span className="text-accent-content">@{username}</span>
-        </p>
-        <p className="parallelogram_clip pointer-events-none bg-accent px-5">
-          <span className="text-accent-content">@{username}</span>
-        </p>
-        <p className="parallelogram_clip pointer-events-none bg-accent px-5">
-          <span className="text-accent-content">@{username}</span>
-        </p>
-        <p className="parallelogram_clip pointer-events-none bg-accent px-5">
-          <span className="text-accent-content">@{username}</span>
-        </p>
-      </div>
-      <style>
-        {`
-          @keyframes scroll {
-            0% {
-                margin-left: 0px;
-            }
-            100% {
-              margin-left: -${width}px;
-            }
-          }
-          .first {
-            animation: scroll 8s linear infinite;
-          }
-        `}
-      </style>
-    </div>
-  )
-}
-
 const UserProfileComponent = (props: ComponentProps) => {
   const { userProfileByUsername } = props
+  const currentUserOfFalse = useAuthentication({})
+
+  const isLoggedInUserProfile =
+    currentUserOfFalse &&
+    currentUserOfFalse.username === userProfileByUsername.user.username
 
   const fallbackAvatar = !userProfileByUsername.profilePictureUrl
 
@@ -151,6 +43,15 @@ const UserProfileComponent = (props: ComponentProps) => {
           />
         </div>
       </div>
+
+      {/* FOLLOW UNFOLLOW */}
+      <div className="h-20"></div>
+      {!isLoggedInUserProfile && (
+        <FollowUnfollowCell
+          username={currentUserOfFalse && currentUserOfFalse.username}
+          userProfile={userProfileByUsername}
+        />
+      )}
     </div>
   )
 }

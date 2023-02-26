@@ -143,3 +143,18 @@ export const UPDATE_USER_PRESENCE_MUTATION = gql`
     }
   }
 `
+export const FOLLOW_MUTATION = gql`
+  mutation follow($userId: Int!) {
+    follow(userId: $userId) {
+      id
+    }
+  }
+`
+
+export const UNFOLLOW_MUTATION = gql`
+  mutation unfollow($userId: Int!) {
+    unfollow(userId: $userId) {
+      id
+    }
+  }
+`

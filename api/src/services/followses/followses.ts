@@ -58,9 +58,7 @@ export const follow: MutationResolvers['follow'] = ({ userId }) => {
 
 export const unfollow: MutationResolvers['unfollow'] = ({ userId }) => {
   requireAuth()
-
   const followerId = context.currentUser.id
-
   return db.follows.delete({
     where: {
       followerId_followingId: {

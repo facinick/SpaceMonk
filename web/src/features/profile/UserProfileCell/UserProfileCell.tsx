@@ -1,7 +1,3 @@
-import type {
-  USER_PROFLIE_BY_USERNAME,
-  USER_PROFLIE_BY_USERNAMEVariables,
-} from 'types/graphql'
 import type { CellSuccessProps, CellFailureProps } from '@redwoodjs/web'
 import { USER_PROFILE_BY_USERNAME_QUERY } from 'src/graphql/queries'
 import { CellEmpty } from 'src/features/redwood/CellWrapper/Empty'
@@ -9,6 +5,10 @@ import { CellLoading } from 'src/features/redwood/CellWrapper/Loading'
 import { CellError } from 'src/features/redwood/CellWrapper/Error'
 import UserProfileComponent from '../UserProfileComponent/UserProfileComponent'
 import { useAuthentication } from 'src/hooks/useAuthentication'
+import {
+  USER_PROFLIE_BY_USERNAMEVariables,
+  USER_PROFLIE_BY_USERNAME,
+} from 'types/graphql'
 
 export const QUERY = USER_PROFILE_BY_USERNAME_QUERY
 

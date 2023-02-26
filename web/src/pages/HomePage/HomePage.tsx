@@ -1,12 +1,11 @@
 import { MetaTags } from '@redwoodjs/web'
 import { useAuth } from 'src/auth'
 import { ContactAdminForm } from 'src/features/contact/ContactAdminForm/ContactAdminForm'
-import ContactAdminsCell from 'src/features/admin/ContactAdminsCell/ContactAdminsCell'
-//@ts-ignore
-import ActiveUsersCell from 'src/features/admin/ActiveUsersCell/ActiveUsersCell'
+import ContactAdminsCell from 'src/features/admin/ContactAdminsCell'
+import ActiveUsersCell from 'src/features/admin/ActiveUsersCell'
 
 const HomePage = () => {
-  const { hasRole, currentUser } = useAuth()
+  const { hasRole } = useAuth()
   const isAdmin = hasRole(['admin'])
 
   return (

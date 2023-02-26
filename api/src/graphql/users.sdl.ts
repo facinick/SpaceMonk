@@ -26,6 +26,8 @@ export const schema = gql`
     posts: [Post]! #-----------------------------#public
     votes: [Vote]! #-----------------------------#public
     comments: [Comment]! #-----------------------#public
+    followers: [Follows]!
+    following: [Follows]!
   }
 
   type Query {

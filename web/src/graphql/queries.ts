@@ -132,6 +132,42 @@ export const USER_PROFILE_BY_USERNAME_QUERY = gql`
   }
 `
 
+export const MY_FOLLOWERS_QUERY = gql`
+  query MY_FOLLOWERS($username: String!) {
+    followersByUsername(username: $username) {
+      id
+      follower {
+        id
+        username
+      }
+      followerId
+      following {
+        id
+        username
+      }
+      followingId
+    }
+  }
+`
+
+export const MY_FOLLOWING_QUERY = gql`
+  query MY_FOLLOWING($username: String!) {
+    followingByUsername(username: $username) {
+      id
+      follower {
+        id
+        username
+      }
+      followerId
+      following {
+        id
+        username
+      }
+      followingId
+    }
+  }
+`
+
 export const USER_PRESENCE_QUERY = gql`
   query USER_PRESENCE {
     userPresences(query: { orderBy: { key: "lastSeen", order: "desc" } }) {
