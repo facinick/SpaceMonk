@@ -176,7 +176,7 @@ export function NewPostEditor() {
             disabled={disableInputs}
             onClick={onSubmit}
           >
-            {renderText && disableInputs ? 'Creating' : 'Create'}
+            {renderText || disableInputs ? 'Creating' : 'Create'}
             <PlusIcon />
           </button>
         </div>
