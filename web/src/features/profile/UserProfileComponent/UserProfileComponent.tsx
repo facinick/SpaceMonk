@@ -11,7 +11,7 @@ const UserProfileComponent = (props: ComponentProps) => {
   const { userProfileByUsername } = props
   const currentUserOfFalse = useAuthentication({})
 
-  const isLoggedInUserProfile =
+  const isMyProfile =
     currentUserOfFalse &&
     currentUserOfFalse.username === userProfileByUsername.user.username
 
@@ -46,7 +46,7 @@ const UserProfileComponent = (props: ComponentProps) => {
 
       {/* FOLLOW UNFOLLOW */}
       <div className="h-20"></div>
-      {!isLoggedInUserProfile && (
+      {!isMyProfile && (
         <FollowUnfollowCell
           username={currentUserOfFalse && currentUserOfFalse.username}
           userProfile={userProfileByUsername}

@@ -8,7 +8,7 @@ interface ComponentProps {
 export const CellEmpty = (props: ComponentProps) => {
   const { itemName } = props
   return (
-    <div className="alert alert-info max-w-md shadow-lg">
+    <div className="alert-secondary alert max-w-md shadow-lg">
       <div>
         <AlertInfoIcon />
         <span>{`No ${capitalizeFirstLetter(itemName)}, Much Empty :/`}</span>

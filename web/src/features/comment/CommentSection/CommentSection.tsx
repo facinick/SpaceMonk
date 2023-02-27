@@ -39,7 +39,7 @@ const CommentSection = ({ comments, postId }: ComponentProps) => {
               key={index}
               className={`flex ${
                 isEven ? 'flex-row' : 'flex-row-reverse'
-              } !m-0 min-h-[160px] items-stretch gap-5 !py-5 !px-0`}
+              } !m-0 min-h-[160px] items-stretch !py-5 !px-0`}
             >
               <aside className="!my-0 flex h-fit flex-shrink-0 items-center justify-center px-4 py-5">
                 <CommentVotingComponent
@@ -73,11 +73,7 @@ const CommentSection = ({ comments, postId }: ComponentProps) => {
                       {readableTime}
                     </time>
                   </div>
-                  {canDelete && (
-                    <DeleteCommentButton
-                      commentId={comment.id}
-                    ></DeleteCommentButton>
-                  )}
+                  {canDelete && <DeleteCommentButton commentId={comment.id} />}
                 </div>
               </article>
             </li>

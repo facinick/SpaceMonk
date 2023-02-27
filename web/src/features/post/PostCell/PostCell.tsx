@@ -1,10 +1,10 @@
 import type { POST_BY_ID, POST_BY_IDVariables } from 'types/graphql'
 import type { CellSuccessProps, CellFailureProps } from '@redwoodjs/web'
-import PostCardBig from '../PostCardBig/PostCardBig'
 import { POST_BY_ID_QUERY } from 'src/graphql/queries'
 import { CellEmpty } from '../../redwood/CellWrapper/Empty'
 import { CellLoading } from '../../redwood/CellWrapper/Loading'
 import { CellError } from '../../redwood/CellWrapper/Error'
+import PostCardBig from '../PostCardBig/PostCardBig'
 
 export const QUERY = POST_BY_ID_QUERY
 

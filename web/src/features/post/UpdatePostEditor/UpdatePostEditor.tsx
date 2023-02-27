@@ -7,7 +7,7 @@ import { toast } from '@redwoodjs/web/toast'
 import { isImageValid } from 'src/hooks/useImageValidator'
 import { useUpdatePostStore } from 'src/store/zustand/updatePostStore'
 import { TipTapEditor } from 'src/features/editor/TIpTapEditor'
-import { CancelIcon, PencilIcon } from 'src/features/Icons/icons'
+import { CancelIcon, EditPostIcon } from 'src/features/Icons/icons'
 import { ALL_POSTS_QUERY } from 'src/graphql/queries'
 import { UPDATE_POST_MUTATION } from 'src/graphql/mutations'
 import { wait } from 'src/utils/misc'
@@ -192,7 +192,7 @@ export function UpdatePostEditor({ post }: ComponentProps) {
         {/* BOTTON ACTIONS: CANCEL AND EDIT */}
         <div className="flex w-full justify-between gap-2">
           <button
-            className="btn-secondary btn"
+            className="btn-secondary btn-sm btn gap-2"
             disabled={disableInputs}
             onClick={cancel}
           >
@@ -201,12 +201,13 @@ export function UpdatePostEditor({ post }: ComponentProps) {
           </button>
           {isEdited && (
             <button
-              className="btn-primary btn"
+              className="btn-primary btn-sm btn gap-2"
               disabled={disableInputs}
               onClick={onSubmit}
             >
-              {renderText && disableInputs ? 'Updating' : 'Update'}
-              <PencilIcon />
+              {renderText && <>{disableInputs ? 'Updating' : 'Update'}</>}
+
+              <EditPostIcon />
             </button>
           )}
         </div>

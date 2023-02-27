@@ -38,6 +38,7 @@ export const Success = ({ posts }: CellSuccessProps<ALL_POSTS>) => {
             <PostCard
               bodyPlainText={bodyPlainText}
               key={post.id}
+              authorUsername={post.author.username}
               createdAt={post.createdAt}
               truncated={truncated}
               body={post.body}

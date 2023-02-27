@@ -21,7 +21,7 @@ const PostPage = (props: PageProps) => {
           <button
             title="Go Back"
             onClick={() => navigate(routes.blog())}
-            className="btn-sm btn gap-2"
+            className="btn-secondary btn-sm btn gap-2"
           >
             <BackIcon />
             Back

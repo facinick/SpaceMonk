@@ -32,6 +32,7 @@ export const ALL_POSTS_QUERY = gql`
         updatedAt
         author {
           id
+          username
         }
         comments {
           id

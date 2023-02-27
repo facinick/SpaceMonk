@@ -8,6 +8,7 @@ interface ComponentProps {
   id: number
   truncated: boolean
   createdAt: string
+  authorUsername: string
 }
 
 const PostCard = (props: ComponentProps) => {
@@ -15,6 +16,7 @@ const PostCard = (props: ComponentProps) => {
     headerImageUrl,
     title,
     body,
+    authorUsername,
     id,
     createdAt,
     truncated,
@@ -48,6 +50,7 @@ const PostCard = (props: ComponentProps) => {
           <time className="brightness-75" dateTime={createdAt}>
             {new Date(createdAt).toDateString()}
           </time>
+          <address className="author">By @{authorUsername}</address>
         </div>
       </div>
     </Link>

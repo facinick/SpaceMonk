@@ -277,7 +277,7 @@ const MenuBar = ({ editor, disable }: { editor: Editor; disable: boolean }) => {
         redo
       </button>
 
-      <div ref={colourPickerRef}>
+      <div className="" ref={colourPickerRef}>
         <button
           disabled={disable}
           style={{
