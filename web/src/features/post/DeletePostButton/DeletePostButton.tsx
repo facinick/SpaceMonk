@@ -4,7 +4,7 @@ import { DELETE_POST_MUTATION } from 'src/graphql/mutations'
 import { ALL_POSTS_QUERY } from 'src/graphql/queries'
 import { useBreakpoint } from 'src/hooks/useBreakpoint'
 import { wait } from 'src/utils/misc'
-import { deletePost } from 'types/graphql'
+import { ALL_POSTS, deletePost } from 'types/graphql'
 import { TrashIcon } from '../../Icons/icons'
 
 interface ComponentProps {
@@ -17,7 +17,34 @@ const DeletePostButton = (props: ComponentProps) => {
   const [deletePost, { loading }] = useMutation<deletePost>(
     DELETE_POST_MUTATION,
     {
-      refetchQueries: [ALL_POSTS_QUERY],
+      // refetchQueries: [ALL_POSTS_QUERY],
+      update: (cache, { data }) => {
+        const deletedPost = data.deletePost
+        const allPostsQueryResult = cache.readQuery<ALL_POSTS>({
+          query: ALL_POSTS_QUERY,
+        })
+
+        let allPosts = allPostsQueryResult.posts.posts
+
+        // it has to exist, so im assuming this won't be -1
+        const postToDeleteIndex = allPosts.findIndex(
+          (post) => post.id === deletedPost.id
+        )
+
+        allPosts = [
+          ...allPosts.slice(0, postToDeleteIndex),
+          ...allPosts.slice(postToDeleteIndex + 1),
+        ]
+
+        cache.writeQuery({
+          query: ALL_POSTS_QUERY,
+          data: {
+            posts: {
+              posts: [...allPosts],
+            },
+          },
+        })
+      },
     }
   )
 

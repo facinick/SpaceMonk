@@ -9,7 +9,7 @@ import { PlusIcon, TrashIcon } from 'src/features/Icons/icons'
 import { ALL_POSTS_QUERY } from 'src/graphql/queries'
 import { CREATE_POST_MUTATION } from 'src/graphql/mutations'
 import { wait } from 'src/utils/misc'
-import { createPost } from 'types/graphql'
+import { ALL_POSTS, createPost } from 'types/graphql'
 import { useBreakpoint } from 'src/hooks/useBreakpoint'
 
 export function NewPostEditor() {
@@ -37,7 +37,21 @@ export function NewPostEditor() {
       onError: (error) => {
         toast.error(error.message)
       },
-      refetchQueries: [ALL_POSTS_QUERY],
+      // refetchQueries: [ALL_POSTS_QUERY],
+      update: (cache, { data }) => {
+        const newPost = data.createPost
+        const allPosts = cache.readQuery<ALL_POSTS>({
+          query: ALL_POSTS_QUERY,
+        })
+        cache.writeQuery({
+          query: ALL_POSTS_QUERY,
+          data: {
+            posts: {
+              posts: [newPost, ...allPosts.posts.posts],
+            },
+          },
+        })
+      },
     }
   )
 
@@ -164,7 +178,7 @@ export function NewPostEditor() {
         />
         <div className="ml-auto flex flex-row gap-5">
           <button
-            className="btn-secondary btn gap-2"
+            className="btn-secondary btn-sm btn gap-2"
             disabled={disableInputs}
             onClick={onClearInputs}
           >
@@ -172,11 +186,11 @@ export function NewPostEditor() {
             <TrashIcon />
           </button>
           <button
-            className="btn-primary btn gap-2"
+            className="btn-primary btn-sm btn gap-2"
             disabled={disableInputs}
             onClick={onSubmit}
           >
-            {renderText || disableInputs ? 'Creating' : 'Create'}
+            {renderText && <>{disableInputs ? 'Creating' : 'Create'}</>}
             <PlusIcon />
           </button>
         </div>

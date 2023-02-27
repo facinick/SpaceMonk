@@ -11,7 +11,7 @@ import { CancelIcon, EditPostIcon } from 'src/features/Icons/icons'
 import { ALL_POSTS_QUERY } from 'src/graphql/queries'
 import { UPDATE_POST_MUTATION } from 'src/graphql/mutations'
 import { wait } from 'src/utils/misc'
-import { POST_BY_ID } from 'types/graphql'
+import { ALL_POSTS, POST_BY_ID } from 'types/graphql'
 import { useBreakpoint } from 'src/hooks/useBreakpoint'
 
 interface ComponentProps {
@@ -51,7 +51,31 @@ export function UpdatePostEditor({ post }: ComponentProps) {
       onError: (error) => {
         toast.error(error.message)
       },
-      refetchQueries: [ALL_POSTS_QUERY],
+      // refetchQueries: [ALL_POSTS_QUERY],
+      update: (cache, { data }) => {
+        const updatedPost = data.deletePost
+        const allPostsQueryResult = cache.readQuery<ALL_POSTS>({
+          query: ALL_POSTS_QUERY,
+        })
+
+        let allPosts = allPostsQueryResult.posts.posts
+
+        // it has to exist, so im assuming this won't be -1
+        const postToUpdateIndex = allPosts.findIndex(
+          (post) => post.id === updatedPost.id
+        )
+
+        allPosts[postToUpdateIndex] = updatedPost
+
+        cache.writeQuery({
+          query: ALL_POSTS_QUERY,
+          data: {
+            posts: {
+              posts: [...allPosts],
+            },
+          },
+        })
+      },
     }
   )
 

@@ -1,3 +1,27 @@
+// export const POST_FIELDS_FRAGMENT = gql`
+//   fragment PostFields on Post {
+//     id
+//     title
+//     body
+//     headerImageUrl
+//     bodyPlainText
+//     createdAt
+//     updatedAt
+//     score
+//     updatedAt
+//     author {
+//       id
+//       username
+//     }
+//     comments {
+//       id
+//     }
+//     votes {
+//       id
+//       entityType
+//     }
+//   }
+// `
 export const MY_DATA_QUERY = gql`
   query MY_DATA {
     me {

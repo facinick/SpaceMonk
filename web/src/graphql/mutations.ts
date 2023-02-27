@@ -32,21 +32,23 @@ export const CREATE_POST_MUTATION = gql`
   mutation createPost($input: CreatePostInput!) {
     createPost(input: $input) {
       id
+      title
       body
+      headerImageUrl
+      bodyPlainText
       createdAt
+      updatedAt
       score
       updatedAt
       author {
         id
         username
       }
+      comments {
+        id
+      }
       votes {
         id
-        value
-        user {
-          id
-          username
-        }
         entityType
       }
     }
@@ -57,23 +59,33 @@ export const UPDATE_POST_MUTATION = gql`
   mutation updatePost($id: Int!, $input: UpdatePostInput!) {
     updatePost(id: $id, input: $input) {
       id
+      title
       body
+      headerImageUrl
+      bodyPlainText
       createdAt
+      updatedAt
       score
       updatedAt
       author {
         id
         username
       }
+      comments {
+        id
+      }
       votes {
         id
-        value
-        user {
-          id
-          username
-        }
         entityType
       }
+    }
+  }
+`
+
+export const DELETE_POST_MUTATION = gql`
+  mutation deletePost($id: Int!) {
+    deletePost(id: $id) {
+      id
     }
   }
 `
@@ -111,14 +123,6 @@ export const DELETE_COMMENT_MUTATION = gql`
   }
 `
 
-export const DELETE_POST_MUTATION = gql`
-  mutation deletePost($id: Int!) {
-    deletePost(id: $id) {
-      id
-    }
-  }
-`
-
 export const CREATE_CONTACT_MUTATION = gql`
   mutation createContact($input: CreateContactInput!) {
     createContact(input: $input) {
@@ -143,6 +147,7 @@ export const UPDATE_USER_PRESENCE_MUTATION = gql`
     }
   }
 `
+
 export const FOLLOW_MUTATION = gql`
   mutation follow($userId: Int!) {
     follow(userId: $userId) {
