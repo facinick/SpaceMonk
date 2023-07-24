@@ -10,4 +10,9 @@ module.exports = {
     utils: true,
     prefix: '',
   },
+  theme: {
+    extend: {
+
+    },
+  },
 }

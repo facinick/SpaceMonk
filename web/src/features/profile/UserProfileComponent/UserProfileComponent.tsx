@@ -1,8 +1,10 @@
 import { UserLoginIcon } from 'src/features/Icons/icons'
+import FollowUnfollowCell from 'src/features/follow_unfollow/FollowUnfollowCell'
 import { useAuthentication } from 'src/hooks/useAuthentication'
 import { USER_PROFLIE_BY_USERNAME } from 'types/graphql'
+import { UserProfileDataComponent } from '../UserProfileDataComponent/UserProfileDataComponent'
+import { UserProfileTabsComponent } from '../UserProfileTabsComponent/UserProfileTabsComponent'
 import { AnimatedUsernamBanner } from '../UserProfileUsernameBannerComponent'
-import FollowUnfollowCell from 'src/features/follow_unfollow/FollowUnfollowCell'
 interface ComponentProps {
   userProfileByUsername: USER_PROFLIE_BY_USERNAME['userProfileByUsername']
 }
@@ -11,10 +13,13 @@ const UserProfileComponent = (props: ComponentProps) => {
   const { userProfileByUsername } = props
   const currentUserOfFalse = useAuthentication({})
 
-  const isMyProfile =
-    currentUserOfFalse &&
-    currentUserOfFalse.username === userProfileByUsername.user.username
+  const isLoggedIn = currentUserOfFalse!!
 
+  const isMyProfile =
+  isLoggedIn &&
+  currentUserOfFalse.username === userProfileByUsername.user.username
+  
+  console.log(isMyProfile)
   const fallbackAvatar = !userProfileByUsername.profilePictureUrl
 
   return (
@@ -46,12 +51,18 @@ const UserProfileComponent = (props: ComponentProps) => {
 
       {/* FOLLOW UNFOLLOW */}
       <div className="h-20"></div>
-      {!isMyProfile && (
+      {isLoggedIn && !isMyProfile && (
         <FollowUnfollowCell
           username={currentUserOfFalse && currentUserOfFalse.username}
           userProfile={userProfileByUsername}
         />
       )}
+
+      {/* TABS */}
+      <div className="w-full">
+        <UserProfileTabsComponent />
+        <UserProfileDataComponent />
+      </div>
     </div>
   )
 }
