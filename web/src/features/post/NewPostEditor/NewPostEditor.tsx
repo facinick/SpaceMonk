@@ -1,16 +1,16 @@
-import { useMemo, useRef, useState } from 'react'
+import { navigate, routes } from '@redwoodjs/router'
 import { useMutation } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/toast'
+import { useMemo, useRef, useState } from 'react'
+import { PlusIcon, TrashIcon } from 'src/features/Icons/icons'
 import { TipTapEditor } from 'src/features/editor/TIpTapEditor'
+import { CREATE_POST_MUTATION } from 'src/graphql/mutations'
+import { ALL_POSTS_QUERY } from 'src/graphql/queries'
+import { useBreakpoint } from 'src/hooks/useBreakpoint'
 import { isImageValid } from 'src/hooks/useImageValidator'
 import { useNewPostStore } from 'src/store/zustand/newPostStore'
-import { navigate, routes } from '@redwoodjs/router'
-import { PlusIcon, TrashIcon } from 'src/features/Icons/icons'
-import { ALL_POSTS_QUERY } from 'src/graphql/queries'
-import { CREATE_POST_MUTATION } from 'src/graphql/mutations'
 import { wait } from 'src/utils/misc'
 import { ALL_POSTS, createPost } from 'types/graphql'
-import { useBreakpoint } from 'src/hooks/useBreakpoint'
 
 export function NewPostEditor() {
   const {

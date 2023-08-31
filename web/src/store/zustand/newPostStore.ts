@@ -1,4 +1,4 @@
-import { persist, createJSONStorage } from 'zustand/middleware'
+import { createJSONStorage, persist } from 'zustand/middleware'
 
 import { createZustandChildrenStore } from './store'
 
@@ -22,7 +22,7 @@ type NewPostStore = State & Actions
 const initialState: State = {
   title: '',
   bodyPlainText: '',
-  body: '<p></p>',
+  body: '',
   headerImageUrl: '',
 }
 
@@ -51,4 +51,5 @@ const useNewPostStore = createZustandChildrenStore<NewPostStore>()(
   )
 )
 
-export { useNewPostStore, NewPostStore }
+export { NewPostStore, useNewPostStore }
+

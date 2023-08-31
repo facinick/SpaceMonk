@@ -1,12 +1,12 @@
 import type {
-  QueryResolvers,
   MutationResolvers,
   PostResolvers,
+  QueryResolvers,
   QuerypostsArgs,
 } from 'types/graphql'
 
-import { db } from 'src/lib/db'
 import { requireAuth, requirePostOwner } from 'src/lib/auth'
+import { db } from 'src/lib/db'
 
 export function removeUndefinedKeys<T>(obj: T): T {
   // If obj is not an object or is null, return obj
@@ -209,6 +209,12 @@ export const post: QueryResolvers['post'] = async ({ id }) => {
 export const createPost: MutationResolvers['createPost'] = ({ input }) => {
   requireAuth()
   const authorId = context.currentUser.id
+
+  // time to do some background task ba
+  if(!input.headerImageUrl) {
+
+  }
+
   return db.post.create({
     data: {
       authorId,

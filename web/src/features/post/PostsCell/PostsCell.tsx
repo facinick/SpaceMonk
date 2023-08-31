@@ -1,7 +1,8 @@
 import type { CellFailureProps, CellSuccessProps } from '@redwoodjs/web'
+import { CellEmpty } from 'src/features/redwood/CellWrapper/Empty'
+import { CellError } from 'src/features/redwood/CellWrapper/Error'
 import { CellLoading } from 'src/features/redwood/CellWrapper/Loading'
 import { ALL_POSTS_QUERY } from 'src/graphql/queries'
-import { Center } from 'src/utils/react'
 import { truncate } from 'src/utils/string'
 import { ALL_POSTS } from 'types/graphql'
 import PostCard from '../PostCard/PostCard'
@@ -15,7 +16,7 @@ export const beforeQuery = (props) => {
   }
 }
 
-export const Loading = () => <Center><CellLoading /></Center>
+export const Loading = () => <CellLoading />
 
 export const isEmpty = ({ posts }) => {
   if (posts.posts.length === 0) {
@@ -23,10 +24,10 @@ export const isEmpty = ({ posts }) => {
   } else return false
 }
 
-export const Empty = () => <Center><div>No Posts.. Such Empty!</div></Center>
+export const Empty = () => <CellEmpty itemName={'Posts'}></CellEmpty>
 
 export const Failure = ({ error }: CellFailureProps) => (
-  <Center><div style={{ color: 'red' }}>Error: {error?.message}</div></Center>
+  <CellError message={error.message}></CellError>
 )
 
 export const Success = ({ posts }: CellSuccessProps<ALL_POSTS>) => {
