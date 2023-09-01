@@ -70,6 +70,33 @@ export const ALL_POSTS_QUERY = gql`
   }
 `
 
+export const ALL_POSTS_BY_USERNAME_QUERY = gql`
+  query ALL_POSTS_BY_USERNAME($query: PaginationInput, $username: String!) {  
+    postsByUsername(query: $query, username: $username) {  
+      posts {
+        id
+        title
+        body
+        headerImageUrl
+        bodyPlainText
+        createdAt
+        updatedAt
+        author {
+          id
+          username
+        }
+        comments {
+          id
+        }
+        votes {
+          id
+          entityType
+        }
+      }
+    }
+  }
+`
+
 export const POST_BY_ID_QUERY = gql`
   # your params will crom from here
   query POST_BY_ID($id: Int!) {

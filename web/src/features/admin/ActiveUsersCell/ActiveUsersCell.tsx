@@ -1,4 +1,4 @@
-import type { CellSuccessProps, CellFailureProps } from '@redwoodjs/web'
+import type { CellFailureProps, CellSuccessProps } from '@redwoodjs/web'
 import { USER_PRESENCE_QUERY } from 'src/graphql/queries'
 import { USER_PRESENCE } from 'types/graphql'
 import ActiveUsersComponent from '../ActiveUsersComponent/ActiveUsersComponent'

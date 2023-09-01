@@ -35,6 +35,7 @@ export const schema = gql`
     orderBy: OrderBy
     filter: String
   }
+
   type Post {
     id: Int! #-----------------------------------------#public
     title: String! #-----------------------------------#public
@@ -54,6 +55,7 @@ export const schema = gql`
   type Query {
     # posts: [Post]! @skipAuth #-------------------------#public
     posts(query: PaginationInput): PaginationResponse! @skipAuth #-------------------------#public
+    postsByUsername(query: PaginationInput, username: String!): PaginationResponse! @skipAuth #-------------------------#public
     post(id: Int!): Post @skipAuth #-------------------#public
   }
 

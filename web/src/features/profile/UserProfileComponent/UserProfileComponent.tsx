@@ -15,6 +15,8 @@ const UserProfileComponent = (props: ComponentProps) => {
 
   const isLoggedIn = currentUserOfFalse!!
 
+  // true => my profile
+  // false => my profile and im not logged in OR not my profile and im not logged in
   const isMyProfile =
   isLoggedIn &&
   currentUserOfFalse.username === userProfileByUsername.user.username
@@ -59,9 +61,10 @@ const UserProfileComponent = (props: ComponentProps) => {
       )}
 
       {/* TABS */}
-      <div className="w-full">
+      <div className="w-full flex flex-col gap-8">
         <UserProfileTabsComponent />
-        <UserProfileDataComponent />
+        
+        <UserProfileDataComponent username={userProfileByUsername.user.username} />
       </div>
     </div>
   )
