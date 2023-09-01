@@ -1,11 +1,12 @@
-import { useParseHtml } from 'src/hooks/useParseHtml'
-import { useAuth } from 'src/auth'
 import { Link, navigate, routes } from '@redwoodjs/router'
-import { EditPostIcon } from '../../Icons/icons'
-import { POST_BY_ID } from 'types/graphql'
-import DeletePostButton from '../DeletePostButton/DeletePostButton'
+import { useAuth } from 'src/auth'
 import { PostVotingComponent } from 'src/features/vote/VotingComponent/PostVotingComponent'
 import { useBreakpoint } from 'src/hooks/useBreakpoint'
+import { useParseHtml } from 'src/hooks/useParseHtml'
+import { POST_BY_ID } from 'types/graphql'
+import nyam from "../../../assets/nyam.gif"
+import { EditPostIcon } from '../../Icons/icons'
+import DeletePostButton from '../DeletePostButton/DeletePostButton'
 interface ComponentProps {
   post: POST_BY_ID['post']
 }
@@ -44,7 +45,7 @@ const PostCardBig = (props: ComponentProps) => {
       <div className="relative inline-block w-full">
         <img
           className="h-[300px] w-full rounded-t-lg object-cover"
-          src={headerImageUrl}
+          src={headerImageUrl || nyam}
           alt="post header image"
         />
         <div className="absolute left-0 top-0 flex h-[100%] w-[100%] items-center justify-center bg-[#0000004d] px-8">

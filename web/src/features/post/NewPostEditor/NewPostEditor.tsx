@@ -164,7 +164,7 @@ export function NewPostEditor() {
             onChange={onHeaderImageUrlChange}
             value={headerImageUrl}
             type="text"
-            placeholder="Image url"
+            placeholder="Image url (You add it, or I'll add it for you)"
             className="input-bordered input w-full"
           />
         </div>
