@@ -5,6 +5,10 @@
   "dependencies": {
     "@redwoodjs/api": "4.1.2",
     "@redwoodjs/auth-dbauth-api": "4.1.2",
-    "@redwoodjs/graphql-server": "4.1.2"
+    "@redwoodjs/graphql-server": "4.1.2",
+    "bull": "^4.11.3"
+  },
+  "devDependencies": {
+    "@types/bull": "^4.10.0"
   }
 }

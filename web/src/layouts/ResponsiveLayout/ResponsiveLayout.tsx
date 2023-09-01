@@ -3,18 +3,19 @@ import { Toaster } from '@redwoodjs/web/dist/toast'
 import { useMemo } from 'react'
 import { useAuth } from 'src/auth'
 import {
-  HomeIcon,
   BlogIcon,
   BurgerMenuIcon,
-  NewPostIcon,
+  HomeIcon,
   LoginIcon,
-  UserRegisterIcon,
-  ResetThemeIcon,
   LogoutIcon,
+  NewPostIcon,
+  ResetThemeIcon,
   UserLoginIcon,
+  UserRegisterIcon,
 } from 'src/features/Icons/icons'
 import ThemeModeToggleComponent from 'src/features/theme/ThemeModeToggleComponent/ThemeModeToggleComponent'
 import ThemeSelectComponent from 'src/features/theme/ThemeSelectComponent/ThemeSelectComponent'
+import { useBreakpoint } from 'src/hooks/useBreakpoint'
 import { useThemeStore } from 'src/store/zustand/themeStore'
 import { wait } from 'src/utils/misc'
 
@@ -33,6 +34,10 @@ const ResponsiveLayout = ({ children }: ResponsiveLayoutProps) => {
   const { logOut, currentUser } = useAuth()
 
   const { reset: resetTheme } = useThemeStore()
+
+  const { isMin } = useBreakpoint()
+
+  const renderButtonTexts = isMin('sm')
 
   const onLogout = async () => {
     await logOut()
@@ -64,8 +69,8 @@ const ResponsiveLayout = ({ children }: ResponsiveLayoutProps) => {
             },
           }}
         />
-        <div className="navbar rounded-box px-3">
-          <div className="flex-1 gap-2">
+        <div className="flex justify-between navbar rounded-box px-3">
+          <div className="gap-2 shrink-0">
             <Link to={routes.home()} className="flex items-center">
               <button
                 title="Please take me home"
@@ -79,7 +84,7 @@ const ResponsiveLayout = ({ children }: ResponsiveLayoutProps) => {
             <div className="flex items-center justify-center gap-2">
               {/* BLOG LINK */}
               <Link to={routes.blog()} className="btn-primary btn-sm btn gap-2">
-                Blog
+                {renderButtonTexts && "Blog"}
                 <BlogIcon />
               </Link>
               {/* THEME SELECT */}

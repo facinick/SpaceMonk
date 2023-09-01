@@ -4,15 +4,15 @@ import { navigate, routes } from '@redwoodjs/router'
 import { useMutation } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/toast'
 
+import { CancelIcon, EditPostIcon } from 'src/features/Icons/icons'
+import { TipTapEditor } from 'src/features/editor/TIpTapEditor'
+import { UPDATE_POST_MUTATION } from 'src/graphql/mutations'
+import { ALL_POSTS_QUERY } from 'src/graphql/queries'
+import { useBreakpoint } from 'src/hooks/useBreakpoint'
 import { isImageValid } from 'src/hooks/useImageValidator'
 import { useUpdatePostStore } from 'src/store/zustand/updatePostStore'
-import { TipTapEditor } from 'src/features/editor/TIpTapEditor'
-import { CancelIcon, EditPostIcon } from 'src/features/Icons/icons'
-import { ALL_POSTS_QUERY } from 'src/graphql/queries'
-import { UPDATE_POST_MUTATION } from 'src/graphql/mutations'
 import { wait } from 'src/utils/misc'
-import { ALL_POSTS, POST_BY_ID } from 'types/graphql'
-import { useBreakpoint } from 'src/hooks/useBreakpoint'
+import { ALL_POSTS, POST_BY_ID, updatePost } from 'types/graphql'
 
 interface ComponentProps {
   post: POST_BY_ID['post']
@@ -24,12 +24,12 @@ export function UpdatePostEditor({ post }: ComponentProps) {
     title,
     body,
     headerImageUrl,
+    bodyPlainText,
     setTitle,
     setBody,
     setHeaderImageUrl,
-    reset,
     setBodyPlainText,
-    bodyPlainText,
+    reset,
   } = useUpdatePostStore()
 
   let definedServerHeaderImageUrl = post.headerImageUrl
@@ -38,7 +38,6 @@ export function UpdatePostEditor({ post }: ComponentProps) {
   let definedClientHeaderImageUrl = headerImageUrl ? headerImageUrl : ''
 
   const { id } = post
-  //@ts-ignore
   const [updatePost, { loading }] = useMutation<updatePost>(
     UPDATE_POST_MUTATION,
     {
@@ -49,17 +48,17 @@ export function UpdatePostEditor({ post }: ComponentProps) {
         navigate(routes.post({ id: data.updatePost.id }))
       },
       onError: (error) => {
+        console.log(error)
         toast.error(error.message)
       },
       // refetchQueries: [ALL_POSTS_QUERY],
       update: (cache, { data }) => {
-        const updatedPost = data.deletePost
+        const updatedPost = data.updatePost
         const allPostsQueryResult = cache.readQuery<ALL_POSTS>({
           query: ALL_POSTS_QUERY,
         })
 
-        let allPosts = allPostsQueryResult.posts.posts
-
+        let allPosts = [...allPostsQueryResult.posts.posts]
         // it has to exist, so im assuming this won't be -1
         const postToUpdateIndex = allPosts.findIndex(
           (post) => post.id === updatedPost.id

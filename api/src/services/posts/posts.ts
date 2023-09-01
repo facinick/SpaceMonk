@@ -7,6 +7,7 @@ import type {
 
 import { requireAuth, requirePostOwner } from 'src/lib/auth'
 import { db } from 'src/lib/db'
+import randomImageQueue from 'src/queues/randomImageQueue'
 
 export function removeUndefinedKeys<T>(obj: T): T {
   // If obj is not an object or is null, return obj
@@ -206,21 +207,33 @@ export const post: QueryResolvers['post'] = async ({ id }) => {
   return post
 }
 
-export const createPost: MutationResolvers['createPost'] = ({ input }) => {
+export const createPost: MutationResolvers['createPost'] = async ({ input }) => {
   requireAuth()
   const authorId = context.currentUser.id
 
   // time to do some background task ba
-  if(!input.headerImageUrl) {
-
-  }
-
-  return db.post.create({
+  const post = await db.post.create({
     data: {
       authorId,
       ...input,
     },
   })
+
+  if(!input.headerImageUrl) {
+    const _job = await randomImageQueue.add({}, { delay: 2000 }); // Delayed by 2 seconds for good measure
+    // Listen to the completed event to update the post when the job finishes
+    randomImageQueue.on('completed', async (job, result) => {
+      if (_job.id === job.id) { // Check if the job is the one we added
+        // Update the post with the random image URL
+        await db.post.update({
+          where: { id: post.id }, // You need to have an 'id' in your input
+          data: { headerImageUrl: result.imageUrl },
+        });
+      }
+    });
+  }
+
+  return post
 }
 
 export const updatePost: MutationResolvers['updatePost'] = ({ id, input }) => {

@@ -5,6 +5,7 @@ import { CellLoading } from 'src/features/redwood/CellWrapper/Loading'
 import { ALL_POSTS_QUERY } from 'src/graphql/queries'
 import { truncate } from 'src/utils/string'
 import { ALL_POSTS } from 'types/graphql'
+import nyam from "../../../assets/nyam.gif"
 import PostCard from '../PostCard/PostCard'
 
 export const QUERY = ALL_POSTS_QUERY
@@ -46,7 +47,7 @@ export const Success = ({ posts }: CellSuccessProps<ALL_POSTS>) => {
               body={post.body}
               title={post.title}
               headerImageUrl={
-                post.headerImageUrl || `https://loremflickr.com/1920/720`
+                post.headerImageUrl || nyam
               }
               id={post.id}
             />

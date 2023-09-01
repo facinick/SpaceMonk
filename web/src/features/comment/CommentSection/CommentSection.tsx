@@ -1,9 +1,9 @@
+import { Link, routes } from '@redwoodjs/router'
 import { useAuthentication } from 'src/hooks/useAuthentication'
-import type { COMMENTS_BY_POST_ID } from 'types/graphql'
-import DeleteCommentButton from '../DeleteCommentButton/DeleteCommentButton'
+import type { COMMENTS_BY_POST_ID, Comment } from 'types/graphql'
 import { prose_classes } from '../../editor/TIpTapEditor'
 import { CommentVotingComponent } from '../../vote/VotingComponent/CommentVotingComponent'
-import { Link, routes } from '@redwoodjs/router'
+import DeleteCommentButton from '../DeleteCommentButton/DeleteCommentButton'
 
 interface ComponentProps {
   comments: COMMENTS_BY_POST_ID['commentsByPostId']
@@ -12,12 +12,16 @@ interface ComponentProps {
 const CommentSection = ({ comments, postId }: ComponentProps) => {
   const currentUserOrFalse = useAuthentication({})
 
+  const sortedComments = [...comments].sort((a: Comment , b: Comment) =>
+    new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+  );
+
   return (
     <div
       className={`${prose_classes} border-current-color w-full max-w-2xl rounded-lg border p-5`}
     >
       <ul className="flex flex-col gap-5 !p-0">
-        {comments.map((comment, index) => {
+        {sortedComments.map((comment, index) => {
           const { body, author, votes, score, createdAt, id } = comment
           const { username, id: authorId } = author
 
