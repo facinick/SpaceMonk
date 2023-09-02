@@ -50,18 +50,26 @@ model UserPresence {
 
 model UserProfile {
   id                Int     @id @default(autoincrement())
-  bio               String?
-  profilePictureUrl String?
-  headerImageUrl    String?
-  name              String?
+  bio               String? @default("")
+
+  // we will set a default one at time of creation
+  profilePictureUrl String? @default("")
+  // we will set a default one at time of creation
+  headerImageUrl    String? @default("")
+  name              String? @default("")
+  //Note: The default value of an optional field is null.
   age               Int?
-  city              String?
+  city              String?  @default("")
   interests         String[] @default([])
   userId            Int
   user              User    @relation("profile", fields: [userId], references: [id])
 
+  // we will set a default one at time of creation
+  mask              Mask?  @default(HEXAVERT)
   @@unique([userId])
 }
+
+
 
 model UserRole {
   id        Int      @id @default(autoincrement())
@@ -89,6 +97,28 @@ model ContactAdmin {
   message   String
   user      User?    @relation(fields: [userId], references: [id])
   userId    Int?
+}
+
+enum Mask {
+  SQUIRCLE
+  HEART
+  HEXASIDE
+  HEXAVERT
+  DECAGON
+  PENTAGON
+  DIAMOND
+  SQUARE
+  CIRCLE
+  PARALITH
+  PARALOGLIDE
+  PARALLELOZEN
+  PARALLELOSURF
+  STARMI
+  STARYU
+  TRIADIX
+  TRINEON
+  TRIQUARK
+  TRIFLUX
 }
 
 model Post {

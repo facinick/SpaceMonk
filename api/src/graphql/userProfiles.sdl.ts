@@ -10,6 +10,29 @@ export const schema = gql`
     interests: [String]!
     userId: Int!
     user: User!
+    mask: Mask
+  }
+
+  enum Mask {
+    SQUIRCLE
+    HEART
+    HEXASIDE
+    HEXAVERT
+    DECAGON
+    PENTAGON
+    DIAMOND
+    SQUARE
+    CIRCLE
+    PARALITH
+    PARALOGLIDE
+    PARALLELOZEN
+    PARALLELOSURF
+    STARMI
+    STARYU
+    TRIADIX
+    TRINEON
+    TRIQUARK
+    TRIFLUX
   }
 
   type Query {
@@ -27,6 +50,7 @@ export const schema = gql`
     city: String
     interests: [String]!
     userId: Int!
+    mask: Mask
   }
 
   input UpdateUserProfileInput {
@@ -38,6 +62,7 @@ export const schema = gql`
     city: String
     interests: [String]!
     userId: Int
+    mask: Mask
   }
 
   type Mutation {
