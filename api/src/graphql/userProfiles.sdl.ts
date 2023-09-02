@@ -5,9 +5,9 @@ export const schema = gql`
     profilePictureUrl: String
     headerImageUrl: String
     name: String
-    age: String
+    age: Int
     city: String
-    interests: String
+    interests: [String]!
     userId: Int!
     user: User!
   }
@@ -23,9 +23,9 @@ export const schema = gql`
     profilePictureUrl: String
     headerImageUrl: String
     name: String
-    age: String
+    age: Int
     city: String
-    interests: String
+    interests: [String]!
     userId: Int!
   }
 
@@ -34,9 +34,9 @@ export const schema = gql`
     profilePictureUrl: String
     headerImageUrl: String
     name: String
-    age: String
+    age: Int
     city: String
-    interests: String
+    interests: [String]!
     userId: Int
   }
 

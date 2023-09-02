@@ -13,10 +13,6 @@ export const schema = gql`
     contactAdmins: [ContactAdmin!]! @requireAuth(roles: ["admin"])
   }
 
-  type Subscription {
-    contactAdminCreated: ContactAdmin!
-  }
-
   input CreateContactAdminInput {
     name: String!
     message: String!

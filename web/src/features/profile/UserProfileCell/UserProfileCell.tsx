@@ -1,4 +1,5 @@
 import type { CellFailureProps, CellSuccessProps } from '@redwoodjs/web'
+import { ProfileOnboarding } from 'src/features/profile_onboarding/ProfileOnboarding'
 import { CellEmpty } from 'src/features/redwood/CellWrapper/Empty'
 import { CellError } from 'src/features/redwood/CellWrapper/Error'
 import { CellLoading } from 'src/features/redwood/CellWrapper/Loading'
@@ -19,7 +20,7 @@ export const Empty = (props) => {
 
   // user is logged in, profile is not created
   if (userOrFalse && userOrFalse.username === props.username) {
-    return <div>This place could be yours, Create Profile?</div>
+    return <ProfileOnboarding username={userOrFalse.username} />
   } 
   
   // user is not logged in, profile is not created

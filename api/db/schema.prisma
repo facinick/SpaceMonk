@@ -54,9 +54,9 @@ model UserProfile {
   profilePictureUrl String?
   headerImageUrl    String?
   name              String?
-  age               String?
+  age               Int?
   city              String?
-  interests         String?
+  interests         String[] @default([])
   userId            Int
   user              User    @relation("profile", fields: [userId], references: [id])
 
