@@ -1,13 +1,12 @@
-import { MetaTags } from '@redwoodjs/web'
-import { useMutation } from '@redwoodjs/web'
+import { MetaTags, useMutation } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/toast'
 import { FormEvent, useRef } from 'react'
-import { MessageIcon, SendRightIcon, UserLoginIcon } from '../../Icons/icons'
 import { CREATE_CONTACT_ADMIN_MUTATION } from 'src/graphql/mutations'
 import { createContactAdmin } from 'types/graphql'
+import { MessageIcon, SendRightIcon, UserLoginIcon } from '../../Icons/icons'
 
 const Constants = {
-  formTitle: 'Ping Admin.. Ping him!',
+  formTitle: 'Feature requests ?!??!!',
   name: 'Name',
   namePlaceholder: 'Nick',
   message: 'Message',

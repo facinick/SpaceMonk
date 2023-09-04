@@ -73,30 +73,18 @@ const ResponsiveLayout = ({ children }: ResponsiveLayoutProps) => {
           }}
         />
         <div className="flex justify-between navbar rounded-box px-3">
-          <div className="gap-3 shrink-0">
-            <Link to={routes.home()} className="flex items-center">
-              <button
-                title="Please take me home"
-                onClick={() => navigate(routes.home())}
-              >
+          <div className="gap-2 shrink-0">
+            <Link to={routes.home()} className="btn-ghost btn-sm btn gap-2" title="Please take me home">
+                {renderButtonTexts && "Home"}
                 <HomeIcon />
-              </button>
             </Link>
-            <Link to={routes.tags()} className="flex items-center">
-              <button
-                title="You're it!"
-                onClick={() => navigate(routes.tags())}
-              >
+            <Link to={routes.tags()} className="btn-ghost btn-sm btn gap-2" title="You're it!">
+                {renderButtonTexts && "Tags"}
                 <TagIcon />
-              </button>
             </Link>
-            <Link to={routes.search()} className="flex items-center">
-              <button
-                title="Lost, but not for long. I always find my way."
-                onClick={() => navigate(routes.search())}
-              >
+            <Link to={routes.search()} className="btn-ghost btn-sm btn gap-2" title="Lost, but not for long. I always find my way.">
+                {renderButtonTexts && "Search"}
                 <SearchIcon />
-              </button>
             </Link>
           </div>
           <div className="flex justify-end">

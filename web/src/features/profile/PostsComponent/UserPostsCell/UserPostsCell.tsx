@@ -47,10 +47,9 @@ export const Success = ({ postsByUsername }: CellSuccessProps<ALL_POSTS_BY_USERN
               truncated={truncated}
               body={post.body}
               title={post.title}
-              headerImageUrl={
-                post.headerImageUrl
-              }
-              id={post.id}
+              headerImageUrl={post.headerImageUrl}
+              id={post.id} 
+              tags={post.tags}            
             />
           </li>
         )

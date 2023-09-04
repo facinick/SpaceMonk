@@ -33,11 +33,13 @@ const Routes = () => {
         <Set wrap={NoProsePostLayout}>
           <Route path="/blog" page={BlogPage} name="blog" />
         </Set>
+        <Route path="/user/{username:String}" page={ProfilePage} name="user" />
         <Route path="/profile/{username:String}" page={ProfilePage} name="profile" />
         <Route path="/login" page={LoginPage} name="login" />
         <Route path="/signup" page={SignupPage} name="signup" />
         <Route path="/search" page={SearchPage} name="search" />
         <Route path="/tags" page={TagsPage} name="tags" />
+        <Route path="/users" page={UsersPage} name="users" />
         <Set wrap={NoProsePostLayout}>
           <Route path="/tags/{name:String}" page={TagPage} name="tag" />
         </Set>
