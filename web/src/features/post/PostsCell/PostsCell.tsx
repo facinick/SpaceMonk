@@ -49,6 +49,7 @@ export const Success = ({ posts }: CellSuccessProps<ALL_POSTS>) => {
               headerImageUrl={
                 post.headerImageUrl || nyam
               }
+              tags={post.tags}
               id={post.id}
             />
           </li>

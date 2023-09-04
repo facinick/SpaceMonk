@@ -1,4 +1,7 @@
 import { Link, routes } from '@redwoodjs/router'
+import { CellSuccessProps } from '@redwoodjs/web'
+import { Chip } from 'src/ui/chip/Chip'
+import { ALL_POSTS } from 'types/graphql'
 
 interface ComponentProps {
   headerImageUrl?: string
@@ -9,6 +12,7 @@ interface ComponentProps {
   truncated: boolean
   createdAt: string
   authorUsername: string
+  tags: CellSuccessProps<ALL_POSTS>['posts']['posts'][0]['tags']
 }
 
 const PostCard = (props: ComponentProps) => {
@@ -21,6 +25,7 @@ const PostCard = (props: ComponentProps) => {
     createdAt,
     truncated,
     bodyPlainText,
+    tags
   } = props
 
   return (
@@ -51,6 +56,9 @@ const PostCard = (props: ComponentProps) => {
             {new Date(createdAt).toDateString()}
           </time>
           <address className="author">By @{authorUsername}</address>
+          <div className="flex flex-wrap gap-y-2">
+            {tags.map((tag => <Chip key={tag.id}>{tag.name}</Chip>))}
+          </div>
         </div>
       </div>
     </Link>

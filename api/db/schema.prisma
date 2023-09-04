@@ -137,6 +137,7 @@ model Post {
   author    User      @relation("author", fields: [authorId], references: [id])
   comments  Comment[]
   votes     Vote[]
+  tags      Tag[]
 }
 
 model Vote {
@@ -171,4 +172,13 @@ model Comment {
   parentCommentId Int?
   parent          Comment?  @relation("parentChildComment", fields: [parentCommentId], references: [id])
   comments        Comment[] @relation("parentChildComment")
+}
+
+model Tag {
+  id        Int       @id @default(autoincrement())
+  name      String    @unique
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  // prisma relations
+  posts     Post[]
 }

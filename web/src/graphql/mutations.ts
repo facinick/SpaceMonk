@@ -51,6 +51,10 @@ export const CREATE_POST_MUTATION = gql`
         id
         entityType
       }
+      tags {
+        id
+        name
+      }
     }
   }
 `
@@ -77,6 +81,10 @@ export const UPDATE_POST_MUTATION = gql`
       votes {
         id
         entityType
+      }
+      tags {
+        id
+        name
       }
     }
   }

@@ -379,12 +379,28 @@ export const createPost: MutationResolvers['createPost'] = async ({ input }) => 
   requireAuth()
   const authorId = context.currentUser.id
 
+  const { tags } = input
+
+  const tagsToConnect = tags.filter((tag) => tag.id !== -1).map( ({id, ...rest})  => { return { id } })
+  const tagsToCreate = tags.filter((tag) => tag.id === -1).map((value, index, array) => ({name: value.name}))
+
   // time to do some background task ba
   const post = await db.post.create({
     data: {
       authorId,
       ...input,
+      tags: {
+        connect: [
+          ...tagsToConnect
+        ],
+        create: [
+          ...tagsToCreate
+        ]
+      }
     },
+    include: {
+      tags: true
+    }
   })
 
   if(!input.headerImageUrl) {
@@ -435,4 +451,6 @@ export const Post: Partial<PostResolvers> = {
   },
   votes: (_obj, { root }) =>
     db.post.findUnique({ where: { id: root.id } }).votes(),
+  tags: (_obj, { root }) =>
+    db.post.findUnique({ where: { id: root.id } }).tags(),
 }

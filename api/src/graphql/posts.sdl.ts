@@ -50,6 +50,7 @@ export const schema = gql`
     author: User! #------------------------------------#public
     comments: [Comment]! #-----------------------------#public
     votes: [Vote]! #-----------------------------------#public
+    tags: [Tag]!   #-----------------------------------#public
   }
 
   type Query {
@@ -66,11 +67,17 @@ export const schema = gql`
     end: Boolean!
   }
 
+  input ConnectOrCreateTagInput {
+    id: Int
+    name: String!
+  }
+
   input CreatePostInput {
     title: String!
     body: String!
     bodyPlainText: String!
     headerImageUrl: String #@optional_input
+    tags: [ConnectOrCreateTagInput]!
   }
 
   input UpdatePostInput {

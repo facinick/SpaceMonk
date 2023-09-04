@@ -1,11 +1,11 @@
 import type { UserProfile } from '@prisma/client'
 
 import {
-  userProfiles,
-  userProfile,
   createUserProfile,
-  updateUserProfile,
   deleteUserProfile,
+  updateUserProfile,
+  userProfile,
+  userProfiles,
 } from './userProfiles'
 import type { StandardScenario } from './userProfiles.scenarios'
 
@@ -33,7 +33,10 @@ describe('userProfiles', () => {
 
   scenario('creates a userProfile', async (scenario: StandardScenario) => {
     const result = await createUserProfile({
-      input: { userId: scenario.userProfile.two.userId },
+      input: {
+        userId: scenario.userProfile.two.userId,
+        interests: []
+      },
     })
 
     expect(result.userId).toEqual(scenario.userProfile.two.userId)
@@ -45,7 +48,10 @@ describe('userProfiles', () => {
     })) as UserProfile
     const result = await updateUserProfile({
       id: original.id,
-      input: { userId: scenario.userProfile.two.userId },
+      input: {
+        userId: scenario.userProfile.two.userId,
+        interests: []
+      },
     })
 
     expect(result.userId).toEqual(scenario.userProfile.two.userId)

@@ -1,8 +1,8 @@
 import { MetaTags } from '@redwoodjs/web'
 import { useAuth } from 'src/auth'
-import { ContactAdminForm } from 'src/features/contact/ContactAdminForm/ContactAdminForm'
-import ContactAdminsCell from 'src/features/admin/ContactAdminsCell'
 import ActiveUsersCell from 'src/features/admin/ActiveUsersCell'
+import ContactAdminsCell from 'src/features/admin/ContactAdminsCell'
+import { ContactAdminForm } from 'src/features/contact/ContactAdminForm/ContactAdminForm'
 
 const HomePage = () => {
   const { hasRole } = useAuth()

@@ -65,6 +65,10 @@ export const ALL_POSTS_QUERY = gql`
           id
           entityType
         }
+        tags {
+          id
+          name
+        }
       }
     }
   }
@@ -91,6 +95,10 @@ export const ALL_POSTS_BY_USERNAME_QUERY = gql`
         votes {
           id
           entityType
+        }
+        tags {
+          id
+          name
         }
       }
     }
@@ -121,6 +129,10 @@ export const POST_BY_ID_QUERY = gql`
           username
         }
         entityType
+      }
+      tags {
+        id
+        name
       }
     }
   }
@@ -232,3 +244,12 @@ export const USER_PRESENCE_QUERY = gql`
     }
   }
 `
+
+export const TAGS_QUERY = gql`
+  query TAGS($input: TagQueryFilterAndPagination) {
+    tags(input: $input) {
+      id
+      name
+    }
+  }
+`;

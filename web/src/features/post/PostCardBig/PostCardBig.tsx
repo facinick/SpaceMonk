@@ -3,6 +3,7 @@ import { useAuth } from 'src/auth'
 import { PostVotingComponent } from 'src/features/vote/VotingComponent/PostVotingComponent'
 import { useBreakpoint } from 'src/hooks/useBreakpoint'
 import { useParseHtml } from 'src/hooks/useParseHtml'
+import { Chip } from 'src/ui/chip/Chip'
 import { POST_BY_ID } from 'types/graphql'
 import nyam from "../../../assets/nyam.gif"
 import { EditPostIcon } from '../../Icons/icons'
@@ -76,6 +77,10 @@ const PostCardBig = (props: ComponentProps) => {
       {/* Article */}
       <article style={{ overflowWrap: 'anywhere' }}>{parsedBodyHtml}</article>
       {/* Footer */}
+
+      <div className="flex flex-wrap gap-y-2 mb-5">
+        {post.tags.map((tag => <Chip key={tag.id}>{tag.name}</Chip>))}
+      </div>
       <aside className="flex flex-row items-center justify-between">
         <PostVotingComponent
           votes={votes}

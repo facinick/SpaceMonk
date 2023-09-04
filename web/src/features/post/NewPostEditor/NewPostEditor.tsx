@@ -4,11 +4,13 @@ import { toast } from '@redwoodjs/web/toast'
 import { useMemo, useRef, useState } from 'react'
 import { PlusIcon, TrashIcon } from 'src/features/Icons/icons'
 import { TipTapEditor } from 'src/features/editor/TIpTapEditor'
+import { TagsInputComponent } from 'src/features/tags/TagsInputComponent/TagsInputComponent'
 import { CREATE_POST_MUTATION } from 'src/graphql/mutations'
 import { ALL_POSTS_QUERY } from 'src/graphql/queries'
 import { useBreakpoint } from 'src/hooks/useBreakpoint'
 import { isImageValid } from 'src/hooks/useImageValidator'
 import { useNewPostStore } from 'src/store/zustand/newPostStore'
+import { useTagsStore } from 'src/store/zustand/tagsStore'
 import { wait } from 'src/utils/misc'
 import { ALL_POSTS, createPost } from 'types/graphql'
 
@@ -25,12 +27,15 @@ export function NewPostEditor() {
     reset,
   } = useNewPostStore()
 
+  const { tags, reset: resetTags } = useTagsStore()
+
   const [createPost, { loading }] = useMutation<createPost>(
     CREATE_POST_MUTATION,
     {
       onCompleted: (data) => {
         toast.success('Post created')
         reset()
+        resetTags()
         wait({ seconds: 0.5 })
         navigate(routes.post({ id: data.createPost.id }))
       },
@@ -123,6 +128,7 @@ export function NewPostEditor() {
           body: _body,
           bodyPlainText: bodyPlainText.trim(),
           ...(_headerImageUrl && { headerImageUrl: _headerImageUrl }),
+          tags: tags.map((value, index, array) => ({id: value.id, name: value.name}))
         },
       },
     })
@@ -176,6 +182,7 @@ export function NewPostEditor() {
           initialValue={initialBodyValue}
           value={body}
         />
+        <TagsInputComponent></TagsInputComponent>
         <div className="ml-auto flex flex-row gap-5">
           <button
             className="btn-secondary btn-sm btn gap-2"
