@@ -188,6 +188,7 @@ export function NewPostEditor() {
             className="btn-secondary btn-sm btn gap-2"
             disabled={disableInputs}
             onClick={onClearInputs}
+            title="Clear all Inputs"
           >
             {renderText && 'clear'}
             <TrashIcon />
@@ -196,6 +197,7 @@ export function NewPostEditor() {
             className="btn-primary btn-sm btn gap-2"
             disabled={disableInputs}
             onClick={onSubmit}
+            title= "Create Post"
           >
             {renderText && <>{disableInputs ? 'Creating' : 'Create'}</>}
             <PlusIcon />

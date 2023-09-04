@@ -64,7 +64,7 @@ const AddableChip = ({ variant, children, onClick }: Props) => {
     return (
         <span className={finalSpanClassName}>
             {children}
-            <button onClick={onClick} type="button" className={finalbuttonClassName} aria-label="Add">
+            <button title="Add" onClick={onClick} type="button" className={finalbuttonClassName} aria-label="Add">
                 <svg
                     className="w-2 h-2 transform rotate-45"
                     aria-hidden="true"

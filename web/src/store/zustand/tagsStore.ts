@@ -1,4 +1,5 @@
 
+import { toast } from '@redwoodjs/web/toast'
 import { Tag } from 'types/graphql'
 import { createZustandChildrenStore } from './store'
 
@@ -45,6 +46,8 @@ const useTagsStore = createZustandChildrenStore<TagsStore>()(
                 set((state) => ({
                     tags: [...state.tags, tag],
                 }));
+            } else {
+                toast.error(`Tag ${tag.name} is already added dumbass!`)
             }
         },
         removeTag: (tag: TagResponseType) => {

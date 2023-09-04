@@ -2,8 +2,8 @@ import { useMutation } from '@redwoodjs/web'
 import { useCallback, useEffect } from 'react'
 import { UPDATE_USER_PRESENCE_MUTATION } from 'src/graphql/mutations'
 import {
-  MY_DATA_QUERY,
   ALL_POSTS_QUERY,
+  MY_DATA_QUERY,
   MY_FOLLOWING_QUERY,
 } from 'src/graphql/queries'
 import { CurrentUser, useAuthentication } from 'src/hooks/useAuthentication'
@@ -52,9 +52,7 @@ export function Initialize({ children }: ComponentProps) {
 
   const runOnMouseMove = useCallback(
     debounce(async () => {
-      console.log(`updating user presence`)
       await updatePresence()
-      console.log(`updated`)
     }, 5000),
     []
   )

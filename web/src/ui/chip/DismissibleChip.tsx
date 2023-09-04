@@ -64,7 +64,7 @@ const DismissibleChip = ({ variant, children, onClick }: Props) => {
     return (
       <span className={finalSpanClassName}>
         {children}
-        <button onClick={onClick} type="button" className={finalbuttonClassName} aria-label="Remove">
+        <button title="Remove" onClick={onClick} type="button" className={finalbuttonClassName} aria-label="Remove">
         <svg
           className="w-2 h-2"
           aria-hidden="true"
