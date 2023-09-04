@@ -253,3 +253,36 @@ export const TAGS_QUERY = gql`
     }
   }
 `;
+
+export const TAG_QUERY = gql`
+  query TAG($name: String!) {
+    tagByName(name: $name) {
+      id
+      name
+      posts {
+        id
+        title
+        body
+        headerImageUrl
+        bodyPlainText
+        createdAt
+        updatedAt
+        author {
+          id
+          username
+        }
+        comments {
+          id
+        }
+        votes {
+          id
+          entityType
+        }
+        tags {
+          id
+          name
+        }
+      }
+    }
+  }
+`;

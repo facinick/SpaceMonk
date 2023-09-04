@@ -34,9 +34,10 @@ const getRandomVariant = () => {
 interface Props {
     children?: ReactNode;
     variant?: ColorVariant;
+    onClick?: () => void
 }
 
-const Chip = ({ variant, children }: Props) => {
+const Chip = ({ variant, children, onClick }: Props) => {
 
     const selectedVariant = useMemo(() => variant || getRandomVariant(), []);
     const colorClasses = VARIANT_MAPS[selectedVariant]
@@ -44,9 +45,9 @@ const Chip = ({ variant, children }: Props) => {
     const finalSpanClassName = `${spanClassName} ${colorClasses}`
 
     return (
-      <span className={finalSpanClassName}>
+      <button onClick={onClick} className={finalSpanClassName}>
         {children}
-      </span>
+      </button>
     );
 };
   

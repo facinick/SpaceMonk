@@ -9,6 +9,9 @@ import { db } from 'src/lib/db';
 export const tag: QueryResolvers['tag'] = ({ id }) => {
   return db.tag.findUnique({
     where: { id },
+    include: {
+      posts: true
+    }
   })
 }
 
@@ -54,6 +57,9 @@ export const createTag: MutationResolvers['createTag'] = ({ input }) => {
 export const tagByName = ({ name }) => {
   return db.tag.findUnique({
     where: { name },
+    include: {
+      posts: true
+    }
   })
 }
 

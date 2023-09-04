@@ -79,7 +79,7 @@ const PostCardBig = (props: ComponentProps) => {
       {/* Footer */}
 
       <div className="flex flex-wrap gap-y-2 mb-5">
-        {post.tags.map((tag => <Chip key={tag.id}>{tag.name}</Chip>))}
+        {post.tags.map((tag => <Chip onClick={() => navigate(routes.tag({name: tag.name}))} key={tag.id}>{tag.name}</Chip>))}
       </div>
       <aside className="flex flex-row items-center justify-between">
         <PostVotingComponent

@@ -1,5 +1,5 @@
 import { Link, navigate, NavLink, routes, useLocation } from '@redwoodjs/router'
-import { Toaster } from '@redwoodjs/web/dist/toast'
+import { toast, Toaster } from '@redwoodjs/web/dist/toast'
 import { useMemo } from 'react'
 import { useAuth } from 'src/auth'
 import {
@@ -10,6 +10,8 @@ import {
   LogoutIcon,
   NewPostIcon,
   ResetThemeIcon,
+  SearchIcon,
+  TagIcon,
   UserLoginIcon,
   UserRegisterIcon,
 } from 'src/features/Icons/icons'
@@ -42,6 +44,7 @@ const ResponsiveLayout = ({ children }: ResponsiveLayoutProps) => {
   const onLogout = async () => {
     await logOut()
     wait({ seconds: 0.5 })
+    toast.success("Logged out!")
     navigate(routes.home())
   }
 
@@ -70,13 +73,29 @@ const ResponsiveLayout = ({ children }: ResponsiveLayoutProps) => {
           }}
         />
         <div className="flex justify-between navbar rounded-box px-3">
-          <div className="gap-2 shrink-0">
+          <div className="gap-3 shrink-0">
             <Link to={routes.home()} className="flex items-center">
               <button
                 title="Please take me home"
                 onClick={() => navigate(routes.home())}
               >
                 <HomeIcon />
+              </button>
+            </Link>
+            <Link to={routes.tags()} className="flex items-center">
+              <button
+                title="You're it!"
+                onClick={() => navigate(routes.tags())}
+              >
+                <TagIcon />
+              </button>
+            </Link>
+            <Link to={routes.search()} className="flex items-center">
+              <button
+                title="Lost, but not for long. I always find my way."
+                onClick={() => navigate(routes.search())}
+              >
+                <SearchIcon />
               </button>
             </Link>
           </div>

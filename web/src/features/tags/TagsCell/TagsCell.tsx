@@ -1,24 +1,27 @@
+import { navigate, routes } from '@redwoodjs/router'
 import type { CellFailureProps, CellSuccessProps } from '@redwoodjs/web'
-import { useEffect } from 'react'
+import { CellEmpty } from 'src/features/redwood/CellWrapper/Empty'
+import { CellError } from 'src/features/redwood/CellWrapper/Error'
+import { CellLoading } from 'src/features/redwood/CellWrapper/Loading'
 import { TAGS_QUERY } from 'src/graphql/queries'
-import { useTagsStore } from 'src/store/zustand/tagsStore'
-import { TAGS } from 'types/graphql'
+import { Chip } from 'src/ui/chip/Chip'
+import { generateUUID } from 'src/utils/math'
+import type { TAGS } from 'types/graphql'
 
 export const QUERY = TAGS_QUERY
 
-export const Loading = () => null
+export const Loading = () => <CellLoading></CellLoading>
 
-export const Empty = () => null
+export const Empty = () => <CellEmpty itemName={'Tag'}></CellEmpty>
 
-export const Failure = ({ error }: CellFailureProps) => null
+export const Failure = ({ error }: CellFailureProps) => <CellError message={error?.message}></CellError>
 
 export const Success = ({ tags }: CellSuccessProps<TAGS>) => {
-
-  const {setTagsSearchResults} = useTagsStore()
-  
-  useEffect(() => {
-    setTagsSearchResults(tags)
-  }, [tags])
-
-  return (null)
+  return (
+    <div className={`flex flex-row flex-wrap gap-y-2`}>
+        {tags.map((value, index, array) => {
+          return (<Chip onClick={() => navigate(routes.tag({name: value.name}))} key={generateUUID()} >{value.name}</Chip>)
+        })}
+    </div>
+  )
 }

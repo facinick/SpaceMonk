@@ -7,7 +7,7 @@
 // 'src/pages/HomePage/HomePage.js'         -> HomePage
 // 'src/pages/Admin/BooksPage/BooksPage.js' -> AdminBooksPage
 
-import { Router, Route, Private, Set, Redirect, routes } from '@redwoodjs/router'
+import { Private, Redirect, Route, Router, Set, routes } from '@redwoodjs/router'
 import { useAuth } from './auth'
 import NoProsePostLayout from './layouts/NoProsePostLayout/NoProsePostLayout'
 import PostLayout from './layouts/PostLayout/PostLayout'
@@ -17,7 +17,7 @@ const Routes = () => {
   return (
     <Router useAuth={useAuth}>
       <Set wrap={ResponsiveLayout}>
-        {/* Public Routes */}
+        {/* private Routes */}
         <Private unauthenticated="home">
           <Set wrap={PostLayout}>
             <Route path="/posts/new" page={PostNewPostPage} name="newPost" />
@@ -36,6 +36,11 @@ const Routes = () => {
         <Route path="/profile/{username:String}" page={ProfilePage} name="profile" />
         <Route path="/login" page={LoginPage} name="login" />
         <Route path="/signup" page={SignupPage} name="signup" />
+        <Route path="/search" page={SearchPage} name="search" />
+        <Route path="/tags" page={TagsPage} name="tags" />
+        <Set wrap={NoProsePostLayout}>
+          <Route path="/tags/{name:String}" page={TagPage} name="tag" />
+        </Set>
       </Set>
       <Route notfound page={NotFoundPage} />
       <Route path="/admin" page={() => <Redirect to={routes.login()} />} name="admin" />

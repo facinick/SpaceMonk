@@ -1,5 +1,5 @@
 import { useTagsStore } from "src/store/zustand/tagsStore";
-import TagsCell from "../TagsCell";
+import TagsSearchCell from "../TagsSearchCell";
 import { TagsInputBoxComponent } from "./TagsInputBoxComponent";
 import { TagsInputInputAreaComponent } from "./TagsInputInputAreaComponent";
 import { TagsInputTagsAreaComponent } from "./TagsInputTagsAreaComponent";
@@ -24,7 +24,7 @@ export const TagsInputComponent = ({ children }: Props): JSX.Element => {
                 <TagsInputTagsSuggessionComponent></TagsInputTagsSuggessionComponent>
             </TagsInputBoxComponent>
             {/* this will just load popular tags and also allow u to create more tags / search more tags */}
-            <TagsCell input={{ filter: tagSearchTerm, skip: 0, take: 5 }} />
+            <TagsSearchCell input={{ filter: tagSearchTerm, skip: 0, take: 5 }} />
         </>
     );
 }
