@@ -6,8 +6,8 @@ import { CommentVotingComponent } from '../../vote/VotingComponent/CommentVoting
 import DeleteCommentButton from '../DeleteCommentButton/DeleteCommentButton'
 
 interface ComponentProps {
-  comments: COMMENTS_BY_POST_ID['commentsByPostId']
-  postId: COMMENTS_BY_POST_ID['commentsByPostId']['0']['id']
+  comments: COMMENTS_BY_POST_ID['commentsByPostId']['edges'][0]['node'][]
+  postId: number
 }
 const CommentSection = ({ comments, postId }: ComponentProps) => {
   const currentUserOrFalse = useAuthentication({})

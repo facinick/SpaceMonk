@@ -60,8 +60,8 @@ export function Initialize({ children }: ComponentProps) {
   useAuthentication({
     onLogin: async function (currentUser: CurrentUser) {
       console.log(`logged in`)
-      await getMyData()
-      await getAllPosts()
+      // await getMyData()
+      // await getAllPosts()
       document.addEventListener('mousemove', runOnMouseMove)
     },
     onLogout: async function () {

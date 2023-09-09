@@ -1,27 +1,3 @@
-// export const POST_FIELDS_FRAGMENT = gql`
-//   fragment PostFields on Post {
-//     id
-//     title
-//     body
-//     headerImageUrl
-//     bodyPlainText
-//     createdAt
-//     updatedAt
-//     score
-//     updatedAt
-//     author {
-//       id
-//       username
-//     }
-//     comments {
-//       id
-//     }
-//     votes {
-//       id
-//       entityType
-//     }
-//   }
-// `
 export const MY_DATA_QUERY = gql`
   query MY_DATA {
     me {
@@ -44,62 +20,78 @@ export const MY_DATA_QUERY = gql`
 `
 
 export const ALL_POSTS_QUERY = gql`
-  query ALL_POSTS($query: PaginationInput) {
+  query ALL_POSTS($query: PostsConnectionArgs) {
     posts(query: $query) {
-      posts {
-        id
-        title
-        body
-        headerImageUrl
-        bodyPlainText
-        createdAt
-        updatedAt
-        author {
+      edges {
+        node {
           id
-          username
+          title
+          body
+          headerImageUrl
+          bodyPlainText
+          createdAt
+          updatedAt
+          author {
+            id
+            username
+          }
+          comments {
+            id
+          }
+          votes {
+            id
+            entityType
+          }
+          tags {
+            id
+            name
+          }
         }
-        comments {
-          id
-        }
-        votes {
-          id
-          entityType
-        }
-        tags {
-          id
-          name
-        }
+      }
+      pageInfo {
+        startCursor
+        endCursor
+        hasPreviousPage
+        hasNextPage
       }
     }
   }
 `
 
 export const ALL_POSTS_BY_USERNAME_QUERY = gql`
-  query ALL_POSTS_BY_USERNAME($query: PaginationInput, $username: String!) {  
-    postsByUsername(query: $query, username: $username) {  
-      posts {
-        id
-        title
-        body
-        headerImageUrl
-        bodyPlainText
-        createdAt
-        updatedAt
-        author {
+  query ALL_POSTS_BY_USERNAME($username: String!, $query: PostsConnectionArgs,) {  
+    postsByUsername(username: $username, query: $query) {  
+      edges {
+        node {
           id
-          username
+          title
+          body
+          headerImageUrl
+          bodyPlainText
+          createdAt
+          updatedAt
+          author {
+            id
+            username
+          }
+          comments {
+            id
+          }
+          votes {
+            id
+            entityType
+          }
+          tags {
+            id
+            name
+          }
         }
-        comments {
-          id
-        }
-        votes {
-          id
-          entityType
-        }
-        tags {
-          id
-          name
-        }
+      }
+      pageInfo {
+        startCursor
+        endCursor
+        hasPreviousPage
+        hasNextPage
       }
     }
   }
@@ -139,25 +131,35 @@ export const POST_BY_ID_QUERY = gql`
 `
 
 export const COMMENTS_BY_POST_ID_QUERY = gql`
-  query COMMENTS_BY_POST_ID($input: CommentsByPostIdInput!) {
-    commentsByPostId(input: $input) {
-      id
-      body
-      createdAt
-      score
-      updatedAt
-      author {
+  query COMMENTS_BY_POST_ID($postId: Int!, $query: CommentsConnectionArgs) {
+    commentsByPostId(postId: $postId, query: $query) {
+     edges {
+      node {
         id
-        username
-      }
-      votes {
-        id
-        value
-        user {
+        body
+        createdAt
+        score
+        updatedAt
+        author {
           id
           username
         }
-        entityType
+        votes {
+          id
+          value
+          user {
+            id
+            username
+          }
+          entityType
+        }
+      }
+     }
+     pageInfo {
+        startCursor
+        endCursor
+        hasPreviousPage
+        hasNextPage
       }
     }
   }
@@ -233,23 +235,111 @@ export const MY_FOLLOWING_QUERY = gql`
 `
 
 export const USER_PRESENCE_QUERY = gql`
-  query USER_PRESENCE {
-    userPresences(query: { orderBy: { key: "lastSeen", order: "desc" } }) {
-      id
-      lastSeen
-      userId
-      user {
-        username
+  query USER_PRESENCE($query: UserPresencesConnectionArgs) {
+    userPresences(query: $query) {
+      edges {
+        node {
+          id
+          lastSeen
+          userId
+          user {
+            username
+          }
+        }
+      }
+      pageInfo {
+        startCursor
+        endCursor
+        hasPreviousPage
+        hasNextPage
       }
     }
   }
 `
 
 export const TAGS_QUERY = gql`
-  query TAGS($input: TagQueryFilterAndPagination) {
-    tags(input: $input) {
-      id
-      name
+  query TAGS($query: TagsConnectionArgs) {
+    tags(query: $query) {
+      edges {
+        node {
+          id
+          name
+        }
+      }
+      pageInfo {
+        startCursor
+        endCursor
+        hasPreviousPage
+        hasNextPage
+      }
+    }
+  }
+`;
+
+export const SEARCH_QUERY = gql`
+  query SEARCH(query: { filter: String! }) {
+    tags(query: { filter: $filter}) {
+      edges {
+        node {
+          id
+          name
+        }
+      }
+      pageInfo {
+        startCursor
+        endCursor
+        hasPreviousPage
+        hasNextPage
+      }
+    }
+    
+    users(query: { filter: $filter}) {
+      edges {
+        node {
+          id
+          username
+        }
+      }
+      pageInfo {
+        startCursor
+        endCursor
+        hasPreviousPage
+        hasNextPage
+      }
+    }
+    posts(query: { filter: $filter}) {
+      edges {
+        node {
+          id
+          title
+          body
+          headerImageUrl
+          bodyPlainText
+          createdAt
+          updatedAt
+          author {
+            id
+            username
+          }
+          comments {
+            id
+          }
+          votes {
+            id
+            entityType
+          }
+          tags {
+            id
+            name
+          }
+        }
+      }
+      pageInfo {
+        startCursor
+        endCursor
+        hasPreviousPage
+        hasNextPage
+      }
     }
   }
 `;

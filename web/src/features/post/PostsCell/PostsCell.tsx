@@ -20,7 +20,7 @@ export const beforeQuery = (props) => {
 export const Loading = () => <CellLoading />
 
 export const isEmpty = ({ posts }) => {
-  if (posts.posts.length === 0) {
+  if (posts.edges.length === 0) {
     return true
   } else return false
 }
@@ -34,23 +34,23 @@ export const Failure = ({ error }: CellFailureProps) => (
 export const Success = ({ posts }: CellSuccessProps<ALL_POSTS>) => {
   return (
     <ul className="flex flex-col gap-8">
-      {posts.posts.map((post) => {
-        const [bodyPlainText, truncated] = truncate(post.bodyPlainText, 150)
+      {posts.edges.map((post) => {
+        const [bodyPlainText, truncated] = truncate(post.node.bodyPlainText, 150)
         return (
-          <li className="flex items-center justify-center" key={post.id}>
+          <li className="flex items-center justify-center" key={post.node.id}>
             <PostCard
               bodyPlainText={bodyPlainText}
-              key={post.id}
-              authorUsername={post.author.username}
-              createdAt={post.createdAt}
+              key={post.node.id}
+              authorUsername={post.node.author.username}
+              createdAt={post.node.createdAt}
               truncated={truncated}
-              body={post.body}
-              title={post.title}
+              body={post.node.body}
+              title={post.node.title}
               headerImageUrl={
-                post.headerImageUrl || nyam
+                post.node.headerImageUrl || nyam
               }
-              tags={post.tags}
-              id={post.id}
+              tags={post.node.tags}
+              id={post.node.id}
             />
           </li>
         )

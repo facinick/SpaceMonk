@@ -1,9 +1,9 @@
 import { navigate, routes } from '@redwoodjs/router'
 import { MetaTags } from '@redwoodjs/web'
-import { NewCommentEditor } from 'src/features/comment/NewCommentEditor/NewCommentEditor'
 import { BackIcon } from 'src/features/Icons/icons'
-import PostCell from 'src/features/post/PostCell'
 import CommentSectionCell from 'src/features/comment/CommentSectionCell'
+import { NewCommentEditor } from 'src/features/comment/NewCommentEditor/NewCommentEditor'
+import PostCell from 'src/features/post/PostCell'
 
 interface PageProps {
   id: number
@@ -32,7 +32,7 @@ const PostPage = (props: PageProps) => {
         {/* COMMENT FORM */}
         <NewCommentEditor />
         {/* COMMENTS SECTION */}
-        <CommentSectionCell input={{ postId: id }} />
+        <CommentSectionCell postId={id} />
       </div>
     </>
   )

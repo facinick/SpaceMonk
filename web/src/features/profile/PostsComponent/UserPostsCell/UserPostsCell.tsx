@@ -35,21 +35,21 @@ export const Success = ({ postsByUsername }: CellSuccessProps<ALL_POSTS_BY_USERN
 
   return (
     <ul className="flex flex-col gap-8">
-      {postsByUsername.posts.map((post) => {
-        const [bodyPlainText, truncated] = truncate(post.bodyPlainText, 150)
+      {postsByUsername.edges.map((edge) => {
+        const [bodyPlainText, truncated] = truncate(edge.node.bodyPlainText, 150)
         return (
-          <li className="flex items-center justify-center" key={post.id}>
+          <li className="flex items-center justify-center" key={edge.node.id}>
             <PostCard
               bodyPlainText={bodyPlainText}
-              key={post.id}
-              authorUsername={post.author.username}
-              createdAt={post.createdAt}
+              key={edge.node.id}
+              authorUsername={edge.node.author.username}
+              createdAt={edge.node.createdAt}
               truncated={truncated}
-              body={post.body}
-              title={post.title}
-              headerImageUrl={post.headerImageUrl}
-              id={post.id} 
-              tags={post.tags}            
+              body={edge.node.body}
+              title={edge.node.title}
+              headerImageUrl={edge.node.headerImageUrl}
+              id={edge.node.id} 
+              tags={edge.node.tags}            
             />
           </li>
         )

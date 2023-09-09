@@ -9,6 +9,8 @@ interface ComponentProps {
 const ActiveUsersComponent = (props: ComponentProps) => {
   const { activeUsers } = props
 
+  const usersList = activeUsers.edges.map((edge => edge.node))
+
   return (
     <>
       <div className="badge-info badge m-5 gap-2">Live ~3s poll</div>
@@ -22,7 +24,7 @@ const ActiveUsersComponent = (props: ComponentProps) => {
             </tr>
           </thead>
           <tbody>
-            {activeUsers.map((activeUser, index) => {
+            {usersList.map((activeUser, index) => {
               return (
                 <tr key={index}>
                   <th>{index}</th>

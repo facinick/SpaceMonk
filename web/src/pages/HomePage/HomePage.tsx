@@ -15,7 +15,7 @@ const HomePage = () => {
       {isAdmin && (
         <div className="flex flex-col gap-5">
           <ContactAdminsCell />
-          <ActiveUsersCell />
+          <ActiveUsersCell query={{orderBy: {lastSeen: "desc"}}} />
         </div>
       )}
     </>

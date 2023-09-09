@@ -12,7 +12,7 @@ interface ComponentProps {
   truncated: boolean
   createdAt: string
   authorUsername: string
-  tags: CellSuccessProps<ALL_POSTS>['posts']['posts'][0]['tags']
+  tags: CellSuccessProps<ALL_POSTS>['posts']['edges'][0]['node']['tags']
 }
 
 const PostCard = (props: ComponentProps) => {

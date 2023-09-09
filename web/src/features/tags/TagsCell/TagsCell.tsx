@@ -19,8 +19,8 @@ export const Failure = ({ error }: CellFailureProps) => <CellError message={erro
 export const Success = ({ tags }: CellSuccessProps<TAGS>) => {
   return (
     <div className={`flex flex-row flex-wrap gap-y-2`}>
-        {tags.map((value, index, array) => {
-          return (<Chip onClick={() => navigate(routes.tag({name: value.name}))} key={generateUUID()} >{value.name}</Chip>)
+        {tags.edges.map((value, index, array) => {
+          return (<Chip onClick={() => navigate(routes.tag({name: value.node.name}))} key={generateUUID()} >{value.node.name}</Chip>)
         })}
     </div>
   )

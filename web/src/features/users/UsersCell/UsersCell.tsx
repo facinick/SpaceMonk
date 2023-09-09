@@ -5,7 +5,11 @@ import type { UsersQuery } from 'types/graphql'
 export const QUERY = gql`
   query UsersQuery {
     users {
-      id
+      edges {
+        node {
+          id
+        }
+      }
       
     }
   }

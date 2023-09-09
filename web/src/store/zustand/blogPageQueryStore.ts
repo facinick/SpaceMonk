@@ -1,68 +1,49 @@
-import { createZustandChildrenStore } from './store'
+import { createZustandChildrenStore } from './store';
 
-export type BlogPageOrderBy = 'asc' | 'desc'
-export type BlogPageOrderKey = 'createdAt' | 'score' | 'activity'
+export type BlogPageOrderBy =
+  | { createdAt: 'asc' | 'desc' }
+  | { score: 'asc' | 'desc' }
+  | { activity: 'asc' | 'desc' };
 
 type State = {
-  skip?: number
-  take?: number
-  filter?: string
-  orderByKey?: BlogPageOrderKey
-  orderByOrder: BlogPageOrderBy
-  cursor?: number
+  first: number
+  orderBy: BlogPageOrderBy
 }
 
 type Actions = {
   reset: () => void
-  setSkip: (value: number) => void
-  setTake: (value: number) => void
-  setFilter: (value: string) => void
-  setKey: (value: BlogPageOrderKey) => void
-  setOrder: (value: BlogPageOrderBy) => void
-  setCursor: (value: number) => void
+  setFirst: (value: number) => void
+  incrementFirst: () => void
+  setOrderBy: (value: BlogPageOrderBy) => void
 }
 
 type BlogPageQueryStore = State & Actions
 
 const initialState: State = {
-  skip: 0,
-  take: undefined,
-  filter: undefined,
-  orderByKey: 'createdAt',
-  orderByOrder: 'desc',
-  cursor: undefined,
+  first: 2,
+  orderBy: {
+    createdAt: "desc"
+  }
 }
 
-const blogPageQueryStore = createZustandChildrenStore<BlogPageQueryStore>()(
+const useBlogPageQueryStore = createZustandChildrenStore<BlogPageQueryStore>()(
   (set, get) => ({
     ...initialState,
 
-    setSkip: (value: number) => {
-      set({ skip: value })
+    setFirst: (value: number) => {
+      set({ first: value })
     },
-    setTake: (value: number) => {
-      set({ take: value })
+
+    incrementFirst: () => {
+      set((state) => ({ first: state.first + 2 }));
     },
-    setFilter: (value: string) => {
-      set({ filter: value })
-    },
-    setKey: (value: BlogPageOrderKey) => {
-      set({
-        orderByKey: value,
-      })
-    },
-    setOrder: (value: BlogPageOrderBy) => {
-      set({
-        orderByOrder: value,
-      })
-    },
-    setCursor: (value: number) => {
-      set({
-        cursor: value,
-      })
+
+    setOrderBy: (orderBy: BlogPageOrderBy) => {
+      set({ orderBy })
     },
     reset: () => set(initialState),
   })
 )
 
-export { blogPageQueryStore, BlogPageQueryStore }
+export { BlogPageQueryStore, useBlogPageQueryStore };
+
