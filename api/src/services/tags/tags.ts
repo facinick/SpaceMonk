@@ -2,6 +2,7 @@ import type {
   MutationResolvers,
   QueryResolvers,
   TagRelationResolvers,
+  TagsSortOrder,
 } from 'types/graphql';
 
 import { db } from 'src/lib/db';
@@ -15,38 +16,62 @@ export const tag: QueryResolvers['tag'] = ({ id }) => {
   })
 }
 
-export const tags: QueryResolvers['tags'] = async ({ input }) => {
-  // Build the "where" object for filtering by tag name
-  const where = input?.filter
+
+export const tags: QueryResolvers['tags'] = async ({ query }) => {
+  const { first, after, orderBy } = query || {};
+  let cursorWhere = undefined;
+
+  // Handle pagination using the "after" cursor
+  if (after) {
+    cursorWhere = { id: parseInt(after, 10) };
+  }
+
+  // Build the "where" object for filtering by username
+  const where = query?.filter
     ? {
         OR: [
-          { name: { contains: input?.filter } },
+          { name: { contains: query.filter } },
         ],
       }
     : {};
 
-  // Initialize "orderBy" object for sorting by popularity
-  let orderBy = {};
-
-  // Check if "orderBy" is specified and set the sorting condition
-  if (input?.orderBy) {
-    if (input.orderBy.popularity === 'asc') {
-      orderBy = { posts: { _count: 'asc' } };
-    } else if (input.orderBy.popularity === 'desc') {
-      orderBy = { posts: { _count: 'desc' } };
-    }
-  }
-
-  // Use Prisma to fetch tags based on the constructed "where" object, pagination, and sorting
+  // Fetch users with pagination, filtering, and ordering
   const tags = await db.tag.findMany({
     where,
-    skip: input?.skip,
-    take: input?.take,
-    orderBy
+    skip: cursorWhere ? 1 : undefined, // Skip the first item when using "after"
+    take: first,
+    cursor: cursorWhere ? { id: cursorWhere.id } : undefined, // Use the cursor for pagination
+    orderBy: orderBy
+      ? {
+        ...(orderBy.name && {
+          name: orderBy.name === "desc" ? 'desc' : 'asc' as TagsSortOrder,
+        }),
+        ...(orderBy.popularity && {
+          popularity: orderBy.popularity === "desc" ? 'desc' : 'asc' as TagsSortOrder,
+        }),
+      }
+      : undefined,
   });
 
-  return tags || [];
+  // Calculate cursors for pageInfo
+  const startCursor = tags.length > 0 ? tags[0].id.toString() : null;
+  const endCursor =
+  tags.length > 0 ? tags[tags.length - 1].id.toString() : null;
+
+  return {
+    edges: tags.map((tags) => ({
+      cursor: tags.id.toString(),
+      node: tags,
+    })),
+    pageInfo: {
+      hasNextPage: tags.length === first, // If there are more items to paginate
+      hasPreviousPage: !!after, // If there are previous items
+      startCursor,
+      endCursor,
+    },
+  };
 };
+
 
 export const createTag: MutationResolvers['createTag'] = ({ input }) => {
   return db.tag.create({

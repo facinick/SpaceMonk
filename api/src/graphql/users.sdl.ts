@@ -1,39 +1,56 @@
 export const schema = gql`
-  #----------------------- Prisma Reference ---------------------#
-  # id                  Int        @id @default(autoincrement()) #
-  # username            String     @unique                       #
-  # hashedPassword      String                                   #
-  # salt                String                                   #
-  # resetToken          String?
-  # resetTokenExpiresAt DateTime?                                #
-  # createdAt           DateTime   @default(now())               #
-  # updatedAt           DateTime   @updatedAt                    #
-  # userRoles           UserRole[]                               #
-  # posts               Post[]     @relation("author")           #
-  # votes               Vote[]                                   #
-  # comments            Comment[]                                #
-  #--------------------------------------------------------------#
   type User {
-    id: Int! #-----------------------------------#public
-    username: String! #--------------------------#public
-    # hashedPassword: String!-------------------#not_available
-    # salt: String!-----------------------------#not_available
-    # resetToken: String------------------------#not_available
-    # resetTokenExpiresAt: DateTime-------------#not_available
-    createdAt: DateTime! #-----------------------#public
-    updatedAt: DateTime! #-----------------------#public
-    userRoles: [UserRole]! #---------------------#authenticate(user) + #authorize(owner)
-    posts: [Post]! #-----------------------------#public
-    votes: [Vote]! #-----------------------------#public
-    comments: [Comment]! #-----------------------#public
+    id: Int!
+    username: String!
+    createdAt: DateTime!
+    updatedAt: DateTime!
+    userRoles: [UserRole]!
+    posts: [Post]!
+    votes: [Vote]!
+    comments: [Comment]!
+    profile: UserProfile
+    UserPresence: UserPresence
     followers: [Follows]!
     following: [Follows]!
   }
 
+  enum UsersSortOrder {
+    asc
+    desc
+  }
+
+  input UserOrderByInput {
+    username: UsersSortOrder
+  }
+
+  input UsersConnectionArgs {
+    first: Int
+    after: String
+    orderBy: UserOrderByInput
+    filter: String
+  }
+  
+  type UsersEdge {
+    cursor: String!
+    node: User!
+  }
+
+  type PageInfo {
+    hasNextPage: Boolean!
+    hasPreviousPage: Boolean!
+    startCursor: String
+    endCursor: String
+  }
+  
+  type UsersConnection {
+    edges: [UsersEdge]!
+    pageInfo: PageInfo!
+  }
+
   type Query {
-    users: [User!]! @skipAuth #------------------#public
-    user(id: Int!): User @skipAuth #-------------#public
-    me: User @skipAuth #-----------------------#authenticate(user) + #authorize(owner)
+    users(query: UsersConnectionArgs): UsersConnection! @skipAuth
+    user(id: Int!): User @skipAuth
+    me: User @requireAuth
   }
 
   # min requirements to create a user

@@ -1,52 +1,67 @@
 export const schema = gql`
-  # model Comment {
-  #  id              Int       @id @default(autoincrement())
-  #  createdAt       DateTime  @default(now())
-  #  updatedAt       DateTime  @updatedAt
-  #  body            String
-  #  authorId        Int
-  #  score           Int       @default(0)
-  #  postId          Int
-  #  activity        Int       @default(0)
-  #  votes           Vote[]
-  #  author          User      @relation(fields: [authorId], references: [id])
-  #  post            Post      @relation(fields: [postId], references: [id])
-  #  parentCommentId Int?
-  #  parent          Comment?  @relation("parentChildComment", fields: [parentCommentId], references: [id])
-  #  comments        Comment[] @relation("parentChildComment")
-  # }
-
   type Comment {
-    id: Int! #public
-    createdAt: DateTime! #public
-    updatedAt: DateTime! #public
-    body: String! #public
-    authorId: Int! #----------------------------------#helps
-    postId: Int! #------------------------------------#helps
-    score: Int! #public
-    parentCommentId: Int #----------------------------#helps
-    votes: [Vote]! #public
-    author: User! #public
-    post: Post! #public
-    parent: Comment #public
-    comments: [Comment]! #public
-    activity: Int! #public
+    id: Int! 
+    createdAt: DateTime! 
+    updatedAt: DateTime! 
+    body: String! 
+    authorId: Int!
+    postId: Int!
+    score: Int! 
+    parentCommentId: Int
+    votes: [Vote]! 
+    author: User! 
+    post: Post! 
+    parent: Comment 
+    comments: [Comment]! 
+    activity: Int! 
   }
 
   input CommentsByPostIdInput {
     postId: Int!
   }
+
+  enum CommentsSortOrder {
+    asc
+    desc
+  }
+
+  input CommentOrderByInput {
+    createdAt: CommentsSortOrder
+  }
+
+  input CommentsConnectionArgs {
+    first: Int
+    after: String
+    orderBy: CommentOrderByInput
+    filter: String
+  }
+  
+  type CommentsEdge {
+    cursor: String!
+    node: Comment!
+  }
+
+  type PageInfo {
+    hasNextPage: Boolean!
+    hasPreviousPage: Boolean!
+    startCursor: String
+    endCursor: String
+  }
+  
+  type CommentsConnection {
+    edges: [CommentsEdge]!
+    pageInfo: PageInfo!
+  }
   
   type Query {
-    comments: [Comment]! @skipAuth
+    comments(query: CommentsConnectionArgs): CommentsConnection! @skipAuth
     comment(id: Int!): Comment @skipAuth
-    commentsByPostId(input: CommentsByPostIdInput!): [Comment] @skipAuth
+    commentsByPostId(postId: Int!, query: CommentsConnectionArgs): CommentsConnection! @skipAuth
   }
 
   input CreateCommentInput {
     body: String!
     postId: Int!
-    # optional
     parentCommentId: Int
   }
 

@@ -1,372 +1,154 @@
 import type {
   MutationResolvers,
   PostResolvers,
-  QueryResolvers,
-  QuerypostsArgs,
-  QuerypostsByUsernameArgs,
+  PostsSortOrder,
+  QueryResolvers
 } from 'types/graphql';
 
 import { requireAuth, requirePostOwner } from 'src/lib/auth';
 import { db } from 'src/lib/db';
 import randomImageQueue from 'src/queues/randomImageQueue';
 
-type Where<T> = {
-  where: T;
+export const posts: QueryResolvers['posts'] = async ({ query }) => {
+  try {
+    // Initialize default values for optional inputs
+    const { filter = '', first, after, orderBy } = query || {};
+
+    // Build the Prisma query based on the input parameters
+    const postsQuery = {
+      where: {
+        // Customize this to apply your filter logic based on the 'filter' input
+        OR: [
+          { title: { contains: filter } },
+          { body: { contains: filter } },
+        ],
+      },
+      orderBy: orderBy
+        ? {
+            ...(orderBy.createdAt && {
+              createdAt: orderBy.createdAt === "desc" ? 'desc' : 'asc' as PostsSortOrder,
+            }),
+            ...(orderBy.activity && {
+              activity: orderBy.activity === "desc" ? 'desc' : 'asc' as PostsSortOrder,
+            }),
+            ...(orderBy.score && {
+              score: orderBy.score === "desc" ? 'desc' : 'asc' as PostsSortOrder,
+            }),
+          }
+        : undefined,
+    };
+
+    // Fetch posts from the database using Prisma
+    const allPosts = await db.post.findMany(postsQuery);
+
+    // Apply cursor-based pagination
+    const startIdx = after ? allPosts.findIndex((post) => post.id === parseInt(after)) + 1 : 0;
+    let endIdx = startIdx + (first || allPosts.length);
+
+    if (endIdx > allPosts.length) {
+      endIdx = allPosts.length;
+    }
+
+    const posts = allPosts.slice(startIdx, endIdx);
+
+    // Calculate pageInfo
+    const hasNextPage = endIdx < allPosts.length;
+    const hasPreviousPage = startIdx > 0;
+    const startCursor = posts.length > 0 ? posts[0].id.toString() : null;
+    const endCursor =
+      posts.length > 0 ? posts[posts.length - 1].id.toString() : null;
+
+    return {
+      edges: posts.map((post) => ({
+        cursor: post.id.toString(),
+        node: post,
+      })),
+      pageInfo: {
+        hasNextPage,
+        hasPreviousPage,
+        startCursor,
+        endCursor,
+      },
+    };
+  } catch (error) {
+    // Handle any errors that occur during execution
+    console.error('Error in posts resolver:', error);
+
+    // You can throw a custom error if needed
+    throw new Error('An error occurred while fetching posts.');
+  }
 };
 
-export function removeUndefinedKeys<T>(obj: T): T {
-  // If obj is not an object or is null, return obj
-  if (typeof obj !== 'object' || obj === null) {
-    return obj
-  }
+export const postsByUsername: QueryResolvers['postsByUsername'] = async ({ query, username }) => {
+  try {
+    // Initialize default values for optional inputs
+    const { filter = '', first, after, orderBy } = query || {};
 
-  // Recursively remove undefined keys from all properties of obj
-  for (const key in obj) {
-    const value = obj[key]
-    if (typeof value === 'undefined') {
-      delete obj[key]
-    } else {
-      obj[key] = removeUndefinedKeys(value)
-    }
-  }
-
-  return obj
-}
-
-const nonNegative = (value: number): number => {
-  if (value < 0) {
-    return 0
-  }
-  return value
-}
-
-const OrderByVKey = ['createdat', 'activity', 'score']
-const OrderByVOrder = ['asc', 'desc']
-
-const parseQueryForPrisma = (
-  query: QuerypostsArgs['query']
-): Partial<Omit<QuerypostsArgs['query'], '__typename'>> => {
-  let paginationQuery: Partial<
-    Pick<QuerypostsArgs['query'], 'skip' | 'take' | 'cursor'>
-  > = {
-    skip: undefined,
-    take: undefined,
-    cursor: {
-      id: undefined,
-    },
-  }
-
-  if (query && !isNaN(query.skip) && !isNaN(query.take)) {
-    paginationQuery.skip = query.skip
-    paginationQuery.take = query.take + 1
-    if (!isNaN(query.cursor?.id)) {
-      paginationQuery.cursor.id = query.cursor.id
-      console.log(`not deleting cursor`)
-    } else {
-      console.log(`deleting cursor`)
-      delete paginationQuery['cursor']
-    }
-  } else {
-    paginationQuery = {}
-  }
-
-  let filterByQuery: Partial<{
-    where: {
-      OR: {
-        body: { contains: QuerypostsArgs['query']['filter'] }
-        title: { contains: QuerypostsArgs['query']['filter'] }
-      }
-    }
-  }> = {
-    where: {
-      OR: {
-        body: {
-          contains: undefined,
-        },
-        title: {
-          contains: undefined,
-        },
+    // Build the Prisma query based on the input parameters
+    const postsQuery = {
+      where: {
+        // Customize this to apply your filter logic based on the 'filter' input
+        OR: [
+          { title: { contains: filter } },
+          { body: { contains: filter } },
+        ],
+        username
       },
-    },
-  }
+      orderBy: orderBy
+        ? {
+            ...(orderBy.createdAt && {
+              createdAt: orderBy.createdAt === "desc" ? 'desc' : 'asc' as PostsSortOrder,
+            }),
+            ...(orderBy.activity && {
+              activity: orderBy.activity === "desc" ? 'desc' : 'asc' as PostsSortOrder,
+            }),
+            ...(orderBy.score && {
+              score: orderBy.score === "desc" ? 'desc' : 'asc' as PostsSortOrder,
+            }),
+          }
+        : undefined,
+    };
 
-  if (query && query.filter) {
-    filterByQuery.where.OR.body.contains = query.filter
-    filterByQuery.where.OR.title.contains = query.filter
-  } else {
-    filterByQuery = {}
-  }
+    // Fetch posts from the database using Prisma
+    const allPosts = await db.post.findMany(postsQuery);
 
-  let orderByByQuery: Partial<{
-    orderBy:
-      | Record<
-          QuerypostsArgs['query']['orderBy']['key'],
-          QuerypostsArgs['query']['orderBy']['order']
-        >
-      | [{ comments: { _count: string } }]
-  }> = {
-    orderBy: {
-      createdAt: undefined,
-    },
-  }
+    // Apply cursor-based pagination
+    const startIdx = after ? allPosts.findIndex((post) => post.id === parseInt(after)) + 1 : 0;
+    let endIdx = startIdx + (first || allPosts.length);
 
-  if (
-    query &&
-    query.orderBy &&
-    query.orderBy.key &&
-    query.orderBy.order &&
-    OrderByVKey.includes(query.orderBy.key) &&
-    OrderByVOrder.includes(query.orderBy.order)
-  ) {
-    if (query.orderBy.key === 'activity') {
-      orderByByQuery.orderBy = [
-        {
-          comments: {
-            _count: query.orderBy.order,
-          },
-        },
-      ]
-    } else {
-      orderByByQuery.orderBy[query.orderBy.key] = query.orderBy.order
+    if (endIdx > allPosts.length) {
+      endIdx = allPosts.length;
     }
-  } else {
-    orderByByQuery.orderBy['createdAt'] = 'desc'
-  }
 
-  // @ts-ignore
-  return removeUndefinedKeys({
-    ...paginationQuery,
-    ...filterByQuery,
-    ...orderByByQuery,
-  })
-}
+    const posts = allPosts.slice(startIdx, endIdx);
 
-const parseQueryForPrisma2 = (
-  query: QuerypostsArgs['query'],
-  where: any
-): Partial<Omit<QuerypostsArgs['query'], '__typename'>> => {
-  let paginationQuery: Partial<
-    Pick<QuerypostsArgs['query'], 'skip' | 'take' | 'cursor'>
-  > = {
-    skip: undefined,
-    take: undefined,
-    cursor: {
-      id: undefined,
-    },
-  }
+    // Calculate pageInfo
+    const hasNextPage = endIdx < allPosts.length;
+    const hasPreviousPage = startIdx > 0;
+    const startCursor = posts.length > 0 ? posts[0].id.toString() : null;
+    const endCursor =
+      posts.length > 0 ? posts[posts.length - 1].id.toString() : null;
 
-  if (query && !isNaN(query.skip) && !isNaN(query.take)) {
-    paginationQuery.skip = query.skip
-    paginationQuery.take = query.take + 1
-    if (!isNaN(query.cursor?.id)) {
-      paginationQuery.cursor.id = query.cursor.id
-      console.log(`not deleting cursor`)
-    } else {
-      console.log(`deleting cursor`)
-      delete paginationQuery['cursor']
-    }
-  } else {
-    paginationQuery = {}
-  }
-
-  let filterByQuery: Partial<{
-    where: {
-      OR: {
-        body: { contains: QuerypostsArgs['query']['filter'] }
-        title: { contains: QuerypostsArgs['query']['filter'] }
-      }
-    }
-  }> = {
-    where: {
-      OR: {
-        body: {
-          contains: undefined,
-        },
-        title: {
-          contains: undefined,
-        },
+    return {
+      edges: posts.map((post) => ({
+        cursor: post.id.toString(),
+        node: post,
+      })),
+      pageInfo: {
+        hasNextPage,
+        hasPreviousPage,
+        startCursor,
+        endCursor,
       },
-      ...where
-    },
+    };
+  } catch (error) {
+    // Handle any errors that occur during execution
+    console.error('Error in posts resolver:', error);
+
+    // You can throw a custom error if needed
+    throw new Error('An error occurred while fetching posts.');
   }
-
-  if (query && query.filter) {
-    filterByQuery.where.OR.body.contains = query.filter
-    filterByQuery.where.OR.title.contains = query.filter
-  } else {
-    filterByQuery = {}
-  }
-
-  let orderByByQuery: Partial<{
-    orderBy:
-      | Record<
-          QuerypostsArgs['query']['orderBy']['key'],
-          QuerypostsArgs['query']['orderBy']['order']
-        >
-      | [{ comments: { _count: string } }]
-  }> = {
-    orderBy: {
-      createdAt: undefined,
-    },
-  }
-
-  if (
-    query &&
-    query.orderBy &&
-    query.orderBy.key &&
-    query.orderBy.order &&
-    OrderByVKey.includes(query.orderBy.key) &&
-    OrderByVOrder.includes(query.orderBy.order)
-  ) {
-    if (query.orderBy.key === 'activity') {
-      orderByByQuery.orderBy = [
-        {
-          comments: {
-            _count: query.orderBy.order,
-          },
-        },
-      ]
-    } else {
-      orderByByQuery.orderBy[query.orderBy.key] = query.orderBy.order
-    }
-  } else {
-    orderByByQuery.orderBy['createdAt'] = 'desc'
-  }
-
-  // @ts-ignore
-  return removeUndefinedKeys({
-    ...paginationQuery,
-    ...filterByQuery,
-    ...orderByByQuery,
-  })
-}
-
-const makeResponseForCats = () => {}
-
-export const posts: QueryResolvers['posts'] = async ({
-  query,
-}: QuerypostsArgs) => {
-  // const prismaQuery = parseQueryForPrisma(query)
-  // parseQueryForPrisma(query)
-  const prismaQuery = parseQueryForPrisma(query)
-
-  console.log(`posts query:`)
-  console.log(prismaQuery)
-
-  // either <11 or 11, asked for 10 + 1
-  // @ts-ignore
-  const posts = await db.post.findMany({
-    ...prismaQuery,
-  })
-
-  // wanted: 10, asked: 11, received < asked => end = true, don't pop
-  // wanted: 10, asked: 11, received = asked => end = false, pop
-
-  let wanted = undefined
-  let asked = undefined
-  let received = posts.length
-  let end = undefined
-  let count = undefined
-  let lastRecord: (typeof posts)[0] | undefined = undefined
-
-  // pagination was requested
-  if (query && !isNaN(query.skip) && !isNaN(query.take)) {
-    wanted = query.take
-    asked = prismaQuery.take
-    if (received < asked) {
-      end = true
-      count = nonNegative(received)
-    }
-    if (received >= asked) {
-      end = false
-      posts.pop()
-      count = nonNegative(wanted)
-    }
-  }
-  // pagination wasn't requested, we fetched all records
-  else {
-    count = nonNegative(received)
-    end = true
-  }
-
-  console.log(`wanted: ${wanted}, asked: ${asked}, received: ${received}`)
-
-  lastRecord = posts[posts.length - 1]
-
-  const response = {
-    posts,
-    count,
-    end,
-    cursor: {
-      id: lastRecord?.id,
-    },
-  }
-
-  return response
-}
-
-export const postsByUsername: QueryResolvers['postsByUsername'] = async ({
-  query,
-  username
-}: QuerypostsByUsernameArgs) => {
-  // const prismaQuery = parseQueryForPrisma(query)
-  // parseQueryForPrisma(query)
-  const prismaQuery = parseQueryForPrisma2(query, {username})
-
-  console.log(`posts query:`)
-  console.log(prismaQuery)
-
-  // either <11 or 11, asked for 10 + 1
-  // @ts-ignore
-  const posts = await db.post.findMany({
-    ...prismaQuery,
-  })
-
-  // wanted: 10, asked: 11, received < asked => end = true, don't pop
-  // wanted: 10, asked: 11, received = asked => end = false, pop
-
-  let wanted = undefined
-  let asked = undefined
-  let received = posts.length
-  let end = undefined
-  let count = undefined
-  let lastRecord: (typeof posts)[0] | undefined = undefined
-
-  // pagination was requested
-  if (query && !isNaN(query.skip) && !isNaN(query.take)) {
-    wanted = query.take
-    asked = prismaQuery.take
-    if (received < asked) {
-      end = true
-      count = nonNegative(received)
-    }
-    if (received >= asked) {
-      end = false
-      posts.pop()
-      count = nonNegative(wanted)
-    }
-  }
-  // pagination wasn't requested, we fetched all records
-  else {
-    count = nonNegative(received)
-    end = true
-  }
-
-  console.log(`wanted: ${wanted}, asked: ${asked}, received: ${received}`)
-
-  lastRecord = posts[posts.length - 1]
-
-  const response = {
-    posts,
-    count,
-    end,
-    cursor: {
-      id: lastRecord?.id,
-    },
-  }
-
-  return response
-}
+};
 
 export const post: QueryResolvers['post'] = async ({ id }) => {
   const post = await db.post.findUnique({

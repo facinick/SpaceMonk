@@ -63,13 +63,10 @@ model UserProfile {
   interests         String[] @default([])
   userId            Int
   user              User    @relation("profile", fields: [userId], references: [id])
-
   // we will set a default one at time of creation
   mask              Mask?  @default(HEXAVERT)
   @@unique([userId])
 }
-
-
 
 model UserRole {
   id        Int      @id @default(autoincrement())

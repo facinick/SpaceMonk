@@ -1,70 +1,61 @@
 export const schema = gql`
-  #----------------------- Prisma Reference ---------------------#
-  # id             Int     @id @default(autoincrement())         #
-  # title          String                                        #
-  # body           String                                        #
-  # headerImageUrl String?                                       #
-  # score     Int       @default(0)                              #
-  # authorId  Int                                                #
-  # createdAt DateTime  @default(now())                          #
-  # updatedAt DateTime  @updatedAt                               #
-  # activity  Int       @default(0)                              #
-  # author    User      @relation("author", fields: [authorId], references: [id])
-  # comments  Comment[]                                          #
-  # votes     Vote[]                                             #
-  #--------------------------------------------------------------#
-
-  input PaginationCursor {
-    id: Int
-  }
-
-  type NextPaginationCursor {
-    id: Int
-  }
-
-  input OrderBy {
-    key: String
-    order: String
-  }
-
-  input PaginationInput {
-    skip: Int
-    take: Int
-    cursor: PaginationCursor
-    #  createdAt activity score
-    orderBy: OrderBy
-    filter: String
-  }
 
   type Post {
-    id: Int! #-----------------------------------------#public
-    title: String! #-----------------------------------#public
-    body: String! #------------------------------------#public
-    bodyPlainText: String! #---------------------------#public
-    headerImageUrl: String #---------------------------#public
-    #authorId: Int!#----------------------------------#not_available
-    score: Int! #--------------------------------------#public
-    createdAt: DateTime! #-----------------------------#public
-    updatedAt: DateTime! #-----------------------------#public
-    activity: Int! #-----------------------------------#public
-    author: User! #------------------------------------#public
-    comments: [Comment]! #-----------------------------#public
-    votes: [Vote]! #-----------------------------------#public
-    tags: [Tag]!   #-----------------------------------#public
+    id: Int! 
+    title: String! 
+    body: String! 
+    bodyPlainText: String! 
+    headerImageUrl: String 
+    #authorId: Int!
+    score: Int! 
+    createdAt: DateTime! 
+    updatedAt: DateTime! 
+    activity: Int! 
+    author: User! 
+    comments: [Comment]! 
+    votes: [Vote]! 
+    tags: [Tag]!   
+  }
+
+  enum PostsSortOrder {
+    asc
+    desc
+  }
+
+  input PostOrderByInput {
+    createdAt: PostsSortOrder
+    activity: PostsSortOrder
+    score: PostsSortOrder
+  }
+
+  input PostsConnectionArgs {
+    first: Int
+    after: String
+    orderBy: PostOrderByInput
+    filter: String
+  }
+  
+  type PostsEdge {
+    cursor: String!
+    node: Post!
+  }
+
+  type PageInfo {
+    hasNextPage: Boolean!
+    hasPreviousPage: Boolean!
+    startCursor: String
+    endCursor: String
+  }
+
+  type PostsConnection {
+    edges: [PostsEdge]!
+    pageInfo: PageInfo!
   }
 
   type Query {
-    # posts: [Post]! @skipAuth #-------------------------#public
-    posts(query: PaginationInput): PaginationResponse! @skipAuth #-------------------------#public
-    postsByUsername(query: PaginationInput, username: String!): PaginationResponse! @skipAuth #-------------------------#public
-    post(id: Int!): Post @skipAuth #-------------------#public
-  }
-
-  type PaginationResponse {
-    posts: [Post]!
-    cursor: NextPaginationCursor
-    count: Int!
-    end: Boolean!
+    posts(query: PostsConnectionArgs): PostsConnection! @skipAuth 
+    postsByUsername(username: String!, query: PostsConnectionArgs): PostsConnection! @skipAuth 
+    post(id: Int!): Post @skipAuth 
   }
 
   input ConnectOrCreateTagInput {

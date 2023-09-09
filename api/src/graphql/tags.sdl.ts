@@ -8,25 +8,42 @@ export const schema = gql`
     posts: [Post]!
   }
 
-  enum TagSort {
+  enum TagsSortOrder {
     asc
     desc
   }
 
   input TagOrderByInput {
-    name: TagSort
-    popularity: TagSort
+    name: TagsSortOrder
+    popularity: TagsSortOrder
   }
 
-  input TagQueryFilterAndPagination {
-    filter: String
-    skip: Int
-    take: Int
+  input TagsConnectionArgs {
+    first: Int
+    after: String
     orderBy: TagOrderByInput
+    filter: String
+  }
+
+  type TagsEdge {
+    cursor: String!
+    node: Tag!
+  }
+
+  type PageInfo {
+    hasNextPage: Boolean!
+    hasPreviousPage: Boolean!
+    startCursor: String
+    endCursor: String
+  }
+
+  type TagsConnection {
+    edges: [TagsEdge]!
+    pageInfo: PageInfo!
   }
 
   type Query {
-    tags(input: TagQueryFilterAndPagination): [Tag]! @skipAuth
+    tags(query: TagsConnectionArgs): TagsConnection! @skipAuth
     tag(id: Int!): Tag @skipAuth
     tagByName(name: String!): Tag @skipAuth
   }

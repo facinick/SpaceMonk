@@ -1,59 +1,60 @@
 import type {
-  QueryResolvers,
   MutationResolvers,
+  QueryResolvers,
   UserPresenceRelationResolvers,
-  QueryuserPresencesArgs,
-} from 'types/graphql'
+  UserPresencesSortOrder
+} from 'types/graphql';
 
-import { db } from 'src/lib/db'
-import { requireAuth } from 'src/lib/auth'
-import { removeUndefinedKeys } from '../posts/posts'
+import { requireAuth } from 'src/lib/auth';
+import { db } from 'src/lib/db';
 
-const OrderByVKey = ['lastSeen']
-const OrderByVOrder = ['asc', 'desc']
+export const userPresences: QueryResolvers['userPresences'] = async ({ query }) => {
+  const { first, after, orderBy } = query || {};
+  let cursorWhere = undefined;
 
-const parseQueryForPrisma = (
-  query: QueryuserPresencesArgs['query']
-): Partial<Omit<QueryuserPresencesArgs['query'], '__typename'>> => {
-  let orderByByQuery: Partial<{
-    orderBy: Record<
-      QueryuserPresencesArgs['query']['orderBy']['key'],
-      QueryuserPresencesArgs['query']['orderBy']['order']
-    >
-  }> = {
-    orderBy: {},
+  // Handle pagination using the "after" cursor
+  if (after) {
+    cursorWhere = { id: parseInt(after, 10) };
   }
 
-  if (
-    query &&
-    query.orderBy &&
-    query.orderBy.key &&
-    query.orderBy.order &&
-    OrderByVKey.includes(query.orderBy.key) &&
-    OrderByVOrder.includes(query.orderBy.order)
-  ) {
-    orderByByQuery.orderBy[query.orderBy.key] = query.orderBy.order
-  } else {
-    orderByByQuery = {}
-  }
+  // Build the "where" object for filtering by username
+  const where = {}
 
-  // @ts-ignore
-  return removeUndefinedKeys({
-    ...orderByByQuery,
-  })
-}
-
-export const userPresences: QueryResolvers['userPresences'] = ({ query }) => {
-  const prismaQuery = parseQueryForPrisma(query)
-  console.log(prismaQuery)
-
-  // @ts-ignore
-  return db.userPresence.findMany({
-    ...prismaQuery,
+  // Fetch users with pagination, filtering, and ordering
+  const userPresences = await db.userPresence.findMany({
+    where,
+    skip: cursorWhere ? 1 : undefined, // Skip the first item when using "after"
+    take: first,
+    cursor: cursorWhere ? { id: cursorWhere.id } : undefined, // Use the cursor for pagination
+    orderBy: orderBy
+      ? {
+        ...(orderBy.lastSeen && {
+          lastSeen: orderBy.lastSeen === "desc" ? 'desc' : 'asc' as UserPresencesSortOrder,
+        }),
+      }
+      : undefined,
     include: {
       user: true,
     },
-  })
+  });
+
+  // Calculate cursors for pageInfo
+  const startCursor = userPresences.length > 0 ? userPresences[0].id.toString() : null;
+  const endCursor =
+    userPresences.length > 0 ? userPresences[userPresences.length - 1].id.toString() : null;
+
+  return {
+    edges: userPresences.map((userPresences) => ({
+      cursor: userPresences.id.toString(),
+      node: userPresences,
+    })),
+    pageInfo: {
+      hasNextPage: userPresences.length === first, // If there are more items to paginate
+      hasPreviousPage: !!after, // If there are previous items
+      startCursor,
+      endCursor,
+    },
+  };
 }
 
 export const userPresenceByUserId: QueryResolvers['userPresenceByUserId'] = ({
@@ -90,6 +91,7 @@ export const updateUserPresence: MutationResolvers['updateUserPresence'] =
       select: {
         id: true,
         lastSeen: true,
+        userId: true
       },
     })
 
