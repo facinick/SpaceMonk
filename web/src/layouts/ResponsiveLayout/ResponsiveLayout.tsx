@@ -57,6 +57,8 @@ const ResponsiveLayout = ({ children }: ResponsiveLayoutProps) => {
   const canCreate = currentUserOrFalse !== false
   const isAuthorizedToCreate = canCreate
 
+  const showThemeSelect = isMin('sm')
+
   return (
     <>
       {/* header content */}
@@ -95,7 +97,9 @@ const ResponsiveLayout = ({ children }: ResponsiveLayoutProps) => {
                 <BlogIcon />
               </Link>
               {/* THEME SELECT */}
+              { showThemeSelect && 
               <ThemeSelectComponent />
+            }
               {/* RIGHT BURGER MENU */}
               <div className="dropdown-end dropdown">
                 {/* BURGER MENU ICON */}
