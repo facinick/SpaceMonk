@@ -1,12 +1,18 @@
+import { FormEvent, useRef } from 'react'
+
+import { createContactAdmin } from 'types/graphql'
+
 import { MetaTags, useMutation } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/toast'
-import { FormEvent, useRef } from 'react'
+
+import { FeatureRequestsDroplist } from 'src/features/feature_requests_droplist/FeatureRequestsDroplist'
 import { CREATE_CONTACT_ADMIN_MUTATION } from 'src/graphql/mutations'
-import { createContactAdmin } from 'types/graphql'
+
+import { FeatureList } from '../../feature_requests_droplist/featureList'
 import { MessageIcon, SendRightIcon, UserLoginIcon } from '../../Icons/icons'
 
 const Constants = {
-  formTitle: 'Feature requests ?!??!!',
+  formTitle: 'Feature requests ?',
   name: 'Name',
   namePlaceholder: 'Nick',
   message: 'Message',
@@ -55,8 +61,10 @@ const ContactAdminForm = () => {
 
       <div className="w-full rounded-lg bg-base-100 sm:max-w-md">
         <div className="space-y-4 p-6">
-          <h1 className="text-xl font-bold">{Constants.formTitle}</h1>
-
+          <div className="flex justify-between">
+            <h1 className="text-xl font-bold">{Constants.formTitle}</h1>
+            <FeatureRequestsDroplist upcomingFeatures={FeatureList} />
+          </div>
           <form ref={formRef} onSubmit={onSubmit} className="space-y-4">
             <div>
               <label htmlFor="name" className="label">
