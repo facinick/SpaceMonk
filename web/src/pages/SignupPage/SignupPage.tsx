@@ -1,5 +1,4 @@
-import { FormEvent, useRef } from 'react'
-import { useEffect } from 'react'
+import { FormEvent, useEffect, useRef } from 'react'
 
 import { navigate, routes } from '@redwoodjs/router'
 import { MetaTags } from '@redwoodjs/web'
@@ -8,7 +7,7 @@ import { toast } from '@redwoodjs/web/toast'
 import { useAuth } from 'src/auth'
 
 const Constants = {
-  formTitle: 'Sign the F Up',
+  formTitle: 'Sign the Up',
   username: 'Username',
   usernamePlaceholder: 'Username',
   password: 'Password',
