@@ -1,14 +1,8 @@
 import Queue from 'bull';
 import { randomImageResolver } from 'src/services/unsplashes/unsplashes';
 
-const redisOptions = {
-  redis: {
-    host: process.env.UPSTASH_REDIS_REST_URL,
-    password: process.env.UPSTASH_REDIS_REST_TOKEN
-  }
-};
-
-const randomImageQueue = new Queue('randomImageQueue', redisOptions);
+const REDIS_URL = process.env.REDIS_URL
+const randomImageQueue = new Queue('randomImageQueue', REDIS_URL);
 
 randomImageQueue.process(async (job, done) => {
   const result = await randomImageResolver(job.data); // Call the randomImage resolver
