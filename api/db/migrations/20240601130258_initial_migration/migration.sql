@@ -1,3 +1,6 @@
+-- CreateEnum
+CREATE TYPE "Mask" AS ENUM ('SQUIRCLE', 'HEART', 'HEXASIDE', 'HEXAVERT', 'DECAGON', 'PENTAGON', 'DIAMOND', 'SQUARE', 'CIRCLE', 'PARALITH', 'PARALOGLIDE', 'PARALLELOZEN', 'PARALLELOSURF', 'STARMI', 'STARYU', 'TRIADIX', 'TRINEON', 'TRIQUARK', 'TRIFLUX');
+
 -- CreateTable
 CREATE TABLE "User" (
     "id" SERIAL NOT NULL,
@@ -33,14 +36,15 @@ CREATE TABLE "UserPresence" (
 -- CreateTable
 CREATE TABLE "UserProfile" (
     "id" SERIAL NOT NULL,
-    "bio" TEXT,
-    "profilePictureUrl" TEXT,
-    "headerImageUrl" TEXT,
-    "name" TEXT,
-    "age" TEXT,
-    "city" TEXT,
-    "interests" TEXT,
+    "bio" TEXT DEFAULT '',
+    "profilePictureUrl" TEXT DEFAULT '',
+    "headerImageUrl" TEXT DEFAULT '',
+    "name" TEXT DEFAULT '',
+    "age" INTEGER,
+    "city" TEXT DEFAULT '',
+    "interests" TEXT[] DEFAULT ARRAY[]::TEXT[],
     "userId" INTEGER NOT NULL,
+    "mask" "Mask" DEFAULT 'HEXAVERT',
 
     CONSTRAINT "UserProfile_pkey" PRIMARY KEY ("id")
 );
@@ -123,6 +127,22 @@ CREATE TABLE "Comment" (
     CONSTRAINT "Comment_pkey" PRIMARY KEY ("id")
 );
 
+-- CreateTable
+CREATE TABLE "Tag" (
+    "id" SERIAL NOT NULL,
+    "name" TEXT NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+
+    CONSTRAINT "Tag_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "_PostToTag" (
+    "A" INTEGER NOT NULL,
+    "B" INTEGER NOT NULL
+);
+
 -- CreateIndex
 CREATE UNIQUE INDEX "User_username_key" ON "User"("username");
 
@@ -137,6 +157,15 @@ CREATE UNIQUE INDEX "UserProfile_userId_key" ON "UserProfile"("userId");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "UserRole_name_userId_key" ON "UserRole"("name", "userId");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Tag_name_key" ON "Tag"("name");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "_PostToTag_AB_unique" ON "_PostToTag"("A", "B");
+
+-- CreateIndex
+CREATE INDEX "_PostToTag_B_index" ON "_PostToTag"("B");
 
 -- AddForeignKey
 ALTER TABLE "Follows" ADD CONSTRAINT "Follows_followerId_fkey" FOREIGN KEY ("followerId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
@@ -176,3 +205,9 @@ ALTER TABLE "Comment" ADD CONSTRAINT "Comment_postId_fkey" FOREIGN KEY ("postId"
 
 -- AddForeignKey
 ALTER TABLE "Comment" ADD CONSTRAINT "Comment_parentCommentId_fkey" FOREIGN KEY ("parentCommentId") REFERENCES "Comment"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "_PostToTag" ADD CONSTRAINT "_PostToTag_A_fkey" FOREIGN KEY ("A") REFERENCES "Post"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "_PostToTag" ADD CONSTRAINT "_PostToTag_B_fkey" FOREIGN KEY ("B") REFERENCES "Tag"("id") ON DELETE CASCADE ON UPDATE CASCADE;
