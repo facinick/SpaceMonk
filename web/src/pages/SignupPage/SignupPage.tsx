@@ -7,7 +7,7 @@ import { toast } from '@redwoodjs/web/toast'
 import { useAuth } from 'src/auth'
 
 const Constants = {
-  formTitle: 'Sign the Up',
+  formTitle: 'Sign Up',
   username: 'Username',
   usernamePlaceholder: 'Username',
   password: 'Password',

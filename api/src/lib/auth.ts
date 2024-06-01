@@ -95,7 +95,6 @@ export const requireAuth = (roles: AllowedRoles = []) => {
   }
 
   if (roles.length > 0 && !hasRole(roles)) {
-    console.log(`fucked`)
     throw new ForbiddenError("You don't have access to do that.")
   }
 }

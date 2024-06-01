@@ -6,7 +6,7 @@ import ResponsiveLayout from 'src/layouts/ResponsiveLayout/ResponsiveLayout'
 const Constants = {
   header: '🙅 ?!?!! 🙅',
   message1: 'Chasing after the unattainable is the fun part. - Dean Potter',
-  message2: "Not here though, this page doesn't fucking exist!",
+  message2: "Not here though, this page doesn't exist!",
 }
 
 export default () => (

@@ -3,7 +3,7 @@ export const strings = {
         "back": "BACK",
         "home": "HOME",
         "notfoundquote": "Chasing after the unattainable is the fun part. - Dean Potter",
-        "notfoundquoteunder": "Not here though, this page doesn't fucking exist!",
+        "notfoundquoteunder": "Not here though, this page doesn't exist!",
         "notfoundheader": "🙅 ?!?!! 🙅",
         "blog": "BLOG",
         "copyright": "Copyright © 2023 - All right reserved by Me",
