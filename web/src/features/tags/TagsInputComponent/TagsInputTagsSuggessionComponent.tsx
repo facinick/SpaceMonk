@@ -13,7 +13,7 @@ export const TagsInputTagsSuggessionComponent = ({ children }: Props): JSX.Eleme
   return (
     <div className="flex flex-row flex-wrap p-4 pl-0 pr-0 gap-y-2">
       {tagsSearchResults.map((value, index, array) => {
-        return (<AddableChip onClick={() => addTag(value)} key={generateUUID()}>{value.name}</AddableChip>)
+        return (<AddableChip onClick={() => addTag(value)} key={value.id}>{value.name}</AddableChip>)
       })}
     </div>
   );

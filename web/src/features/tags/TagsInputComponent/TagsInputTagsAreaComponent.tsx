@@ -16,7 +16,7 @@ export const TagsInputTagsAreaComponent = ({ children }: Props): JSX.Element => 
     <>
       <div className={`flex flex-row flex-wrap gap-y-2 ${padding}`}>
         {tags.map((value, index, array) => {
-          return (<DismissibleChip onClick={() => removeTag(value)} key={generateUUID()} >{value.name}</DismissibleChip>)
+          return (<DismissibleChip onClick={() => removeTag(value)} key={value.id} >{value.name}</DismissibleChip>)
         })}
       </div>
     </>
