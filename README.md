@@ -1,121 +1,104 @@
-# README
+# Spacemonk
 
-Welcome to [RedwoodJS](https://redwoodjs.com)!
+[![MIT License](https://img.shields.io/github/license/facinick/SpaceMonk)](https://github.com/facinick/SpaceMonk/blob/main/LICENSE)
+[![RedwoodJS](https://img.shields.io/badge/RedwoodJS-Full%20Stack%20Web%20Framework-ff7f00)](https://redwoodjs.com/)
 
-> **Prerequisites**
->
-> - Redwood requires [Node.js](https://nodejs.org/en/) (>=14.19.x <=16.x) and [Yarn](https://yarnpkg.com/) (>=1.15)
-> - Are you on Windows? For best results, follow our [Windows development setup](https://redwoodjs.com/docs/how-to/windows-development-setup) guide
+Spacemonk is a full-featured blogging platform built with the power of RedwoodJS and TypeScript. It showcases a variety of features including authentication/authorization, rich text editing, dynamic themes, and more.
 
-Start by installing dependencies:
+## Demo and Screenshots
 
-```
+<img width="1418" alt="Screenshot 2024-08-04 at 5 52 17 PM" src="https://github.com/user-attachments/assets/09630457-98aa-4f02-b3e0-53fc38d7ef01">
+
+<img width="1424" alt="Screenshot 2024-08-04 at 5 51 29 PM" src="https://github.com/user-attachments/assets/accd1de6-8514-42f4-8b42-4fdb819f4795">
+
+<img width="1424" alt="Screenshot 2024-08-04 at 5 51 53 PM" src="https://github.com/user-attachments/assets/33330a49-83bf-4454-8af6-c705ceee658a">
+
+[Demo Video](https://drive.google.com/file/d/11BX3gyq3-NcZUvX_38FSFQrafNvniNaO/view?usp=sharing)
+
+## Features
+
+1. **Authentication / Authorization**
+   - Admin dashboard to monitor all online users via GraphQL polling.
+   - Regular users can create, view, and edit blog posts.
+   - All users can log in using username and password.
+   - Authorization checks for user permissions (e.g., deleting posts).
+
+2. **Rich Text Editor**
+   - Create blog posts with rich content using Tiptap editor.
+   - Add header images with validation for content type.
+   - Include tags, titles, and other rich content.
+
+3. **Dynamic Themes**
+   - Switch between numerous themes categorized as light, dark, and merryweather.
+   - Cycle through themes using the '`' key press.
+
+4. **Tag-Based Post Viewing**
+   - Users can view posts filtered by tags.
+
+5. **Automatic Image Generation**
+   - If no image URL is provided, a placeholder image is added.
+   - A job is scheduled to apply an image URL from Unsplash automatically.
+
+6. **User Requests**
+   - Regular users can send requests/messages to the admin.
+
+7. **GraphQL Backend**
+
+8. **State Management**
+   - Global state managed by Zustand.
+   - Local state managed by React useState.
+
+9. **Follow/Unfollow**
+   - Users can follow or unfollow other users.
+   - User profiles display created posts.
+
+10. **Comments and Replies**
+    - Users can comment on posts and reply to other comments.
+
+11. **Voting**
+    - Upvote/downvote functionality for posts and comments.
+
+12. **Responsiveness**
+    - The web app is responsive and works seamlessly on mobile, tablet, and desktop devices.
+
+13. **Pagination**
+    - Cursor-based pagination for browsing blog posts.
+
+14. **Routing**
+    - Various pages including login, signup, profile, tags, blog, etc.
+
+## Tech Stack
+
+- **Frontend:** ReactJS, Tailwind CSS, DaisyUI
+- **Backend:** Typescript, GraphQL, Prisma ORM, PostgreSQL
+- **State Management:** Zustand, React useState
+- **Rich Text Editor:** Tiptap
+- **Job Queue:** Bull for Redis
+- **Authentication:** JWT
+- **Image Generation:** Unsplash API
+
+## Installation
+
+To get started with Spacemonk, follow these steps:
+
+Clone the repository:
+   ```bash
+   git clone https://github.com/facinick/SpaceMonk.git
+   cd SpaceMonk
+   ```
+Install dependencies:
+
+```bash
 yarn install
 ```
+Run the development server:
 
-Then change into that directory and start the development server:
-
-```
-cd my-redwood-project
-yarn redwood dev
+```bash
+yarn rw dev
 ```
 
-Your browser should automatically open to http://localhost:8910 where you'll see the Welcome Page, which links out to a ton of great resources.
+Author
+Created by facinick.
 
-> **The Redwood CLI**
->
-> Congratulations on running your first Redwood CLI command!
-> From dev to deploy, the CLI is with you the whole way.
-> And there's quite a few commands at your disposal:
-> ```
-> yarn redwood --help
-> ```
-> For all the details, see the [CLI reference](https://redwoodjs.com/docs/cli-commands).
-
-## Prisma and the database
-
-Redwood wouldn't be a full-stack framework without a database. It all starts with the schema. Open the [`schema.prisma`](api/db/schema.prisma) file in `api/db` and replace the `UserExample` model with the following `Post` model:
-
-```
-model Post {
-  id        Int      @id @default(autoincrement())
-  title     String
-  body      String
-  createdAt DateTime @default(now())
-}
-```
-
-Redwood uses [Prisma](https://www.prisma.io/), a next-gen Node.js and TypeScript ORM, to talk to the database. Prisma's schema offers a declarative way of defining your app's data models. And Prisma [Migrate](https://www.prisma.io/migrate) uses that schema to make database migrations hassle-free:
-
-```
-yarn rw prisma migrate dev
-
-# ...
-
-? Enter a name for the new migration: › create posts
-```
-
-> `rw` is short for `redwood`
-
-You'll be prompted for the name of your migration. `create posts` will do.
-
-Now let's generate everything we need to perform all the CRUD (Create, Retrieve, Update, Delete) actions on our `Post` model:
-
-```
-yarn redwood g scaffold post
-```
-
-Navigate to http://localhost:8910/posts/new, fill in the title and body, and click "Save":
-
-Did we just create a post in the database? Yup! With `yarn rw g scaffold <model>`, Redwood created all the pages, components, and services necessary to perform all CRUD actions on our posts table.
-
-## Frontend first with Storybook
-
-Don't know what your data models look like?
-That's more than ok—Redwood integrates Storybook so that you can work on design without worrying about data.
-Mockup, build, and verify your React components, even in complete isolation from the backend:
-
-```
-yarn rw storybook
-```
-
-Before you start, see if the CLI's `setup ui` command has your favorite styling library:
-
-```
-yarn rw setup ui --help
-```
-
-## Testing with Jest
-
-It'd be hard to scale from side project to startup without a few tests.
-Redwood fully integrates Jest with the front and the backends and makes it easy to keep your whole app covered by generating test files with all your components and services:
-
-```
-yarn rw test
-```
-
-To make the integration even more seamless, Redwood augments Jest with database [scenarios](https://redwoodjs.com/docs/testing.md#scenarios)  and [GraphQL mocking](https://redwoodjs.com/docs/testing.md#mocking-graphql-calls).
-
-## Ship it
-
-Redwood is designed for both serverless deploy targets like Netlify and Vercel and serverful deploy targets like Render and AWS:
-
-```
-yarn rw setup deploy --help
-```
-
-Don't go live without auth!
-Lock down your front and backends with Redwood's built-in, database-backed authentication system ([dbAuth](https://redwoodjs.com/docs/authentication#self-hosted-auth-installation-and-setup)), or integrate with nearly a dozen third party auth providers:
-
-```
-yarn rw setup auth --help
-```
-
-## Next Steps
-
-The best way to learn Redwood is by going through the comprehensive [tutorial](https://redwoodjs.com/docs/tutorial/foreword) and joining the community (via the [Discourse forum](https://community.redwoodjs.com) or the [Discord server](https://discord.gg/redwoodjs)).
-
-## Quick Links
-
-- Stay updated: read [Forum announcements](https://community.redwoodjs.com/c/announcements/5), follow us on [Twitter](https://twitter.com/redwoodjs), and subscribe to the [newsletter](https://redwoodjs.com/newsletter)
-- [Learn how to contribute](https://redwoodjs.com/docs/contributing)
+Contribution
+Feel free to open issues or submit pull requests for any improvements or bug fixes. Purpose of this repository was to learn various components in full stack coming together.
